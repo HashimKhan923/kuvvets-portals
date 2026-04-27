@@ -30,7 +30,7 @@ Route::get('/', function () {
             ? redirect()->route('dashboard')
             : redirect()->route('employee.dashboard');
     }
-    return redirect()->route('admin.login');
+    return redirect()->route('employee.login');
 });
 
 Route::get('/login', function () {
