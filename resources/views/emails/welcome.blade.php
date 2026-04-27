@@ -1,38 +1,64 @@
 <x-emails.layout>
-    <div class="status-banner green">
-        <span class="status-icon">🎉</span>
-        <div class="status-title">Welcome to KUVVET!</div>
-        <div class="status-sub">Your employee account has been created.</div>
-    </div>
 
-    <p class="greeting">Hi <strong>{{ $employee->first_name }}</strong>,</p>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:28px;">
+        <tr>
+            <td style="background-color:#F0FDF4;border:1.5px solid #BBF7D0;border-radius:14px;padding:20px 24px;text-align:center;">
+                <div style="font-size:36px;line-height:1;margin-bottom:10px;">🎉</div>
+                <div style="font-family:Arial,sans-serif;font-size:20px;font-weight:800;color:#16A34A;margin-bottom:6px;">Welcome to KUVVET!</div>
+                <div style="font-family:Arial,sans-serif;font-size:13px;color:#6B5347;line-height:1.5;">Your employee account has been created.</div>
+            </td>
+        </tr>
+    </table>
 
-    <p class="body-text">
+    <p style="font-family:Arial,sans-serif;font-size:15px;color:#6B5347;margin:0 0 18px;">Hi <strong style="color:#2D1F14;">{{ $employee->first_name }}</strong>,</p>
+
+    <p style="font-family:Arial,sans-serif;font-size:14px;color:#4A3728;line-height:1.7;margin:0 0 24px;">
         Welcome aboard! Your account on the KUVVET Employee Portal has been set up by HR.
         You can log in to manage your attendance, view payslips, apply for leaves, and more.
     </p>
 
-    <div class="creds-box">
-        <div class="creds-row">
-            <span class="creds-key">Portal URL</span>
-            <span class="creds-value">{{ url('/employee/login') }}</span>
-        </div>
-        <div class="creds-row">
-            <span class="creds-key">Username</span>
-            <span class="creds-value">{{ $username }}</span>
-        </div>
-        <div class="creds-row">
-            <span class="creds-key">Temp. Password</span>
-            <span class="creds-value">{{ $password }}</span>
-        </div>
-    </div>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#2D1F14;border-radius:12px;margin-bottom:24px;">
+        <tr>
+            <td style="padding:20px 24px;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td style="font-family:'Courier New',monospace;font-size:13px;color:rgba(255,255,255,0.55);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.08);width:40%;">Portal URL</td>
+                        <td style="font-family:'Courier New',monospace;font-size:13px;color:#E87A45;font-weight:700;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.08);text-align:right;">{{ url('/employee/login') }}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-family:'Courier New',monospace;font-size:13px;color:rgba(255,255,255,0.55);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.08);">Username</td>
+                        <td style="font-family:'Courier New',monospace;font-size:13px;color:#E87A45;font-weight:700;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.08);text-align:right;">{{ $username }}</td>
+                    </tr>
+                    <tr>
+                        <td style="font-family:'Courier New',monospace;font-size:13px;color:rgba(255,255,255,0.55);padding:6px 0;">Temp. Password</td>
+                        <td style="font-family:'Courier New',monospace;font-size:13px;color:#E87A45;font-weight:700;padding:6px 0;text-align:right;">{{ $password }}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 
-    <div class="callout warning">
-        <span class="callout-icon">⚠️</span>
-        <span>Change your password immediately after first login. Go to <strong>Profile → Password</strong>.</span>
-    </div>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:24px;">
+        <tr>
+            <td style="background-color:#FFFBEB;border-left:4px solid #F59E0B;border-radius:0 10px 10px 0;padding:14px 18px;">
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td style="font-size:16px;vertical-align:top;padding-right:12px;padding-top:1px;">⚠️</td>
+                        <td style="font-family:Arial,sans-serif;font-size:12.5px;color:#92400E;line-height:1.6;">
+                            Change your password immediately after first login. Go to <strong>Profile &rarr; Password</strong>.
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 
-    <div class="cta-wrap">
-        <a href="{{ url('/employee/login') }}" class="cta-btn">Login Now →</a>
-    </div>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+            <td style="text-align:center;padding:4px 0 8px;">
+                <a href="{{ url('/employee/login') }}" style="display:inline-block;background-color:#C2531B;color:#ffffff;text-decoration:none;padding:14px 36px;border-radius:12px;font-family:Arial,sans-serif;font-size:14px;font-weight:700;letter-spacing:0.3px;">Login Now &rarr;</a>
+            </td>
+        </tr>
+    </table>
+
 </x-emails.layout>
