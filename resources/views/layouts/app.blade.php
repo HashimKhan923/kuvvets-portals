@@ -9,10 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = { theme: { extend: { fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] } } } }
-    </script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
         /* ═══════════════════════════════════════════════════════
@@ -498,7 +495,7 @@
 <aside id="sidebar">
 
     <div class="sidebar-brand">
-        <div class="sidebar-logo"><i class="fa-solid fa-grid-2"></i></div>
+        <div class="sidebar-logo"><i class="fa-solid fa-grid-2"></i>K</div>
         <div class="brand-text">
             <div class="brand-name">KUVVET</div>
             <div class="brand-sub">HR PORTAL · ADMIN</div>
