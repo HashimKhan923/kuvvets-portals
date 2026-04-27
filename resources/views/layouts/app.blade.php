@@ -764,13 +764,13 @@
             <div id="pk-time" class="topbar-clock"></div>
 
             <!-- Notifications -->
-            <div class="relative" x-data="{ open: false }">
+            <div style="position:relative;" x-data="{ open: false }">
                 <button class="topbar-icon-btn" @click="open = !open">
                     <i class="fa-solid fa-bell"></i>
                     <span class="notif-dot"></span>
                 </button>
                 <div x-show="open" @click.outside="open = false"
-                     class="notification-panel dropdown-menu absolute right-0 mt-2" style="width:300px;z-index:100;padding:0;overflow:hidden;">
+                     class="notification-panel dropdown-menu" style="position:absolute;right:0;top:calc(100% + 8px);width:300px;z-index:100;padding:0;overflow:hidden;">
                     <div style="padding:12px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;">
                         <span style="font-size:12px;font-weight:600;color:var(--text-primary);">Notifications</span>
                         <span style="font-size:11px;color:var(--accent);cursor:pointer;">Mark all read</span>
@@ -783,7 +783,7 @@
             </div>
 
             <!-- User Dropdown -->
-            <div class="relative" x-data="{ open: false }">
+            <div style="position:relative;" x-data="{ open: false }">
                 <button class="topbar-user-btn" @click="open = !open">
                     <img src="{{ auth()->user()->avatar_url }}" class="avatar avatar-sm" alt="{{ auth()->user()->name }}">
                     <div>
@@ -793,7 +793,7 @@
                     <i class="fa-solid fa-chevron-down" style="font-size:9px;color:var(--text-muted);"></i>
                 </button>
 
-                <div x-show="open" @click.outside="open = false" class="dropdown-menu absolute right-0 mt-2" style="z-index:100;">
+                <div x-show="open" @click.outside="open = false" class="dropdown-menu" style="position:absolute;right:0;top:calc(100% + 8px);z-index:100;">
                     <div style="padding:10px 16px 8px;border-bottom:1px solid var(--border);">
                         <div style="font-size:13px;font-weight:600;color:var(--text-primary);">{{ auth()->user()->name }}</div>
                         <div style="font-size:11px;color:var(--text-muted);margin-top:1px;">{{ auth()->user()->email }}</div>
