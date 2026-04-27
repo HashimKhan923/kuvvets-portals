@@ -79,7 +79,7 @@
                 <div style="font-family:Arial,sans-serif;font-size:11px;color:#A89080;margin-bottom:12px;">
                     <a href="{{ url('/employee/login') }}" style="color:#C2531B;text-decoration:none;">Employee Portal</a>
                     &nbsp;&middot;&nbsp;
-                    <a href="{{ url('/') }}" style="color:#C2531B;text-decoration:none;">Admin Portal</a>
+                    <a href="{{ url('/admin/login') }}" style="color:#C2531B;text-decoration:none;">Admin Portal</a>
                 </div>
                 <div style="font-family:Arial,sans-serif;font-size:10px;color:#C4B8B0;line-height:1.5;">
                     This is an automated email from KUVVET HR System. Please do not reply to this email.<br>
