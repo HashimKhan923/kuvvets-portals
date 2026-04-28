@@ -168,7 +168,7 @@ class LocationController extends Controller
      */
     public function qrSvg(Location $location)
     {
-        $this->authorizeCompany($location);
+        // $this->authorizeCompany($location);
 
         $renderer = new ImageRenderer(
             new RendererStyle(420, 1),

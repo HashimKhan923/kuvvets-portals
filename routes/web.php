@@ -77,6 +77,8 @@ Route::post('/admin/logout', [LoginController::class, 'logout'])
 | Admin Protected Routes (with permission-level locking)
 |--------------------------------------------------------------------------
 */
+Route::get('/admin/locations/{location}/qr.svg', [\App\Http\Controllers\LocationController::class, 'qrSvg'])
+    ->name('locations.qr');
 Route::middleware(['auth', 'admin.portal'])->prefix('admin')->group(function () {
 
     // ── DASHBOARD ─────────────────────────────────────────────
@@ -392,7 +394,7 @@ Route::middleware(['auth', 'admin.portal'])->prefix('admin')->group(function () 
         Route::middleware('permission:locations.view')->group(function () {
             Route::get('/',                          [\App\Http\Controllers\LocationController::class, 'index'])->name('index');
             Route::get('/{location}',                [\App\Http\Controllers\LocationController::class, 'show'])->name('show');
-            Route::get('/{location}/qr.svg',         [\App\Http\Controllers\LocationController::class, 'qrSvg'])->name('qr');
+            // Route::get('/{location}/qr.svg',         [\App\Http\Controllers\LocationController::class, 'qrSvg'])->name('qr');
             Route::get('/{location}/print',          [\App\Http\Controllers\LocationController::class, 'print'])->name('print');
         });
         Route::middleware('permission:locations.manage')->group(function () {
