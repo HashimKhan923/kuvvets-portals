@@ -477,23 +477,24 @@ Route::middleware(['auth', 'employee.portal'])->prefix('employee')->name('employ
 });
 
 /// Mobile API routes for employee portal (using Sanctum for authentication)
-Route::prefix('mobile-api/employee')->group(function () {
-    Route::post('/login', [EmployeeAuthController::class, 'apiLogin']);
+Route::prefix('mobile-api/employee')->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class])->group(function () {
+
+    Route::post('/login', [\App\Http\Controllers\Employee\AuthController::class, 'apiLogin']);
 
     Route::middleware('auth:sanctum')->group(function () {
-        Route::post('/logout',                [EmployeeAuthController::class, 'apiLogout']);
-        Route::get('/me',                     [EmpDashboardCtrl::class, 'apiMe']);
-        Route::get('/dashboard',              [EmpDashboardCtrl::class, 'apiIndex']);
-        Route::get('/attendance/status',      [EmpAttendanceCtrl::class, 'status']);
-        Route::post('/check-in',              [EmpAttendanceCtrl::class, 'checkIn']);
-        Route::post('/check-out',             [EmpAttendanceCtrl::class, 'checkOut']);
-        Route::get('/attendance/history',     [EmpHistoryCtrl::class, 'apiIndex']);
-        Route::post('/break/start',           [EmpBreakCtrl::class, 'start']);
-        Route::post('/break/end',             [EmpBreakCtrl::class, 'end']);
-        Route::get('/leaves',                 [EmpLeaveCtrl::class, 'apiIndex']);
-        Route::post('/leaves',                [EmpLeaveCtrl::class, 'store']);
-        Route::delete('/leaves/{leaveRequest}', [EmpLeaveCtrl::class, 'cancel']);
-        Route::get('/payslips',               [EmpPayslipCtrl::class, 'apiIndex']);
-        Route::get('/profile',                [EmpProfileCtrl::class, 'apiShow']);
+        Route::post('/logout',                   [\App\Http\Controllers\Employee\AuthController::class,              'apiLogout']);
+        Route::get('/me',                        [\App\Http\Controllers\Employee\DashboardController::class,         'apiMe']);
+        Route::get('/dashboard',                 [\App\Http\Controllers\Employee\DashboardController::class,         'apiIndex']);
+        Route::get('/attendance/status',         [\App\Http\Controllers\Employee\AttendanceController::class,        'status']);
+        Route::post('/check-in',                 [\App\Http\Controllers\Employee\AttendanceController::class,        'checkIn']);
+        Route::post('/check-out',                [\App\Http\Controllers\Employee\AttendanceController::class,        'checkOut']);
+        Route::get('/attendance/history',        [\App\Http\Controllers\Employee\AttendanceHistoryController::class, 'apiIndex']);
+        Route::post('/break/start',              [\App\Http\Controllers\Employee\BreakController::class,             'start']);
+        Route::post('/break/end',                [\App\Http\Controllers\Employee\BreakController::class,             'end']);
+        Route::get('/leaves',                    [\App\Http\Controllers\Employee\LeaveController::class,             'apiIndex']);
+        Route::post('/leaves',                   [\App\Http\Controllers\Employee\LeaveController::class,             'store']);
+        Route::delete('/leaves/{leaveRequest}',  [\App\Http\Controllers\Employee\LeaveController::class,             'cancel']);
+        Route::get('/payslips',                  [\App\Http\Controllers\Employee\PayslipController::class,           'apiIndex']);
+        Route::get('/profile',                   [\App\Http\Controllers\Employee\ProfileController::class,           'apiShow']);
     });
 });
