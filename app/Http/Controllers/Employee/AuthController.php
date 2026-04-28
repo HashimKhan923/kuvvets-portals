@@ -186,10 +186,16 @@ class AuthController extends Controller
             'token'    => $token,
             'user'     => ['id' => $user->id, 'email' => $user->email, 'username' => $user->username],
             'employee' => $user->employee ? [
-                'id' => $user->employee->id, 'employee_id' => $user->employee->employee_id,
-                'first_name' => $user->employee->first_name, 'last_name' => $user->employee->last_name,
-                'department' => $user->employee->department?->only(['id','name']),
-                'designation' => $user->employee->designation?->only(['id','name']),
+                'id'          => $user->employee->id,
+                'employee_id' => $user->employee->employee_id,
+                'first_name'  => $user->employee->first_name  ?? '',
+                'last_name'   => $user->employee->last_name   ?? '',
+                'department'  => $user->employee->department 
+                                ? $user->employee->department->only(['id', 'name']) 
+                                : ['id' => null, 'name' => ''],
+                'designation' => $user->employee->designation 
+                                ? $user->employee->designation->only(['id', 'name']) 
+                                : ['id' => null, 'name' => ''],
             ] : null,
         ]);
     }
