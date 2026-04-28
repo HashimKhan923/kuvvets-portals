@@ -10,32 +10,34 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
-    ->withMiddleware(function (Middleware $middleware) {
+->withMiddleware(function (Middleware $middleware) {
+    // ── Exclude mobile API from CSRF ──────────────────────────
+    $middleware->validateCsrfTokens(except: [
+        'mobile-api/*',
+    ]);
 
-        // ── Use our custom Authenticate middleware ────────────
-        $middleware->redirectGuestsTo(function ($request) {
-            if ($request->is('employee/*') || $request->is('employee')) {
-                return route('employee.login');
-            }
-            return route('admin.login');
-        });
-
-        // ── Web middleware stack ──────────────────────────────
-        $middleware->web(append: [
-            \App\Http\Middleware\CheckUserActive::class,
-            \App\Http\Middleware\TrackLastActivity::class,
-        ]);
-
-        // ── Aliases ───────────────────────────────────────────
-        $middleware->alias([
-            'admin.portal'       => \App\Http\Middleware\AdminPortalMiddleware::class,
-            'employee.portal' => \App\Http\Middleware\EmployeePortalMiddleware::class,
-            'guest.redirect'     => \App\Http\Middleware\RedirectIfAuthenticated::class,
-            'role'               => \Spatie\Permission\Middleware\RoleMiddleware::class,
-            'permission'         => \Spatie\Permission\Middleware\PermissionMiddleware::class,
-            'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
-        ]);
-    })
+    // ── Use our custom Authenticate middleware ────────────
+    $middleware->redirectGuestsTo(function ($request) {
+        if ($request->is('employee/*') || $request->is('employee')) {
+            return route('employee.login');
+        }
+        return route('admin.login');
+    });
+    // ── Web middleware stack ──────────────────────────────
+    $middleware->web(append: [
+        \App\Http\Middleware\CheckUserActive::class,
+        \App\Http\Middleware\TrackLastActivity::class,
+    ]);
+    // ── Aliases ───────────────────────────────────────────
+    $middleware->alias([
+        'admin.portal'       => \App\Http\Middleware\AdminPortalMiddleware::class,
+        'employee.portal'    => \App\Http\Middleware\EmployeePortalMiddleware::class,
+        'guest.redirect'     => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'role'               => \Spatie\Permission\Middleware\RoleMiddleware::class,
+        'permission'         => \Spatie\Permission\Middleware\PermissionMiddleware::class,
+        'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
+    ]);
+})
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();
