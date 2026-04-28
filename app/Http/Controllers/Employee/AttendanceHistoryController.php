@@ -218,4 +218,26 @@ class AttendanceHistoryController extends Controller
             fclose($out);
         }, $filename, $headers);
     }
+
+// API method to return attendance records for a month (for mobile app)
+    public function apiIndex(Request $request)
+    {
+        $employee = $request->user()->employee;
+        $month = (int) $request->input('month', now()->month);
+        $year  = (int) $request->input('year', now()->year);
+        $start = \Carbon\Carbon::create($year, $month, 1)->startOfMonth();
+        $end   = (clone $start)->endOfMonth();
+        $records = \App\Models\Attendance::where('employee_id', $employee->id)
+            ->whereBetween('date', [$start->toDateString(), $end->toDateString()])
+            ->with('location','shift')->orderBy('date', 'desc')->get()
+            ->map(fn($r) => ['date' => $r->date->toDateString(), 'status' => $r->status,
+                'check_in' => $r->check_in?->format('h:i A'), 'check_out' => $r->check_out?->format('h:i A'),
+                'working_minutes' => $r->working_minutes, 'overtime_minutes' => $r->overtime_minutes,
+                'late_minutes' => $r->late_minutes, 'break_minutes' => $r->break_minutes,
+                'location_name' => $r->location?->name, 'shift_name' => $r->shift?->name]);
+        $stats = \App\Models\Attendance::where('employee_id', $employee->id)
+            ->whereBetween('date', [$start->toDateString(), $end->toDateString()])
+            ->selectRaw("SUM(CASE WHEN status='present' THEN 1 ELSE 0 END) as present_days, SUM(CASE WHEN status='late' THEN 1 ELSE 0 END) as late_days, SUM(CASE WHEN status='absent' THEN 1 ELSE 0 END) as absent_days, SUM(CASE WHEN status='half_day' THEN 1 ELSE 0 END) as half_days, COALESCE(SUM(working_minutes),0) as total_minutes, COALESCE(SUM(overtime_minutes),0) as overtime_minutes, COALESCE(SUM(late_minutes),0) as late_minutes")->first();
+        return response()->json(['records' => $records, 'stats' => $stats]);
+    }
 }

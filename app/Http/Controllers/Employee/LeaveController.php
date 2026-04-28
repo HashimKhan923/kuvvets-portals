@@ -163,4 +163,27 @@ class LeaveController extends Controller
             'leave-'.$leaveRequest->request_number.'-document.'.pathinfo($path, PATHINFO_EXTENSION)
         );
     }
+
+    // API method to return leave balances and recent requests for mobile app
+
+    public function apiIndex(Request $request)
+    {
+        $employee = $request->user()->employee;
+        $year = now()->year;
+        $balances = $this->service->balancesFor($employee, $year)->map(fn($b) => [
+            'leave_type' => $b->leaveType ? ['id' => $b->leaveType->id, 'name' => $b->leaveType->name, 'code' => $b->leaveType->code] : null,
+            'allocated_days' => $b->allocated_days, 'used_days' => $b->used_days, 'pending_days' => $b->pending_days ?? 0,
+        ]);
+        $requests = \App\Models\LeaveRequest::with('leaveType','reviewer')
+            ->where('employee_id', $employee->id)->orderByDesc('created_at')->take(50)->get()
+            ->map(fn($r) => ['id' => $r->id, 'leave_type' => $r->leaveType ? ['id' => $r->leaveType->id, 'name' => $r->leaveType->name] : null,
+                'from_date' => $r->from_date->toDateString(), 'to_date' => $r->to_date->toDateString(),
+                'total_days' => $r->total_days, 'day_type' => $r->day_type, 'status' => $r->status, 'reason' => $r->reason,
+                'reviewer_name' => $r->reviewer?->employee ? ($r->reviewer->employee->first_name.' '.$r->reviewer->employee->last_name) : null]);
+        $stats = ['pending' => \App\Models\LeaveRequest::where('employee_id', $employee->id)->where('status','pending')->count(),
+            'approved' => \App\Models\LeaveRequest::where('employee_id', $employee->id)->where('status','approved')->whereYear('from_date', $year)->count(),
+            'rejected' => \App\Models\LeaveRequest::where('employee_id', $employee->id)->where('status','rejected')->whereYear('from_date', $year)->count(),
+            'total_days_used' => \App\Models\LeaveRequest::where('employee_id', $employee->id)->where('status','approved')->whereYear('from_date', $year)->sum('total_days')];
+        return response()->json(['balances' => $balances, 'requests' => $requests, 'stats' => $stats]);
+    }
 }

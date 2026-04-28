@@ -152,4 +152,51 @@ class AuthController extends Controller
     {
         return 'employee_login_' . strtolower($request->login) . '|' . $request->ip();
     }
+
+    
+/// API Methods for Mobile App
+
+    public function apiLogin(Request $request)
+    {
+        $request->validate(['login' => 'required|string', 'password' => 'required|string']);
+        $identifier = trim($request->login);
+        $user = null;
+
+        if (filter_var($identifier, FILTER_VALIDATE_EMAIL)) {
+            $user = \App\Models\User::where('email', $identifier)->first();
+        } else {
+            $user = \App\Models\User::where('username', $identifier)->first();
+            if (!$user) {
+                $emp = \App\Models\Employee::where('employee_id', $identifier)->first();
+                if ($emp && $emp->user) $user = $emp->user;
+            }
+        }
+
+        if (!$user || !$user->is_active || !$user->canAccessEmployeePortal())
+            return response()->json(['message' => 'Invalid credentials or no access.'], 401);
+
+        $field = filter_var($identifier, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        if (!\Illuminate\Support\Facades\Auth::attempt([$field => $user->$field, 'password' => $request->password]))
+            return response()->json(['message' => 'Invalid credentials.'], 401);
+
+        $user = \Illuminate\Support\Facades\Auth::user();
+        $token = $user->createToken('mobile-app')->plainTextToken;
+
+        return response()->json([
+            'token'    => $token,
+            'user'     => ['id' => $user->id, 'email' => $user->email, 'username' => $user->username],
+            'employee' => $user->employee ? [
+                'id' => $user->employee->id, 'employee_id' => $user->employee->employee_id,
+                'first_name' => $user->employee->first_name, 'last_name' => $user->employee->last_name,
+                'department' => $user->employee->department?->only(['id','name']),
+                'designation' => $user->employee->designation?->only(['id','name']),
+            ] : null,
+        ]);
+    }
+
+    public function apiLogout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+        return response()->json(['message' => 'Logged out.']);
+    }
 }

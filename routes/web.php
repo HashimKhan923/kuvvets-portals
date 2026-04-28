@@ -18,6 +18,15 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\Employee\AuthController as EmployeeAuthController;
 use App\Http\Controllers\Employee\DashboardController as EmployeeDashboardController;
 
+use App\Http\Controllers\Employee\AuthController as EmployeeAuthCtrl;
+use App\Http\Controllers\Employee\AttendanceController as EmpAttendanceCtrl;
+use App\Http\Controllers\Employee\AttendanceHistoryController as EmpHistoryCtrl;
+use App\Http\Controllers\Employee\BreakController as EmpBreakCtrl;
+use App\Http\Controllers\Employee\DashboardController as EmpDashboardCtrl;
+use App\Http\Controllers\Employee\LeaveController as EmpLeaveCtrl;
+use App\Http\Controllers\Employee\PayslipController as EmpPayslipCtrl;
+use App\Http\Controllers\Employee\ProfileController as EmpProfileCtrl;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -465,4 +474,26 @@ Route::middleware(['auth', 'employee.portal'])->prefix('employee')->name('employ
 
     // documents.index alias (for sidebar)
     Route::redirect('/documents', '/employee/profile?tab=documents')->name('documents.index');
+});
+
+/// Mobile API routes for employee portal (using Sanctum for authentication)
+Route::prefix('mobile-api/employee')->group(function () {
+    Route::post('/login', [EmployeeAuthController::class, 'apiLogin']);
+
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/logout',                [EmployeeAuthController::class, 'apiLogout']);
+        Route::get('/me',                     [EmpDashboardCtrl::class, 'apiMe']);
+        Route::get('/dashboard',              [EmpDashboardCtrl::class, 'apiIndex']);
+        Route::get('/attendance/status',      [EmpAttendanceCtrl::class, 'status']);
+        Route::post('/check-in',              [EmpAttendanceCtrl::class, 'checkIn']);
+        Route::post('/check-out',             [EmpAttendanceCtrl::class, 'checkOut']);
+        Route::get('/attendance/history',     [EmpHistoryCtrl::class, 'apiIndex']);
+        Route::post('/break/start',           [EmpBreakCtrl::class, 'start']);
+        Route::post('/break/end',             [EmpBreakCtrl::class, 'end']);
+        Route::get('/leaves',                 [EmpLeaveCtrl::class, 'apiIndex']);
+        Route::post('/leaves',                [EmpLeaveCtrl::class, 'store']);
+        Route::delete('/leaves/{leaveRequest}', [EmpLeaveCtrl::class, 'cancel']);
+        Route::get('/payslips',               [EmpPayslipCtrl::class, 'apiIndex']);
+        Route::get('/profile',                [EmpProfileCtrl::class, 'apiShow']);
+    });
 });

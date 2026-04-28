@@ -289,4 +289,24 @@ class ProfileController extends Controller
         if ($bytes < 1024 * 1024 * 1024) return round($bytes / (1024 * 1024), 1) . ' MB';
         return round($bytes / (1024 * 1024 * 1024), 2) . ' GB';
     }
+
+/// API Methods for Mobile App
+    public function apiShow(Request $request)
+    {
+        $emp = $request->user()->employee->load('department','designation','user');
+        return response()->json(['employee' => [
+            'id' => $emp->id, 'employee_id' => $emp->employee_id,
+            'first_name' => $emp->first_name, 'last_name' => $emp->last_name,
+            'email' => $emp->email, 'phone' => $emp->phone, 'mobile' => $emp->mobile,
+            'date_of_birth' => $emp->date_of_birth?->toDateString(), 'gender' => $emp->gender,
+            'address' => $emp->address, 'hire_date' => $emp->hire_date?->toDateString(),
+            'employment_type' => $emp->employment_type, 'status' => $emp->status,
+            'emergency_contact_name' => $emp->emergency_contact_name,
+            'emergency_contact_phone' => $emp->emergency_contact_phone,
+            'emergency_contact_relation' => $emp->emergency_contact_relation,
+            'department' => $emp->department?->only(['id','name']),
+            'designation' => $emp->designation?->only(['id','name']),
+            'user' => $emp->user ? ['email' => $emp->user->email, 'username' => $emp->user->username] : null,
+        ]]);
+    }
 }

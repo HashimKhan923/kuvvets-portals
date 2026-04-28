@@ -141,4 +141,33 @@ class PayslipController extends Controller
             'This payslip is not yet available.'
         );
     }
+
+    // API method to return payslip list and YTD totals for mobile app
+
+    public function apiIndex(Request $request)
+    {
+        $employee = $request->user()->employee;
+        $year = (int) $request->input('year', now()->year);
+        $payslips = \App\Models\Payslip::with('period')->where('employee_id', $employee->id)
+            ->whereHas('period', fn($q) => $q->where('year', $year))->whereIn('status', ['approved','paid'])->get()
+            ->sortByDesc(fn($p) => $p->period->year * 100 + $p->period->month)->values()
+            ->map(fn($p) => ['id' => $p->id, 'status' => $p->status, 'gross_salary' => $p->gross_salary,
+                'net_salary' => $p->net_salary, 'total_deductions' => $p->total_deductions,
+                'basic_salary' => $p->basic_salary, 'house_rent' => $p->house_rent, 'medical' => $p->medical,
+                'conveyance' => $p->conveyance, 'fuel' => $p->fuel, 'special_allowance' => $p->special_allowance,
+                'overtime_amount' => $p->overtime_amount, 'bonus' => $p->bonus, 'income_tax' => $p->income_tax,
+                'eobi_employee' => $p->eobi_employee, 'pessi_employee' => $p->pessi_employee,
+                'loan_deduction' => $p->loan_deduction, 'absent_deduction' => $p->absent_deduction,
+                'other_deduction' => $p->other_deduction,
+                'period' => $p->period ? ['id' => $p->period->id, 'month' => $p->period->month, 'year' => $p->period->year,
+                    'label' => $p->period->label ?? \Carbon\Carbon::create($p->period->year, $p->period->month)->format('F Y')] : null]);
+        $ytd = \App\Models\Payslip::where('employee_id', $employee->id)->whereHas('period', fn($q) => $q->where('year', $year))
+            ->whereIn('status', ['approved','paid'])
+            ->selectRaw('COALESCE(SUM(gross_salary),0) as total_gross, COALESCE(SUM(net_salary),0) as total_net, COALESCE(SUM(total_deductions),0) as total_deductions, COUNT(*) as count')->first();
+        $availableYears = \App\Models\Payslip::where('employee_id', $employee->id)
+            ->join('payroll_periods','payroll_periods.id','=','payslips.payroll_period_id')
+            ->whereIn('payslips.status', ['approved','paid'])->distinct()->orderByDesc('payroll_periods.year')
+            ->pluck('payroll_periods.year')->map(fn($y) => (int) $y)->all();
+        return response()->json(['payslips' => $payslips, 'ytd' => $ytd, 'available_years' => $availableYears ?: [now()->year]]);
+    }
 }
