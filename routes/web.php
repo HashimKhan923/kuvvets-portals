@@ -77,7 +77,7 @@ Route::post('/admin/logout', [LoginController::class, 'logout'])
 | Admin Protected Routes (with permission-level locking)
 |--------------------------------------------------------------------------
 */
-Route::get('/admin/locations/{location}/qr.svg', [\App\Http\Controllers\LocationController::class, 'qrSvg'])
+Route::get('/admin/locations/{location}/qr-code', [\App\Http\Controllers\LocationController::class, 'qrSvg'])
     ->name('locations.qr');
 Route::middleware(['auth', 'admin.portal'])->prefix('admin')->group(function () {
 
