@@ -18,15 +18,15 @@
 
     /* Hero card */
     .hero-check {
-        background: linear-gradient(135deg, #2D1F14 0%, #3d2a1c 100%);
-        color: #fff; border-radius: 20px; padding: 26px;
+        background: #000000;
+        color: #CBA557; border-radius: 20px; padding: 26px;
         position: relative; overflow: hidden;
         display: flex; flex-direction: column; gap: 18px;
     }
     .hero-check::before {
         content:''; position:absolute; top:-60%; right:-20%;
         width:440px; height:440px;
-        background: radial-gradient(circle, rgba(232,122,69,.25), transparent 60%);
+        background: #000000;
         pointer-events:none;
     }
     .hero-check::after {
@@ -110,7 +110,7 @@
     }
     .big-btn i { font-size: 17px; }
     .big-btn.primary {
-        background: linear-gradient(135deg, #C2531B, #E87A45);
+        background: var(--text-primary);
         color:#fff; box-shadow: 0 8px 24px rgba(194,83,27,.4);
     }
     .big-btn.primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(194,83,27,.5); }

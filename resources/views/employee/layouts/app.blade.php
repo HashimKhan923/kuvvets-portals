@@ -24,17 +24,17 @@
             --accent-grad:    linear-gradient(135deg, #C2531B 0%, #E87A45 100%);
 
             --bg-page:        #F9F6F2;
-            --bg-card:        #FFFFFF;
+            --bg-card:        #000000;
             --bg-input:       #F7F3EF;
-            --bg-muted:       #F5F0EB;
-            --bg-hover:       #FEF2EC;
+            --bg-muted:       #F0EAE2;
+            --bg-hover:       #F0EAE2;
 
             --border:         #F0EAE2;
             --border-strong:  #E8DDD5;
 
-            --text-primary:   #2D1F14;
-            --text-secondary: #6B5347;
-            --text-muted:     #A89080;
+            --text-primary:   #917130;
+            --text-secondary: #CBA557;
+            --text-muted:     #CBA557;
 
             --green:  #16A34A;  --green-bg:  #F0FDF4;  --green-border: #BBF7D0;
             --yellow: #F59E0B;  --yellow-bg: #FFFBEB;  --yellow-border:#FDE68A;
@@ -86,6 +86,8 @@
             display: flex; align-items: center; gap: 10px;
             padding: 18px 18px;
             border-bottom: 1px solid var(--border);
+            background-color: #000000;
+
         }
         .side-brand-logo {
             width: 38px; height: 38px; border-radius: 10px;
@@ -99,11 +101,12 @@
         .side-brand-name { font-size: 14px; font-weight: 700; letter-spacing: .8px; }
         .side-brand-sub  { font-size: 10px; color: var(--text-muted); letter-spacing: .4px; }
 
-        .side-nav { padding: 12px 10px; flex: 1; }
+        .side-nav { padding: 12px 10px; flex: 1; background-color: #000000; }
         .side-group-label {
             font-size: 10px; font-weight: 600; color: var(--text-muted);
             letter-spacing: 1.2px; text-transform: uppercase;
             padding: 12px 10px 6px;
+            
         }
         .side-item {
             display: flex; align-items: center; gap: 12px;
@@ -119,7 +122,8 @@
         }
         .side-item.active i { color: var(--accent); }
 
-        .side-foot { padding: 12px; border-top: 1px solid var(--border); }
+        .side-foot { padding: 12px; border-top: 1px solid var(--border);     background-color: #000000;
+ }
         .side-user {
             display: flex; align-items: center; gap: 10px;
             padding: 10px; background: var(--bg-muted);
@@ -148,6 +152,8 @@
             padding: 0 18px;
             display: flex; align-items: center; justify-content: space-between;
             position: sticky; top: 0; z-index: 40;
+            background-color: #000000;
+
         }
         .top-title { font-size: 15px; font-weight: 700; font-family: 'Space Grotesk', sans-serif; }
         .top-sub   { font-size: 10.5px; color: var(--text-muted); letter-spacing: .3px; }

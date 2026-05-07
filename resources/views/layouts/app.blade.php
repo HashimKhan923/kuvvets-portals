@@ -20,8 +20,8 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --accent:         #C2531B;
-            --accent-light:   #E87A45;
+            --accent:         #917130;
+            --accent-light:   #CBA557;
             --accent-bg:      #FEF2EC;
             --accent-border:  #F5D5C0;
 
@@ -34,9 +34,9 @@
             --border:         #F0EAE2;
             --border-strong:  #E8DDD5;
 
-            --text-primary:   #2D1F14;
-            --text-secondary: #6B5347;
-            --text-muted:     #A89080;
+            --text-primary:   #917130;
+            --text-secondary: #CBA557;
+            --text-muted:     #CBA557;
             --text-accent:    #C2531B;
 
             --green:          #22C55E;   --green-bg:    #F0FDF4;   --green-border:  #BBF7D0;
@@ -84,7 +84,7 @@
         #sidebar.collapsed .nav-arrow  { display: none !important; }
 
         /* Brand */
-        .sidebar-brand  { display: flex; align-items: center; gap: 10px; padding: 14px 16px; border-bottom: 1px solid var(--border); min-height: 56px; flex-shrink: 0; }
+.sidebar-brand {display: flex;align-items: center;gap: 10px;padding: 14px 16px;border-bottom: 1px solid var(--border);min-height: 56px;flex-shrink: 0;background-color: #000000;}
         .sidebar-logo   { width: 34px; height: 34px; border-radius: 9px; background: var(--accent); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .sidebar-logo i { color: #fff; font-size: 15px; }
         .brand-name     { font-size: 13px; font-weight: 700; color: var(--text-primary); letter-spacing: .8px; }
@@ -98,7 +98,13 @@
         }
 
         /* Nav */
-        .sidebar-nav { flex: 1; overflow-y: auto; padding: 8px; scrollbar-width: thin; }
+        .sidebar-nav {
+            flex: 1;
+            overflow-y: auto;
+            padding: 8px;
+            scrollbar-width: thin;
+            background-color: #000000;
+        }
 
         .nav-group-label {
             font-size: 9px; font-weight: 600; color: var(--text-muted);
