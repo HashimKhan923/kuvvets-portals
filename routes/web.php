@@ -138,6 +138,9 @@ Route::middleware(['auth', 'admin.portal'])->prefix('admin')->group(function () 
             Route::get('/shifts',        [AttendanceController::class, 'shifts'])->name('shifts');
             Route::post('/shifts',       [AttendanceController::class, 'storeShift'])->name('shifts.store');
             Route::post('/assign-shift', [AttendanceController::class, 'assignShift'])->name('shifts.assign');
+            Route::put('shifts/{shift}', [AttendanceController::class, 'updateShift'])
+     ->name('shifts.update');
+                Route::delete('shifts/{shift}', [AttendanceController::class, 'destroyShift'])->name('shifts.destroy');   
         });
     });
 

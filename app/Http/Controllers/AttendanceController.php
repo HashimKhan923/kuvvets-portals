@@ -271,4 +271,53 @@ class AttendanceController extends Controller
 
         return back()->with('success', 'Shift assigned successfully.');
     }
+
+    public function updateShift(Request $request, Shift $shift)
+{
+    $request->validate([
+        'name'          => 'required|string|max:100',
+        'start_time'    => 'required',
+        'end_time'      => 'required',
+        'working_hours' => 'nullable|numeric|min:0|max:24',
+        'grace_minutes' => 'nullable|integer|min:0|max:120',
+        'break_minutes' => 'nullable|integer|min:0|max:240',
+        'working_days'  => 'nullable|array',
+        'working_days.*'=> 'in:Mon,Tue,Wed,Thu,Fri,Sat,Sun',
+    ]);
+
+    $shift->update([
+        'name'           => $request->name,
+        'start_time'     => $request->start_time,
+        'end_time'       => $request->end_time,
+        'working_hours'  => $request->working_hours  ?? 8,
+        'grace_minutes'  => $request->grace_minutes  ?? 10,
+        'break_minutes'  => $request->break_minutes  ?? 60,
+        'working_days'   => $request->working_days   ?? [],
+        'is_night_shift' => $request->boolean('is_night_shift'),
+        'is_active'      => $request->boolean('is_active'),
+    ]);
+
+    return redirect()->route('attendance.shifts')
+                     ->with('success', 'Shift "' . $shift->name . '" updated successfully.');
+}
+
+/**
+ * Delete a shift.
+ * Route: DELETE /admin/attendance/shifts/{shift}
+ * Name: attendance.shifts.destroy
+ */
+public function destroyShift(Shift $shift)
+{
+    // Prevent deleting if employees are currently assigned to this shift
+    if ($shift->employees()->count() > 0) {
+        return redirect()->route('attendance.shifts')
+                         ->with('error', 'Cannot delete "' . $shift->name . '" — ' . $shift->employees()->count() . ' employee(s) are assigned to it. Reassign them first.');
+    }
+
+    $name = $shift->name;
+    $shift->delete();
+
+    return redirect()->route('attendance.shifts')
+                     ->with('success', 'Shift "' . $name . '" deleted successfully.');
+}
 }
