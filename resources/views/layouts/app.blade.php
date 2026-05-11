@@ -85,7 +85,7 @@
 
         /* Brand */
 .sidebar-brand {display: flex;align-items: center;gap: 10px;padding: 14px 16px;border-bottom: 1px solid var(--border);min-height: 56px;flex-shrink: 0;background-color: #000000;}
-        .sidebar-logo   { width: 34px; height: 34px; border-radius: 9px; background: var(--accent); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .sidebar-logo   { width: 34px; height: 34px; border-radius: 9px; background: #000000; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .sidebar-logo i { color: #fff; font-size: 15px; }
         .brand-name     { font-size: 13px; font-weight: 700; color: var(--text-primary); letter-spacing: .8px; }
         .brand-sub      { font-size: 9px; color: var(--text-muted); letter-spacing: .4px; margin-top: 1px; }
@@ -137,7 +137,7 @@
         }
 
         /* Sidebar footer / user */
-        .sidebar-footer { padding: 10px 8px; border-top: 1px solid var(--border); flex-shrink: 0; }
+        .sidebar-footer { padding: 10px 8px; border-top: 1px solid var(--border); flex-shrink: 0; background-color: #000000; }
         .sidebar-user   { display: flex; align-items: center; gap: 9px; padding: 8px 10px; border-radius: 8px; background: var(--bg-muted); cursor: pointer; }
         .sidebar-collapse { display: flex; align-items: center; gap: 9px; padding: 8px 10px; border-radius: 8px; cursor: pointer; color: var(--text-muted); font-size: 12px; font-weight: 500; transition: all .15s; }
         .sidebar-collapse:hover { background: var(--bg-hover); color: var(--accent); }
@@ -145,7 +145,7 @@
         /* ═══════════════════════════════════════════════════
            TOPBAR
         ═══════════════════════════════════════════════════ */
-        #topbar { height: 56px; background: var(--bg-card); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; flex-shrink: 0; }
+        #topbar { height: 84px; background: var(--bg-card); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; flex-shrink: 0; background-color: #000000; }
         .topbar-title  { font-size: 15px; font-weight: 700; color: var(--text-primary); line-height: 1.2; }
         .topbar-bread  { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
         .topbar-right  { display: flex; align-items: center; gap: 10px; }
@@ -501,7 +501,11 @@
 <aside id="sidebar">
 
     <div class="sidebar-brand">
-        <div class="sidebar-logo"><i class="fa-solid fa-grid-2"></i>K</div>
+        <!-- <div class="sidebar-logo"> -->
+            <img src="{{ asset('kuvvet_logo.png') }}" 
+                 alt="KUVVET" 
+                 width="60">
+        <!-- </div> -->
         <div class="brand-text">
             <div class="brand-name">KUVVET</div>
             <div class="brand-sub">HR PORTAL · ADMIN</div>
