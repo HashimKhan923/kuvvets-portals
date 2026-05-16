@@ -28,7 +28,7 @@ class EmailService
     protected static function send(string $to, string $toName, object $mailable): void
     {
         try {
-            Mail::to($to, $toName)->queue($mailable);
+            Mail::to($to, $toName)->send($mailable);
         } catch (\Throwable $e) {
             Log::error('EmailService failed', [
                 'mailable' => get_class($mailable),

@@ -77,8 +77,13 @@ class EmployeeController extends Controller
     {
         $validated = $request->validate($this->validationRules(), $this->validationMessages());
 
-        DB::transaction(function () use ($request, $validated) {
-            // Handle avatar upload
+        // Variables to pass out of the transaction
+        $emailEmployee     = null;
+        $emailUsername     = null;
+        $emailPassword     = null;
+
+        DB::transaction(function () use ($request, $validated, &$emailEmployee, &$emailUsername, &$emailPassword) {
+
             if ($request->hasFile('avatar')) {
                 $validated['avatar'] = $request->file('avatar')
                     ->store('avatars', 'public');
@@ -87,26 +92,37 @@ class EmployeeController extends Controller
             $validated['company_id'] = auth()->user()->company_id;
             $employee = Employee::create($validated);
 
-            // Create portal user account if requested
             if ($request->boolean('create_user_account')) {
+                $plainPassword = 'Kuvvet@' . now()->year . '!';
+
                 $user = User::create([
-                    'company_id'         => auth()->user()->company_id,
-                    'name'               => $employee->full_name,
-                    'email'              => $validated['work_email'],
-                    'username'           => strtolower($employee->employee_id),
-                    'password'           => Hash::make('Kuvvet@' . now()->year . '!'),
-                    'email_verified_at'  => now(),
-                    'is_active'          => true,
-                    'password_changed_at'=> now(),
+                    'company_id'          => auth()->user()->company_id,
+                    'name'                => $employee->full_name,
+                    'email'               => $validated['work_email'],
+                    'username'            => strtolower($employee->employee_id),
+                    'password'            => Hash::make($plainPassword),
+                    'email_verified_at'   => now(),
+                    'is_active'           => true,
+                    'password_changed_at' => now(),
                 ]);
+
                 $user->assignRole('employee');
                 $employee->update(['user_id' => $user->id]);
-                $plainPassword = 'Kuvvet@' . now()->year . '!';
-                EmailService::welcomeEmployee($employee, strtolower($employee->employee_id), $plainPassword);
+
+                // Store for after transaction — don't send inside transaction
+                $emailEmployee = $employee;
+                $emailUsername = strtolower($employee->employee_id);
+                $emailPassword = $plainPassword;
             }
 
             AuditLog::log('employee_created', $employee, [], $employee->toArray());
         });
+
+        // ✅ Send email AFTER transaction is committed
+        if ($emailEmployee) {
+            $emailEmployee->refresh(); // ensure latest data from DB
+            EmailService::welcomeEmployee($emailEmployee, $emailUsername, $emailPassword);
+        }
 
         return redirect()->route('employees.index')
             ->with('success', 'Employee created successfully.');
