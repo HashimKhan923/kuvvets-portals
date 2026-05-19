@@ -67,7 +67,7 @@ class DashboardController extends Controller
     {
         // return $request->user()->only(['id','email','username']);
        $emp_id = $request->user()->id;
-        $emp = \App\Models\Employee::where('user_id', $emp_id)->with('department','designation')->first();
+        $emp = \App\Models\Employee::where('id', $emp_id)->with('department','designation')->first();
         return response()->json(['employee' => $emp], 200);
     }
 
