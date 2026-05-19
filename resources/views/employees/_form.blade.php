@@ -112,11 +112,13 @@
             <label class="form-label">Designation</label>
             <select name="designation_id" class="form-select">
                 <option value="">Select Designation</option>
-                @foreach($designations as $desig)
+                <!-- @foreach($designations as $desig)
                     <option value="{{ $desig->id }}" {{ old('designation_id', $employee?->designation_id) == $desig->id ? 'selected' : '' }}>
                         {{ $desig->title }}
                     </option>
-                @endforeach
+                @endforeach -->
+                /// i need complete 
+                <option value=""></option>
             </select>
         </div>
 
