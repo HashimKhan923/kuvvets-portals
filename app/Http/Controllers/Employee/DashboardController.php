@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Attendance;
 use App\Models\BreakSession;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
