@@ -66,7 +66,7 @@ class DashboardController extends Controller
     public function apiMe(Request $request)
     {
         // return $request->user()->only(['id','email','username']);
-        $emp = $request->user()->employee;
+       return $emp = $request->user()->id;
         return response()->json([
             'user' => $request->user()->only(['id','email','username']),
             'employee' => [
