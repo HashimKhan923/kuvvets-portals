@@ -66,17 +66,9 @@ class DashboardController extends Controller
     public function apiMe(Request $request)
     {
         // return $request->user()->only(['id','email','username']);
-       return $emp = $request->user()->id;
-        return response()->json([
-            'user' => $request->user()->only(['id','email','username']),
-            'employee' => [
-                'id' => $emp->id, 'employee_id' => $emp->employee_id,
-                'first_name' => $emp->first_name, 'last_name' => $emp->last_name,
-                'email' => $emp->email, 'phone' => $emp->phone,
-                'department' => $emp->department?->only(['id','name']),
-                'designation' => $emp->designation?->only(['id','name']),
-            ],
-        ]);
+       $emp_id = $request->user()->id;
+        $emp = \App\Models\Employee::where('user_id', $emp_id)->with('department','designation')->first();
+        return response()->json(['employee' => $emp], 200);
     }
 
     public function apiIndex(Request $request)
