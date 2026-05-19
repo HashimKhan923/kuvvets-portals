@@ -177,6 +177,11 @@ class EmployeeController extends Controller
     // ── DESTROY ──────────────────────────────────────────────
     public function destroy(Employee $employee)
     {
+        // want to delete from user
+
+        if ($employee->user) {
+            $employee->user->delete();
+        }
         
         $this->authorizeCompany($employee);
         AuditLog::log('employee_deleted', $employee, $employee->toArray(), []);
