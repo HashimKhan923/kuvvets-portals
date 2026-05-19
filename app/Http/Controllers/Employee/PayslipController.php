@@ -146,7 +146,8 @@ class PayslipController extends Controller
 
     public function apiIndex(Request $request)
     {
-        $employee = $request->user()->employee;
+        $emp_id = $request->user()->id;
+        $employee = \App\Models\Employee::where('user_id', $emp_id)->first();
         $year = (int) $request->input('year', now()->year);
         $payslips = \App\Models\Payslip::with('period')->where('employee_id', $employee->id)
             ->whereHas('period', fn($q) => $q->where('year', $year))->whereIn('status', ['approved','paid'])->get()

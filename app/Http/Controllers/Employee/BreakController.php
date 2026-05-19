@@ -16,13 +16,19 @@ class BreakController extends Controller
             'reason' => 'nullable|in:lunch,prayer,tea,personal',
         ]);
 
-        $result = $this->service->start($request->user()->employee, $data['reason'] ?? null);
+        $emp_id = $request->user()->id;
+        $employee = \App\Models\Employee::where('user_id', $emp_id)->first();
+
+        $result = $this->service->start($employee, $data['reason'] ?? null);
         return response()->json($result, $result['status'] === 'ok' ? 200 : 422);
     }
 
     public function end(Request $request): JsonResponse
     {
-        $result = $this->service->end($request->user()->employee);
+        $emp_id = $request->user()->id;
+        $employee = \App\Models\Employee::where('user_id', $emp_id)->first();
+
+        $result = $this->service->end($employee);
         return response()->json($result, $result['status'] === 'ok' ? 200 : 422);
     }
 }

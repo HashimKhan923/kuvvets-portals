@@ -168,7 +168,8 @@ class LeaveController extends Controller
 
     public function apiIndex(Request $request)
     {
-        $employee = $request->user()->employee;
+        $emp_id = $request->user()->id;
+        $employee = \App\Models\Employee::where('user_id', $emp_id)->first();
         $year = now()->year;
         $balances = $this->service->balancesFor($employee, $year)->map(fn($b) => [
             'leave_type' => $b->leaveType ? ['id' => $b->leaveType->id, 'name' => $b->leaveType->name, 'code' => $b->leaveType->code] : null,

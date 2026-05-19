@@ -222,7 +222,8 @@ class AttendanceHistoryController extends Controller
 // API method to return attendance records for a month (for mobile app)
     public function apiIndex(Request $request)
     {
-        $employee = $request->user()->employee;
+        $emp_id = $request->user()->id;
+        $employee = \App\Models\Employee::where('user_id', $emp_id)->first();
         $month = (int) $request->input('month', now()->month);
         $year  = (int) $request->input('year', now()->year);
         $start = \Carbon\Carbon::create($year, $month, 1)->startOfMonth();

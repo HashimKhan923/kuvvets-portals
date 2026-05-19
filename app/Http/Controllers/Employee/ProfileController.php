@@ -293,20 +293,21 @@ class ProfileController extends Controller
 /// API Methods for Mobile App
     public function apiShow(Request $request)
     {
-        $emp = $request->user()->employee->load('department','designation','user');
+        $emp_id = $request->user()->id;
+        $employee = \App\Models\Employee::where('user_id', $emp_id)->with('department','designation')->first(); 
         return response()->json(['employee' => [
-            'id' => $emp->id, 'employee_id' => $emp->employee_id,
-            'first_name' => $emp->first_name, 'last_name' => $emp->last_name,
-            'email' => $emp->email, 'phone' => $emp->phone, 'mobile' => $emp->mobile,
-            'date_of_birth' => $emp->date_of_birth?->toDateString(), 'gender' => $emp->gender,
-            'address' => $emp->address, 'hire_date' => $emp->hire_date?->toDateString(),
-            'employment_type' => $emp->employment_type, 'status' => $emp->status,
-            'emergency_contact_name' => $emp->emergency_contact_name,
-            'emergency_contact_phone' => $emp->emergency_contact_phone,
-            'emergency_contact_relation' => $emp->emergency_contact_relation,
-            'department' => $emp->department?->only(['id','name']),
-            'designation' => $emp->designation?->only(['id','name']),
-            'user' => $emp->user ? ['email' => $emp->user->email, 'username' => $emp->user->username] : null,
+            'id' => $employee->id, 'employee_id' => $employee->employee_id,
+            'first_name' => $employee->first_name, 'last_name' => $employee->last_name,
+            'email' => $employee->email, 'phone' => $employee->phone, 'mobile' => $employee->mobile,
+            'date_of_birth' => $employee->date_of_birth?->toDateString(), 'gender' => $employee->gender,
+            'address' => $employee->address, 'hire_date' => $employee->hire_date?->toDateString(),
+            'employment_type' => $employee->employment_type, 'status' => $employee->status,
+            'emergency_contact_name' => $employee->emergency_contact_name,
+            'emergency_contact_phone' => $employee->emergency_contact_phone,
+            'emergency_contact_relation' => $employee->emergency_contact_relation,
+            'department' => $employee->department?->only(['id','name']),
+            'designation' => $employee->designation?->only(['id','name']),
+            'user' => $employee->user ? ['email' => $employee->user->email, 'username' => $employee->user->username] : null,
         ]]);
     }
 }

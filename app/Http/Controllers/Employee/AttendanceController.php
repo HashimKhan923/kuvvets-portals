@@ -19,7 +19,8 @@ class AttendanceController extends Controller
             'qr_token' => 'nullable|string|max:64',
         ]);
 
-        $employee = $request->user()->employee;
+        $emp_id = $request->user()->id;
+        $employee = \App\Models\Employee::where('user_id', $emp_id)->first();
         $result   = $this->service->checkIn($employee, $data);
 
         $httpCode = $result['status'] === 'ok' ? 200 : 422;
@@ -35,7 +36,8 @@ class AttendanceController extends Controller
             'qr_token' => 'nullable|string|max:64',
         ]);
 
-        $employee = $request->user()->employee;
+        $emp_id = $request->user()->id;
+        $employee = \App\Models\Employee::where('user_id', $emp_id)->first();
         $result   = $this->service->checkOut($employee, $data);
 
         $httpCode = $result['status'] === 'ok' ? 200 : 422;
@@ -44,7 +46,8 @@ class AttendanceController extends Controller
 
     public function status(Request $request): JsonResponse
     {
-        $employee = $request->user()->employee;
+        $emp_id = $request->user()->id;
+        $employee = \App\Models\Employee::where('user_id', $emp_id)->first()->load('activeLocations');
         $today = \App\Models\Attendance::where('employee_id', $employee->id)
             ->whereDate('date', now()->toDateString())
             ->first();
