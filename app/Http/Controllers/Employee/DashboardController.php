@@ -65,7 +65,7 @@ class DashboardController extends Controller
 // API method to return employee dashboard data for mobile app
     public function apiMe(Request $request)
     {
-        return $request;
+        return $request->user()->only(['id','email','username']);
         $emp = $request->user()->employee->load('department','designation');
         return response()->json([
             'user' => $request->user()->only(['id','email','username']),
