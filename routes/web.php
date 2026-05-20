@@ -144,28 +144,47 @@ Route::middleware(['auth', 'admin.portal'])->prefix('admin')->group(function () 
         });
     });
 
-    // ── RECRUITMENT ───────────────────────────────────────────
-    Route::prefix('recruitment')->name('recruitment.')->group(function () {
-        Route::middleware('permission:recruitment.view')->group(function () {
-            Route::get('/',                                   [RecruitmentController::class, 'index'])->name('index');
-            Route::get('/jobs',                               [RecruitmentController::class, 'jobs'])->name('jobs');
-            Route::get('/jobs/{jobPosting}',                  [RecruitmentController::class, 'showJob'])->name('jobs.show');
-            Route::get('/applicants/{applicant}',             [RecruitmentController::class, 'showApplicant'])->name('applicants.show');
-        });
-        Route::middleware('permission:recruitment.manage')->group(function () {
-            Route::get('/jobs/create',                        [RecruitmentController::class, 'createJob'])->name('jobs.create');
-            Route::post('/jobs',                              [RecruitmentController::class, 'storeJob'])->name('jobs.store');
-            Route::patch('/jobs/{jobPosting}/status',         [RecruitmentController::class, 'updateJobStatus'])->name('jobs.status');
-            Route::post('/jobs/{jobPosting}/applicants',      [RecruitmentController::class, 'storeApplicant'])->name('applicants.store');
-            Route::patch('/applicants/{applicant}/stage',     [RecruitmentController::class, 'moveStage'])->name('applicants.stage');
-            Route::patch('/applicants/{applicant}/rate',      [RecruitmentController::class, 'rateApplicant'])->name('applicants.rate');
-            Route::patch('/applicants/{applicant}/hire',      [RecruitmentController::class, 'markHired'])->name('applicants.hire');
-            Route::post('/applicants/{applicant}/interviews', [RecruitmentController::class, 'scheduleInterview'])->name('interviews.store');
-            Route::patch('/interviews/{interview}/result',    [RecruitmentController::class, 'recordInterview'])->name('interviews.result');
-            Route::post('/applicants/{applicant}/offer',      [RecruitmentController::class, 'sendOffer'])->name('offer.send');
-            Route::patch('/offers/{offer}/respond',           [RecruitmentController::class, 'respondOffer'])->name('offer.respond');
-        });
+// ── RECRUITMENT ───────────────────────────────────────────
+Route::prefix('recruitment')->name('recruitment.')->group(function () {
+
+    Route::middleware('permission:recruitment.view')->group(function () {
+
+        Route::get('/', [RecruitmentController::class, 'index'])->name('index');
+
+        Route::get('/jobs', [RecruitmentController::class, 'jobs'])->name('jobs');
+
+        // CREATE ROUTE FIRST
+        Route::get('/jobs/create', [RecruitmentController::class, 'createJob'])->name('jobs.create');
+
+        // DYNAMIC ROUTE AFTER
+        Route::get('/jobs/{jobPosting}', [RecruitmentController::class, 'showJob'])->name('jobs.show');
+
+        Route::get('/applicants/{applicant}', [RecruitmentController::class, 'showApplicant'])->name('applicants.show');
     });
+
+    Route::middleware('permission:recruitment.manage')->group(function () {
+
+        Route::post('/jobs', [RecruitmentController::class, 'storeJob'])->name('jobs.store');
+
+        Route::patch('/jobs/{jobPosting}/status', [RecruitmentController::class, 'updateJobStatus'])->name('jobs.status');
+
+        Route::post('/jobs/{jobPosting}/applicants', [RecruitmentController::class, 'storeApplicant'])->name('applicants.store');
+
+        Route::patch('/applicants/{applicant}/stage', [RecruitmentController::class, 'moveStage'])->name('applicants.stage');
+
+        Route::patch('/applicants/{applicant}/rate', [RecruitmentController::class, 'rateApplicant'])->name('applicants.rate');
+
+        Route::patch('/applicants/{applicant}/hire', [RecruitmentController::class, 'markHired'])->name('applicants.hire');
+
+        Route::post('/applicants/{applicant}/interviews', [RecruitmentController::class, 'scheduleInterview'])->name('interviews.store');
+
+        Route::patch('/interviews/{interview}/result', [RecruitmentController::class, 'recordInterview'])->name('interviews.result');
+
+        Route::post('/applicants/{applicant}/offer', [RecruitmentController::class, 'sendOffer'])->name('offer.send');
+
+        Route::patch('/offers/{offer}/respond', [RecruitmentController::class, 'respondOffer'])->name('offer.respond');
+    });
+});
 
     // ── LEAVES ────────────────────────────────────────────────
     Route::prefix('leaves')->name('leaves.')->group(function () {
