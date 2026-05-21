@@ -140,9 +140,19 @@ Route::middleware(['auth', 'admin.portal'])->prefix('admin')->group(function () 
             Route::post('/assign-shift', [AttendanceController::class, 'assignShift'])->name('shifts.assign');
             Route::put('shifts/{shift}', [AttendanceController::class, 'updateShift'])
      ->name('shifts.update');
-                Route::delete('shifts/{shift}', [AttendanceController::class, 'destroyShift'])->name('shifts.destroy');   
+                Route::delete('shifts/{shift}', [AttendanceController::class, 'destroyShift'])->name('shifts.destroy'); 
+                
+                Route::get('/shift-assignment',[ShiftAssignmentController::class, 'index'])->name('shift-assignment');
+ 
+                Route::post('/shift-assignment',[ShiftAssignmentController::class, 'store'])->name('shift-assignment.store');
+ 
+                Route::post('shift-assignment/bulk',[ShiftAssignmentController::class, 'bulk'])->name('shift-assignment.bulk');
+ 
+                Route::delete('shift-assignment/{employee}/remove',[ShiftAssignmentController::class, 'remove'])->name('shift-assignment.remove');
         });
     });
+
+    
 
 // ── RECRUITMENT ───────────────────────────────────────────
 Route::prefix('recruitment')->name('recruitment.')->group(function () {

@@ -566,6 +566,7 @@
                 @endcan
                 @can('attendance.manage')
                 <a href="{{ route('attendance.shifts') }}" class="nav-item {{ request()->routeIs('attendance.shifts') ? 'active' : '' }}"><i class="fa-solid fa-rotate fa-fw"></i><span class="nav-label">Shift Management</span></a>
+                <a href="{{ route('attendance.shift-assignment') }}" class="nav-item {{ request()->routeIs('attendance.shift-assignment') ? 'active' : '' }}"><i class="fa-solid fa-user-friends fa-fw"></i><span class="nav-label">Shift Assignment</span></a>
                 @endcan
             </div>
         </div>
