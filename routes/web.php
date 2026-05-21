@@ -15,6 +15,7 @@ use App\Http\Controllers\AssetController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\ShiftAssignmentController;
 use App\Http\Controllers\Employee\AuthController as EmployeeAuthController;
 use App\Http\Controllers\Employee\DashboardController as EmployeeDashboardController;
 
