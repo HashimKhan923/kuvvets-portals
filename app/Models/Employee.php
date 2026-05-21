@@ -32,6 +32,7 @@ class Employee extends Model {
         'termination_date'  => 'date',
         'last_working_day'  => 'date',
         'basic_salary'      => 'decimal:2',
+        'shift_effective_from' => 'date',
     ];
 
     // Relationships
