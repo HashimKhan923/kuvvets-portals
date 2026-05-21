@@ -19,6 +19,8 @@ class Employee extends Model {
         'eobi_number','pessi_number','nssf_number','basic_salary',
         'avatar','emergency_contact_name','emergency_contact_relation',
         'emergency_contact_phone','notes',
+            'shift_id',
+    'shift_effective_from',
     ];
 
     protected $casts = [
@@ -148,5 +150,10 @@ class Employee extends Model {
     {
         return $this->hasMany(Attendance::class);
     }
+
+    public function shift(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+{
+    return $this->belongsTo(\App\Models\Shift::class);
+}
 
 }
