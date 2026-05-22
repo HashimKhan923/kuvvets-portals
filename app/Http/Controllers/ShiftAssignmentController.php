@@ -65,95 +65,110 @@ class ShiftAssignmentController extends Controller
     }
 
     // ── STORE (Single Assignment) ────────────────────────────
-    public function store(Request $request)
-    {
-        $request->validate([
-            'employee_id'    => 'required|exists:employees,id',
-            'shift_id'       => 'required',
-            'effective_from' => 'required|date',
-            'notes'          => 'nullable|string|max:255',
-        ]);
+public function store(Request $request)
+{
+    $request->validate([
+        'employee_id'    => 'required|exists:employees,id',
+        'shift_id'       => 'required',
+        'effective_from' => 'required|date',
+        'notes'          => 'nullable|string|max:255',
+    ]);
 
-        $employee = Employee::where('company_id', auth()->user()->company_id)
-            ->findOrFail($request->employee_id);
+    $employee   = Employee::where('company_id', auth()->user()->company_id)
+                    ->findOrFail($request->employee_id);
+    $oldShiftId = $employee->shift_id;
+    $newShiftId = $request->shift_id === 'none' ? null : (int) $request->shift_id;
 
-        $oldShiftId = $employee->shift_id;
-        $newShiftId = $request->shift_id === 'none' ? null : $request->shift_id;
+    if ($newShiftId) {
+        Shift::where('company_id', auth()->user()->company_id)->findOrFail($newShiftId);
+    }
 
-        // Validate shift belongs to company
+    DB::transaction(function () use ($employee, $newShiftId, $request) {
+
+        // 1. Mark all previous shifts as not current
+        $employee->employeeShifts()->update(['is_current' => false]);
+
+        // 2. Insert new current record into employee_shifts
         if ($newShiftId) {
-            $shift = Shift::where('company_id', auth()->user()->company_id)
-                ->findOrFail($newShiftId);
+            $employee->employeeShifts()->create([
+                'shift_id'       => $newShiftId,
+                'effective_from' => $request->effective_from,
+                'effective_to'   => null,
+                'is_current'     => true,
+            ]);
         }
 
+        // 3. Also update employees.shift_id (for roster display)
         $employee->update([
             'shift_id'             => $newShiftId,
             'shift_effective_from' => $request->effective_from,
         ]);
+    });
 
-        // Log the change
-        $this->logShiftChange(
-            $employee,
-            $oldShiftId,
-            $newShiftId,
-            $request->effective_from,
-            $request->notes
-        );
+    $this->logShiftChange(
+        $employee, $oldShiftId, $newShiftId,
+        $request->effective_from, $request->notes
+    );
 
-        $message = $newShiftId
-            ? 'Shift assigned to ' . $employee->full_name . ' successfully.'
-            : 'Shift removed from ' . $employee->full_name . '.';
+    $message = $newShiftId
+        ? 'Shift assigned to ' . $employee->full_name . ' successfully.'
+        : 'Shift removed from ' . $employee->full_name . '.';
 
-        return redirect()->route('attendance.shift-assignment')
-            ->with('success', $message);
-    }
+    return redirect()->route('attendance.shift-assignment')->with('success', $message);
+}
+
 
     // ── BULK ASSIGN ──────────────────────────────────────────
-    public function bulk(Request $request)
-    {
-        $request->validate([
-            'employee_ids'   => 'required|array|min:1',
-            'employee_ids.*' => 'exists:employees,id',
-            'shift_id'       => 'required|exists:shifts,id',
-            'effective_from' => 'required|date',
-            'notes'          => 'nullable|string|max:255',
-        ]);
+public function bulk(Request $request)
+{
+    $request->validate([
+        'employee_ids'   => 'required|array|min:1',
+        'employee_ids.*' => 'exists:employees,id',
+        'shift_id'       => 'required|exists:shifts,id',
+        'effective_from' => 'required|date',
+        'notes'          => 'nullable|string|max:255',
+    ]);
 
-        $companyId = auth()->user()->company_id;
+    $companyId = auth()->user()->company_id;
+    $shift     = Shift::where('company_id', $companyId)->findOrFail($request->shift_id);
+    $employees = Employee::where('company_id', $companyId)
+                    ->whereIn('id', $request->employee_ids)->get();
+    $count = 0;
 
-        // Validate shift belongs to company
-        $shift = Shift::where('company_id', $companyId)->findOrFail($request->shift_id);
+    DB::transaction(function () use ($employees, $shift, $request, &$count) {
+        foreach ($employees as $employee) {
+            $oldShiftId = $employee->shift_id;
 
-        $employees = Employee::where('company_id', $companyId)
-            ->whereIn('id', $request->employee_ids)
-            ->get();
+            // 1. Mark previous shifts as not current
+            $employee->employeeShifts()->update(['is_current' => false]);
 
-        $count = 0;
+            // 2. Insert new record into employee_shifts
+            $employee->employeeShifts()->create([
+                'shift_id'       => $shift->id,
+                'effective_from' => $request->effective_from,
+                'effective_to'   => null,
+                'is_current'     => true,
+            ]);
 
-        DB::transaction(function () use ($employees, $shift, $request, &$count) {
-            foreach ($employees as $employee) {
-                $oldShiftId = $employee->shift_id;
+            // 3. Update employees.shift_id for roster display
+            $employee->update([
+                'shift_id'             => $shift->id,
+                'shift_effective_from' => $request->effective_from,
+            ]);
 
-                $employee->update([
-                    'shift_id'             => $shift->id,
-                    'shift_effective_from' => $request->effective_from,
-                ]);
+            $this->logShiftChange(
+                $employee, $oldShiftId, $shift->id,
+                $request->effective_from,
+                $request->notes ?? 'Bulk assignment'
+            );
 
-                $this->logShiftChange(
-                    $employee,
-                    $oldShiftId,
-                    $shift->id,
-                    $request->effective_from,
-                    $request->notes ?? 'Bulk assignment'
-                );
+            $count++;
+        }
+    });
 
-                $count++;
-            }
-        });
-
-        return redirect()->route('attendance.shift-assignment')
-            ->with('success', $shift->name . ' assigned to ' . $count . ' employee(s) successfully.');
-    }
+    return redirect()->route('attendance.shift-assignment')
+        ->with('success', $shift->name . ' assigned to ' . $count . ' employee(s) successfully.');
+}
 
     // ── REMOVE SHIFT ─────────────────────────────────────────
     public function remove(Employee $employee)
