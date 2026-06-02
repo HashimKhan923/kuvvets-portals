@@ -110,6 +110,30 @@ class DashboardController extends Controller
         $storedToday = $today?->working_minutes ?? 0;
         $liveTotalMinutes = ($monthStats->total_minutes - $storedToday) + $liveToday;
 
+        // Last 7 days — fetch all at once then map
+        $last7Dates = collect(range(6, 0))->map(fn($i) => now()->subDays($i)->toDateString());
+        $last7Records = Attendance::where('employee_id', $employee->id)
+            ->whereIn('date', $last7Dates)
+            ->get()
+            ->keyBy(fn($a) => $a->date->toDateString());
+
+        $last7 = $last7Dates->map(function ($dateStr) use ($last7Records) {
+            $att = $last7Records->get($dateStr);
+            $d   = Carbon::parse($dateStr);
+            return [
+                'date'             => $d->format('D'),
+                'full_date'        => $dateStr,
+                'day'              => (int) $d->format('j'),
+                'is_today'         => $d->isToday(),
+                'status'           => $att?->status,
+                'is_late'          => (bool) $att?->is_late,
+                'working_minutes'  => $att?->live_working_minutes ?? 0,
+                'overtime_minutes' => $att?->overtime_minutes ?? 0,
+                'check_in'         => $att?->check_in?->format('h:i A'),
+                'check_out'        => $att?->check_out?->format('h:i A'),
+            ];
+        })->values();
+
         return response()->json([
             'employee'                    => $employee,
             'shift'                       => $shift,
@@ -131,6 +155,7 @@ class DashboardController extends Controller
                 'late_minutes_total' => (int) $monthStats->late_minutes_total,
                 'break_minutes_total'=> (int) $monthStats->break_minutes_total,
             ],
+            'last_7_days' => $last7,
         ], 200);
     }
 }
