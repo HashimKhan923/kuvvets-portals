@@ -101,7 +101,7 @@ class AttendanceController extends Controller
                 'company_id'   => $employee->company_id,
                 'shift_id'     => $shift?->id,
                 'check_in'     => now(),
-                'status'       => 'absent',
+                'status'       => 'short_day',
                 'source'       => 'web',
                 'check_in_ip'  => $request->ip(),
             ]

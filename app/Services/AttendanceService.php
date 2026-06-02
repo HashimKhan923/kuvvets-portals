@@ -81,7 +81,7 @@ class AttendanceService
                 'check_in_method'     => $method,
                 'check_in_ip'         => request()->ip(),
                 'source'              => 'web',
-                'status'              => 'absent',
+                'status'              => 'short_day',
                 'is_late'             => $lateInfo['is_late'],
                 'late_minutes'        => $lateInfo['late_minutes'],
                 'device_info'         => substr(request()->userAgent() ?? '', 0, 255),

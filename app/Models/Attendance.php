@@ -99,14 +99,13 @@ class Attendance extends Model {
             }
         }
 
-        // Status is determined solely by how much of the shift was completed
+        // Status based on shift completion — minimum is short_day for any employee who checked in
         $ratio  = $shiftMins > 0 ? $workMins / $shiftMins : 1.0;
         $status = match(true) {
             $ratio >= 1.00 => 'completed',
             $ratio >= 0.75 => 'three_quarter_day',
             $ratio >= 0.50 => 'half_day',
-            $ratio >= 0.25 => 'short_day',
-            default        => 'absent',
+            default        => 'short_day',
         };
 
         $att->update([
