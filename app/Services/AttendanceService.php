@@ -81,7 +81,8 @@ class AttendanceService
                 'check_in_method'     => $method,
                 'check_in_ip'         => request()->ip(),
                 'source'              => 'web',
-                'status'              => $lateInfo['status'],
+                'status'              => 'absent',
+                'is_late'             => $lateInfo['is_late'],
                 'late_minutes'        => $lateInfo['late_minutes'],
                 'device_info'         => substr(request()->userAgent() ?? '', 0, 255),
             ];
@@ -104,7 +105,7 @@ class AttendanceService
             'attendance'   => $attendance,
             'distance'     => round($distance),
             'location'     => $location,
-            'is_late'      => $lateInfo['late_minutes'] > 0,
+            'is_late'      => $lateInfo['is_late'],
             'late_minutes' => $lateInfo['late_minutes'],
         ];
     }
@@ -164,14 +165,6 @@ class AttendanceService
             $totalBreak = \App\Models\BreakSession::where('attendance_id', $attendance->id)
                 ->whereNotNull('ended_at')->sum('duration_minutes');
 
-            // Update status if early leave
-            $newStatus = $attendance->status;
-            if ($earlyLeaveMinutes > 0 && !in_array($attendance->status, ['late'])) {
-                $newStatus = 'early_leave';
-            } elseif ($earlyLeaveMinutes > 0 && $attendance->status === 'late') {
-                $newStatus = 'late_early_leave';
-            }
-
             $attendance->update([
                 'check_out'            => now(),
                 'check_out_lat'        => $data['lat'] ?? null,
@@ -181,7 +174,6 @@ class AttendanceService
                 'check_out_ip'         => request()->ip(),
                 'break_minutes'        => $totalBreak,
                 'early_leave_minutes'  => $earlyLeaveMinutes,
-                'status'               => $newStatus,
             ]);
 
             Attendance::compute($attendance->fresh());
@@ -263,12 +255,12 @@ class AttendanceService
     }
 
     /**
-     * Compute late minutes based on shift start + grace period.
+     * Compute whether employee is late based on shift start + grace period.
      */
     protected function computeLateInfo(?Shift $shift): array
     {
         if (!$shift) {
-            return ['status' => 'present', 'late_minutes' => 0];
+            return ['is_late' => false, 'late_minutes' => 0];
         }
 
         $shiftStart  = Carbon::createFromFormat('H:i:s', $shift->start_time)
@@ -277,14 +269,13 @@ class AttendanceService
         $nowTime     = Carbon::createFromFormat('H:i:s', now()->format('H:i:s'));
 
         if ($nowTime->gt($graceEnd)) {
-            $lateMinutes = (int) $graceEnd->diffInMinutes($nowTime);
             return [
-                'status'       => 'late',
-                'late_minutes' => $lateMinutes,
+                'is_late'      => true,
+                'late_minutes' => (int) $graceEnd->diffInMinutes($nowTime),
             ];
         }
 
-        return ['status' => 'present', 'late_minutes' => 0];
+        return ['is_late' => false, 'late_minutes' => 0];
     }
 
     /**

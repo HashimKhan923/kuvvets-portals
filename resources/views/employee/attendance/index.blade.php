@@ -173,13 +173,14 @@
     }
 
     /* Status colors as bottom bar */
-    .status-present  .cal-day-bar { background: var(--green); }
-    .status-late     .cal-day-bar { background: var(--yellow); }
-    .status-absent   .cal-day-bar { background: var(--red); }
-    .status-half_day .cal-day-bar { background: var(--blue); }
-    .status-on_leave .cal-day-bar { background: var(--purple); }
-    .status-holiday  .cal-day-bar { background: #14B8A6; }
-    .status-work_from_home .cal-day-bar { background: #06B6D4; }
+    .status-completed         .cal-day-bar { background: var(--green); }
+    .status-three_quarter_day .cal-day-bar { background: #22C55E; }
+    .status-half_day          .cal-day-bar { background: var(--blue); }
+    .status-short_day         .cal-day-bar { background: #F97316; }
+    .status-absent            .cal-day-bar { background: var(--red); }
+    .status-on_leave          .cal-day-bar { background: var(--purple); }
+    .status-holiday           .cal-day-bar { background: #14B8A6; }
+    .status-work_from_home    .cal-day-bar { background: #06B6D4; }
 
     .cal-day-time {
         font-size: 10.5px; color: var(--text-muted);
@@ -193,14 +194,16 @@
         padding: 2px 6px; border-radius: 4px;
         letter-spacing: .3px; text-transform: uppercase;
     }
-    .pill-present { background: var(--green-bg); color: var(--green); }
-    .pill-late    { background: var(--yellow-bg); color: var(--yellow); }
-    .pill-absent  { background: var(--red-bg); color: var(--red); }
-    .pill-half    { background: var(--blue-bg); color: var(--blue); }
-    .pill-leave   { background: var(--purple-bg); color: var(--purple); }
-    .pill-holiday { background: #CCFBF1; color: #0F766E; }
-    .pill-wfh     { background: #CFFAFE; color: #0E7490; }
-    .pill-ot { background: var(--purple-bg); color: var(--purple); margin-left: 4px; }
+    .pill-completed    { background: var(--green-bg); color: var(--green); }
+    .pill-3qd         { background: #DCFCE7; color: #16A34A; }
+    .pill-half        { background: var(--blue-bg); color: var(--blue); }
+    .pill-short       { background: #FFEDD5; color: #C2410C; }
+    .pill-absent      { background: var(--red-bg); color: var(--red); }
+    .pill-late        { background: var(--yellow-bg); color: var(--yellow); }
+    .pill-leave       { background: var(--purple-bg); color: var(--purple); }
+    .pill-holiday     { background: #CCFBF1; color: #0F766E; }
+    .pill-wfh         { background: #CFFAFE; color: #0E7490; }
+    .pill-ot          { background: var(--purple-bg); color: var(--purple); margin-left: 4px; }
 
     /* Legend */
     .legend {
@@ -310,7 +313,6 @@
         margin-bottom: 18px;
     }
     .d-status-bar.present { background: var(--green-bg); border-color: var(--green-border); }
-    .d-status-bar.late    { background: var(--yellow-bg); border-color: var(--yellow-border); }
     .d-status-bar.absent  { background: var(--red-bg); border-color: var(--red-border); }
     .d-status-bar.leave   { background: var(--purple-bg); border-color: var(--purple-border); }
     .d-status-bar.holiday { background: #CCFBF1; border-color: #99F6E4; }
@@ -318,7 +320,6 @@
     .d-status-txt  { font-size: 13px; font-weight: 700; letter-spacing: .3px; }
     .d-status-sub  { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
     .d-status-bar.present .d-status-icon, .d-status-bar.present .d-status-txt { color: var(--green); }
-    .d-status-bar.late .d-status-icon, .d-status-bar.late .d-status-txt { color: var(--yellow); }
     .d-status-bar.absent .d-status-icon, .d-status-bar.absent .d-status-txt { color: var(--red); }
     .d-status-bar.leave .d-status-icon, .d-status-bar.leave .d-status-txt { color: var(--purple); }
     .d-status-bar.holiday .d-status-icon, .d-status-bar.holiday .d-status-txt { color: #0F766E; }
@@ -391,12 +392,12 @@
     {{-- ═══════════════════════════ Stats banner ═══════════════════════════ --}}
     <div class="stat-row">
         <div class="stat-tile green">
-            <div class="stat-tile-lbl"><i class="fa-solid fa-circle-check"></i> Present</div>
-            <div class="stat-tile-val">{{ $monthStats['by_status']['present'] ?? 0 }}<span class="unit">d</span></div>
+            <div class="stat-tile-lbl"><i class="fa-solid fa-circle-check"></i> Completed</div>
+            <div class="stat-tile-val">{{ $monthStats['by_status']['completed'] ?? 0 }}<span class="unit">d</span></div>
         </div>
         <div class="stat-tile yellow">
-            <div class="stat-tile-lbl"><i class="fa-solid fa-clock"></i> Late</div>
-            <div class="stat-tile-val">{{ $monthStats['by_status']['late'] ?? 0 }}<span class="unit">d</span></div>
+            <div class="stat-tile-lbl"><i class="fa-solid fa-clock"></i> Late Days</div>
+            <div class="stat-tile-val">{{ $monthStats['late_days'] ?? 0 }}<span class="unit">d</span></div>
         </div>
         <div class="stat-tile red">
             <div class="stat-tile-lbl"><i class="fa-solid fa-circle-xmark"></i> Absent</div>
@@ -445,7 +446,7 @@
             {{-- Status filter --}}
             <select name="status" onchange="document.getElementById('filterForm').submit()">
                 <option value="">All status</option>
-                @foreach(['present'=>'Present','late'=>'Late','absent'=>'Absent','half_day'=>'Half day','on_leave'=>'On leave','holiday'=>'Holiday','work_from_home'=>'WFH'] as $val=>$lbl)
+                @foreach(['completed'=>'Completed','three_quarter_day'=>'Three Quarter Day','half_day'=>'Half Day','short_day'=>'Short Day','absent'=>'Absent','on_leave'=>'On leave','holiday'=>'Holiday','work_from_home'=>'WFH'] as $val=>$lbl)
                     <option value="{{ $val }}" {{ $status===$val ? 'selected' : '' }}>{{ $lbl }}</option>
                 @endforeach
             </select>
@@ -502,15 +503,18 @@
                         if ($att) {
                             $statusClass = 'status-' . $att->status . ' has-attendance';
                             $pill = match($att->status) {
-                                'present'        => ['Present', 'pill-present'],
-                                'late'           => ['Late', 'pill-late'],
-                                'absent'         => ['Absent', 'pill-absent'],
-                                'half_day'       => ['Half', 'pill-half'],
-                                'on_leave'       => ['Leave', 'pill-leave'],
-                                'work_from_home' => ['WFH', 'pill-wfh'],
-                                'holiday'        => ['Holiday', 'pill-holiday'],
-                                default          => null,
+                                'completed'         => ['Done', 'pill-completed'],
+                                'three_quarter_day' => ['¾ Day', 'pill-3qd'],
+                                'half_day'          => ['½ Day', 'pill-half'],
+                                'short_day'         => ['Short', 'pill-short'],
+                                'absent'            => ['Absent', 'pill-absent'],
+                                'on_leave'          => ['Leave', 'pill-leave'],
+                                'work_from_home'    => ['WFH', 'pill-wfh'],
+                                'holiday'           => ['Holiday', 'pill-holiday'],
+                                default             => null,
                             };
+                            // Overlay a Late badge if employee was late (independent of status)
+                            $latePill = $att->is_late ? ['Late', 'pill-late'] : null;
                         } elseif ($lv) {
                             $statusClass = 'status-on_leave is-leave';
                             $pill = ['Leave', 'pill-leave'];
@@ -531,6 +535,9 @@
                             <span class="cal-day-num">{{ $cell['date']->day }}</span>
                             @if($pill && $pill[0])
                                 <span class="pill {{ $pill[1] }}" style="margin-left:auto;">{{ $pill[0] }}</span>
+                            @endif
+                            @if(!empty($latePill))
+                                <span class="pill {{ $latePill[1] }}" title="Arrived late">{{ $latePill[0] }}</span>
                             @endif
                             @if($att && $att->overtime_minutes > 0)
                                 <span class="pill pill-ot" title="Overtime">OT</span>

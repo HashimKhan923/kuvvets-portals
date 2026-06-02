@@ -17,13 +17,15 @@
     }
 
     $statusMap = [
-        'present'        => ['present', 'fa-circle-check', 'Present', 'You attended work this day'],
-        'late'           => ['late',    'fa-clock',         'Late',     'You arrived after your shift start'],
-        'absent'         => ['absent',  'fa-circle-xmark',  'Absent',   'No attendance was recorded'],
-        'half_day'       => ['present', 'fa-clock-rotate-left', 'Half Day', 'You worked half a day'],
-        'on_leave'       => ['leave',   'fa-umbrella-beach','On Leave', 'You were on approved leave'],
-        'holiday'        => ['holiday', 'fa-flag',          'Holiday',  'Company holiday'],
-        'work_from_home' => ['present', 'fa-house-laptop',  'Work From Home', 'You worked remotely'],
+        'completed'         => ['present', 'fa-circle-check',          'Completed',          'You completed your full shift'],
+        'three_quarter_day' => ['present', 'fa-clock-rotate-left',     'Three Quarter Day',  'You worked 75 – 100% of your shift'],
+        'half_day'          => ['present', 'fa-clock-rotate-left',     'Half Day',           'You worked 50 – 75% of your shift'],
+        'short_day'         => ['absent',  'fa-hourglass-half',        'Short Day',          'You worked 25 – 50% of your shift'],
+        'absent'            => ['absent',  'fa-circle-xmark',          'Absent',             'No attendance was recorded or less than 25% of shift worked'],
+        'on_leave'          => ['leave',   'fa-umbrella-beach',        'On Leave',           'You were on approved leave'],
+        'holiday'           => ['holiday', 'fa-flag',                  'Holiday',            'Company holiday'],
+        'work_from_home'    => ['present', 'fa-house-laptop',          'Work From Home',     'You worked remotely'],
+        'weekend'           => ['',        'fa-couch',                 'Weekend',            'Non-working day'],
     ];
     $sm = $statusMap[$statusKey] ?? ['', 'fa-circle-question', 'No Data', 'No record for this day'];
 @endphp
@@ -40,6 +42,11 @@
         <div class="d-status-icon"><i class="fa-solid {{ $sm[1] }}"></i></div>
         <div class="d-status-txt">{{ $sm[2] }}</div>
         <div class="d-status-sub">{{ $sm[3] }}</div>
+        @if($hasAttendance && $att->is_late)
+            <div style="margin-top:6px;display:inline-block;background:var(--yellow-bg);color:var(--yellow);border:1px solid var(--yellow-border);border-radius:6px;padding:2px 10px;font-size:11px;font-weight:700;">
+                <i class="fa-solid fa-clock"></i> Arrived Late
+            </div>
+        @endif
     </div>
 
     {{-- Holiday card --}}

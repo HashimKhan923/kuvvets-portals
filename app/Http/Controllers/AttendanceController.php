@@ -44,9 +44,9 @@ class AttendanceController extends Controller
             ->get();
 
         $summary = [
-            'present'  => $records->whereIn('status', ['present','late','work_from_home'])->count(),
+            'present'  => $records->whereIn('status', ['completed','three_quarter_day','half_day','short_day','work_from_home'])->count(),
             'absent'   => $absentees->count(),
-            'late'     => $records->where('status','late')->count(),
+            'late'     => $records->where('is_late', true)->count(),
             'on_leave' => $records->where('status','on_leave')->count(),
             'half_day' => $records->where('status','half_day')->count(),
             'total'    => Employee::where('company_id', $companyId)->where('employment_status','active')->count(),
@@ -101,7 +101,7 @@ class AttendanceController extends Controller
                 'company_id'   => $employee->company_id,
                 'shift_id'     => $shift?->id,
                 'check_in'     => now(),
-                'status'       => 'present',
+                'status'       => 'absent',
                 'source'       => 'web',
                 'check_in_ip'  => $request->ip(),
             ]
@@ -199,9 +199,9 @@ class AttendanceController extends Controller
                 ->whereBetween('date', [$start, $end])->get();
             return [
                 'employee'       => $emp,
-                'present'        => $atts->whereIn('status',['present','late','work_from_home'])->count(),
+                'present'        => $atts->whereIn('status',['completed','three_quarter_day','half_day','short_day','work_from_home'])->count(),
                 'absent'         => $atts->where('status','absent')->count(),
-                'late'           => $atts->where('status','late')->count(),
+                'late'           => $atts->where('is_late', true)->count(),
                 'half_day'       => $atts->where('status','half_day')->count(),
                 'on_leave'       => $atts->where('status','on_leave')->count(),
                 'total_hours'    => round($atts->sum('working_minutes') / 60, 1),

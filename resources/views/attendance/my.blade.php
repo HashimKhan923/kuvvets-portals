@@ -71,9 +71,9 @@
         <div class="section-label">{{ $start->format('F Y') }} Summary</div>
         @php
             $monthRecords  = $records->values();
-            $presentCount  = $monthRecords->whereIn('status', ['present','late','work_from_home'])->count();
+            $presentCount  = $monthRecords->whereIn('status', ['completed','three_quarter_day','half_day','short_day','work_from_home'])->count();
             $absentCount   = $monthRecords->where('status', 'absent')->count();
-            $lateCount     = $monthRecords->where('status', 'late')->count();
+            $lateCount     = $monthRecords->where('is_late', true)->count();
             $totalHours    = round($monthRecords->sum('working_minutes') / 60, 1);
             $overtimeHours = round($monthRecords->sum('overtime_minutes') / 60, 1);
         @endphp

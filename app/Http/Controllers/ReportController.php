@@ -177,9 +177,9 @@ class ReportController extends Controller
 
         $stats = [
             'working_days'  => $workingDays,
-            'total_present' => (clone $totalAttendance)->whereIn('status',['present','late','work_from_home'])->count(),
+            'total_present' => (clone $totalAttendance)->whereIn('status',['completed','three_quarter_day','half_day','short_day','work_from_home'])->count(),
             'total_absent'  => (clone $totalAttendance)->where('status','absent')->count(),
-            'total_late'    => (clone $totalAttendance)->where('status','late')->count(),
+            'total_late'    => (clone $totalAttendance)->where('is_late', true)->count(),
             'total_ot_hrs'  => round((clone $totalAttendance)->sum('overtime_minutes') / 60, 1),
         ];
 
@@ -193,7 +193,7 @@ class ReportController extends Controller
                     'present' => Attendance::whereHas('employee',
                         fn($q) => $q->where('company_id', $companyId))
                         ->where('date', $cur->toDateString())
-                        ->whereIn('status', ['present','late','work_from_home'])
+                        ->whereIn('status', ['completed','three_quarter_day','half_day','short_day','work_from_home'])
                         ->count(),
                     'absent'  => Attendance::whereHas('employee',
                         fn($q) => $q->where('company_id', $companyId))
@@ -218,9 +218,9 @@ class ReportController extends Controller
         $employeeReport = $employees->map(function ($emp) use ($start, $end, $workingDays) {
             $records  = Attendance::where('employee_id', $emp->id)
                 ->whereBetween('date', [$start, $end])->get();
-            $present  = $records->whereIn('status', ['present','late','work_from_home'])->count();
+            $present  = $records->whereIn('status', ['completed','three_quarter_day','half_day','short_day','work_from_home'])->count();
             $absent   = max(0, $workingDays - $present);
-            $late     = $records->where('status', 'late')->count();
+            $late     = $records->where('is_late', true)->count();
             $otHrs    = round($records->sum('overtime_minutes') / 60, 1);
 
             return [

@@ -86,7 +86,7 @@ class PayrollService
             ->whereBetween('date', [$start, $end])
             ->get();
 
-        $presentDays  = $attendances->whereIn('status', ['present','late','work_from_home'])->count();
+        $presentDays  = $attendances->whereIn('status', ['completed','three_quarter_day','half_day','short_day','work_from_home'])->count();
         $absentDays   = max(0, $workingDays - $presentDays);
         $overtimeHours= (int) round($attendances->sum('overtime_minutes') / 60);
 

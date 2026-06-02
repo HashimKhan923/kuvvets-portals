@@ -32,8 +32,8 @@ class DashboardController extends Controller
             ->whereMonth('date', now()->month)
             ->whereYear('date', now()->year)
             ->selectRaw("
-                SUM(CASE WHEN status='present' THEN 1 ELSE 0 END) as present_days,
-                SUM(CASE WHEN status='late' THEN 1 ELSE 0 END) as late_days,
+                SUM(CASE WHEN status IN ('completed','three_quarter_day','half_day','short_day','work_from_home') THEN 1 ELSE 0 END) as present_days,
+                SUM(CASE WHEN is_late=1 THEN 1 ELSE 0 END) as late_days,
                 SUM(CASE WHEN status='absent' THEN 1 ELSE 0 END) as absent_days,
                 SUM(CASE WHEN status='half_day' THEN 1 ELSE 0 END) as half_days,
                 COALESCE(SUM(working_minutes),0) as total_minutes,

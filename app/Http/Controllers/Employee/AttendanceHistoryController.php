@@ -94,16 +94,17 @@ class AttendanceHistoryController extends Controller
 
         // Month stats
         $monthStats = $records->reduce(function ($acc, $r) {
-            $acc['working_minutes']  += $r->working_minutes;
-            $acc['overtime_minutes'] += $r->overtime_minutes;
-            $acc['late_minutes']     += $r->late_minutes;
-            $acc['break_minutes']    += $r->break_minutes;
+            $acc['working_minutes']     += $r->working_minutes;
+            $acc['overtime_minutes']    += $r->overtime_minutes;
+            $acc['late_minutes']        += $r->late_minutes;
+            $acc['break_minutes']       += $r->break_minutes;
             $acc['early_leave_minutes'] += $r->early_leave_minutes;
+            $acc['late_days']           += $r->is_late ? 1 : 0;
             $acc['by_status'][$r->status] = ($acc['by_status'][$r->status] ?? 0) + 1;
             return $acc;
         }, [
             'working_minutes'=>0,'overtime_minutes'=>0,'late_minutes'=>0,
-            'break_minutes'=>0,'early_leave_minutes'=>0,'by_status'=>[],
+            'break_minutes'=>0,'early_leave_minutes'=>0,'late_days'=>0,'by_status'=>[],
         ]);
         $monthStats['holiday_count'] = $holidays->count();
         $monthStats['leave_count']   = count($leaveDays);
@@ -194,8 +195,8 @@ class AttendanceHistoryController extends Controller
             fputcsv($out, ['Period',   $start->format('F Y')]);
             fputcsv($out, []);
             fputcsv($out, [
-                'Date','Day','Status','Shift','Location',
-                'Check-In','Check-Out','Working','Break','Overtime','Late','Early Out','Notes'
+                'Date','Day','Status','Late','Shift','Location',
+                'Check-In','Check-Out','Working','Break','Overtime','Late Minutes','Early Out','Notes'
             ]);
 
             foreach ($records as $r) {
@@ -203,6 +204,7 @@ class AttendanceHistoryController extends Controller
                     $r->date->format('Y-m-d'),
                     $r->date->format('l'),
                     ucfirst(str_replace('_',' ',$r->status)),
+                    $r->is_late ? 'Yes' : 'No',
                     $r->shift?->name ?? '—',
                     $r->location?->name ?? '—',
                     $r->check_in  ? $r->check_in->format('h:i A')  : '—',
@@ -232,13 +234,14 @@ class AttendanceHistoryController extends Controller
             ->whereBetween('date', [$start->toDateString(), $end->toDateString()])
             ->with('location','shift')->orderBy('date', 'desc')->get()
             ->map(fn($r) => ['date' => $r->date->toDateString(), 'status' => $r->status,
+                'is_late' => (bool) $r->is_late,
                 'check_in' => $r->check_in?->format('h:i A'), 'check_out' => $r->check_out?->format('h:i A'),
                 'working_minutes' => $r->working_minutes, 'overtime_minutes' => $r->overtime_minutes,
                 'late_minutes' => $r->late_minutes, 'break_minutes' => $r->break_minutes,
                 'location_name' => $r->location?->name, 'shift_name' => $r->shift?->name]);
         $stats = \App\Models\Attendance::where('employee_id', $employee->id)
             ->whereBetween('date', [$start->toDateString(), $end->toDateString()])
-            ->selectRaw("SUM(CASE WHEN status='present' THEN 1 ELSE 0 END) as present_days, SUM(CASE WHEN status='late' THEN 1 ELSE 0 END) as late_days, SUM(CASE WHEN status='absent' THEN 1 ELSE 0 END) as absent_days, SUM(CASE WHEN status='half_day' THEN 1 ELSE 0 END) as half_days, COALESCE(SUM(working_minutes),0) as total_minutes, COALESCE(SUM(overtime_minutes),0) as overtime_minutes, COALESCE(SUM(late_minutes),0) as late_minutes")->first();
+            ->selectRaw("SUM(CASE WHEN status IN ('completed','three_quarter_day','half_day','short_day','work_from_home') THEN 1 ELSE 0 END) as present_days, SUM(CASE WHEN is_late=1 THEN 1 ELSE 0 END) as late_days, SUM(CASE WHEN status='absent' THEN 1 ELSE 0 END) as absent_days, SUM(CASE WHEN status='half_day' THEN 1 ELSE 0 END) as half_days, COALESCE(SUM(working_minutes),0) as total_minutes, COALESCE(SUM(overtime_minutes),0) as overtime_minutes, COALESCE(SUM(late_minutes),0) as late_minutes")->first();
         return response()->json(['records' => $records, 'stats' => $stats]);
     }
 }

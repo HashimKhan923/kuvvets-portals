@@ -9,7 +9,7 @@ class Attendance extends Model {
         'company_id','employee_id','shift_id','location_id','date',
         'check_in','check_out','working_minutes','overtime_minutes',
         'late_minutes','early_leave_minutes','break_minutes',
-        'status','source','check_in_ip','check_out_ip',
+        'is_late','status','source','check_in_ip','check_out_ip',
         'check_in_lat','check_in_lng','check_in_distance_m','check_in_method',
         'check_out_lat','check_out_lng','check_out_distance_m','check_out_method',
         'device_info',
@@ -22,6 +22,7 @@ class Attendance extends Model {
         'check_out'   => 'datetime',
         'approved_at' => 'datetime',
         'is_approved' => 'boolean',
+        'is_late'     => 'boolean',
         'override'    => 'boolean',
         'check_in_lat' => 'decimal:7',
         'check_in_lng' => 'decimal:7',
@@ -50,15 +51,16 @@ class Attendance extends Model {
 
     public function getStatusBadgeAttribute(): array {
         return match($this->status) {
-            'present'       => ['bg'=>'#0a1a0a', 'color'=>'#4CAF50', 'border'=>'#1a3a0a'],
-            'absent'        => ['bg'=>'#1a0505', 'color'=>'#E24B4A', 'border'=>'#3a1010'],
-            'late'          => ['bg'=>'#1a1200', 'color'=>'#EF9F27', 'border'=>'#2a2008'],
-            'half_day'      => ['bg'=>'#001015', 'color'=>'#378ADD', 'border'=>'#0a2a35'],
-            'on_leave'      => ['bg'=>'#100a1a', 'color'=>'#7F77DD', 'border'=>'#2a1a3a'],
-            'holiday'       => ['bg'=>'#0a1a0a', 'color'=>'#BA7517', 'border'=>'#2a2008'],
-            'weekend'       => ['bg'=>'#111820', 'color'=>'#5a5040', 'border'=>'#1e2a35'],
-            'work_from_home'=> ['bg'=>'#001015', 'color'=>'#1D9E75', 'border'=>'#0a2a20'],
-            default         => ['bg'=>'#111820', 'color'=>'#5a5040', 'border'=>'#1e2a35'],
+            'completed'         => ['bg'=>'#0a1a0a', 'color'=>'#4CAF50', 'border'=>'#1a3a0a'],
+            'absent'            => ['bg'=>'#1a0505', 'color'=>'#E24B4A', 'border'=>'#3a1010'],
+            'short_day'         => ['bg'=>'#1a0a00', 'color'=>'#F97316', 'border'=>'#3a1a00'],
+            'half_day'          => ['bg'=>'#001015', 'color'=>'#378ADD', 'border'=>'#0a2a35'],
+            'three_quarter_day' => ['bg'=>'#0a1510', 'color'=>'#22C55E', 'border'=>'#1a3525'],
+            'on_leave'          => ['bg'=>'#100a1a', 'color'=>'#7F77DD', 'border'=>'#2a1a3a'],
+            'holiday'           => ['bg'=>'#0a1a0a', 'color'=>'#BA7517', 'border'=>'#2a2008'],
+            'weekend'           => ['bg'=>'#111820', 'color'=>'#5a5040', 'border'=>'#1e2a35'],
+            'work_from_home'    => ['bg'=>'#001015', 'color'=>'#1D9E75', 'border'=>'#0a2a20'],
+            default             => ['bg'=>'#111820', 'color'=>'#5a5040', 'border'=>'#1e2a35'],
         };
     }
 
@@ -71,38 +73,48 @@ class Attendance extends Model {
         $totalMins = $checkIn->diffInMinutes($checkOut);
         $workMins  = max(0, $totalMins - ($att->break_minutes ?? 0));
 
-        $shift       = $att->shift;
-        $lateMins    = 0;
-        $earlyMins   = 0;
-        $overtimeMins= 0;
+        $shift        = $att->shift;
+        $lateMins     = 0;
+        $earlyMins    = 0;
+        $overtimeMins = 0;
+        $isLate       = false;
+
+        $shiftMins = ($shift?->working_hours ?? 8) * 60;
 
         if ($shift) {
-            $shiftStart = Carbon::parse($att->date->format('Y-m-d') . ' ' . $shift->start_time);
-            $shiftEnd   = Carbon::parse($att->date->format('Y-m-d') . ' ' . $shift->end_time);
+            $shiftStart  = Carbon::parse($att->date->format('Y-m-d') . ' ' . $shift->start_time);
+            $shiftEnd    = Carbon::parse($att->date->format('Y-m-d') . ' ' . $shift->end_time);
             if ($shift->is_night_shift) $shiftEnd->addDay();
 
             $gracedStart = $shiftStart->copy()->addMinutes($shift->grace_minutes);
             if ($checkIn->gt($gracedStart)) {
                 $lateMins = $checkIn->diffInMinutes($shiftStart);
+                $isLate   = true;
             }
             if ($checkOut->lt($shiftEnd)) {
                 $earlyMins = $checkOut->diffInMinutes($shiftEnd);
             }
-            $shiftWorkMins = $shift->working_hours * 60;
-            if ($workMins > $shiftWorkMins) {
-                $overtimeMins = $workMins - $shiftWorkMins;
+            if ($workMins > $shiftMins) {
+                $overtimeMins = $workMins - $shiftMins;
             }
         }
 
-        $status = 'present';
-        if ($lateMins > 0 && $lateMins <= 120)  $status = 'late';
-        if ($workMins < ($shift?->working_hours ?? 8) * 60 / 2) $status = 'half_day';
+        // Status is determined solely by how much of the shift was completed
+        $ratio  = $shiftMins > 0 ? $workMins / $shiftMins : 1.0;
+        $status = match(true) {
+            $ratio >= 1.00 => 'completed',
+            $ratio >= 0.75 => 'three_quarter_day',
+            $ratio >= 0.50 => 'half_day',
+            $ratio >= 0.25 => 'short_day',
+            default        => 'absent',
+        };
 
         $att->update([
             'working_minutes'     => $workMins,
             'late_minutes'        => $lateMins,
             'early_leave_minutes' => $earlyMins,
             'overtime_minutes'    => $overtimeMins,
+            'is_late'             => $isLate,
             'status'              => $status,
         ]);
     }
