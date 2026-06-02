@@ -54,7 +54,7 @@ class DashboardController extends Controller
                 'day'      => $d->format('j'),
                 'status'   => $att?->status,
                 'is_today' => $d->isToday(),
-                'minutes'  => $att?->working_minutes ?? 0,
+                'minutes'  => $att?->live_working_minutes ?? 0,
             ];
         }
 
@@ -90,8 +90,17 @@ class DashboardController extends Controller
 
         $activeLocations = $employee->activeLocations()->get();
 
-        return response()->json(compact(
-            'employee','shift','today','activeBreak','activeLocations'
-        ), 200);
+        return response()->json([
+            'employee'                    => $employee,
+            'shift'                       => $shift,
+            'today'                       => $today,
+            'today_live_working_minutes'  => $today?->live_working_minutes ?? 0,
+            'today_is_late'               => (bool) $today?->is_late,
+            'today_status'                => $today?->status,
+            'on_break'                    => (bool) $activeBreak,
+            'break_started_at'            => $activeBreak?->started_at?->toIso8601String(),
+            'break_reason'                => $activeBreak?->reason,
+            'activeLocations'             => $activeLocations,
+        ], 200);
     }
 }

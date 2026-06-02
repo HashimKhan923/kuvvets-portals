@@ -236,7 +236,7 @@ class AttendanceHistoryController extends Controller
             ->map(fn($r) => ['date' => $r->date->toDateString(), 'status' => $r->status,
                 'is_late' => (bool) $r->is_late,
                 'check_in' => $r->check_in?->format('h:i A'), 'check_out' => $r->check_out?->format('h:i A'),
-                'working_minutes' => $r->working_minutes, 'overtime_minutes' => $r->overtime_minutes,
+                'working_minutes' => $r->live_working_minutes, 'overtime_minutes' => $r->overtime_minutes,
                 'late_minutes' => $r->late_minutes, 'break_minutes' => $r->break_minutes,
                 'location_name' => $r->location?->name, 'shift_name' => $r->shift?->name]);
         $stats = \App\Models\Attendance::where('employee_id', $employee->id)

@@ -16,6 +16,8 @@ class Attendance extends Model {
         'notes','is_approved','approved_by','approved_at','override',
     ];
 
+    protected $appends = ['live_working_minutes'];
+
     protected $casts = [
         'date'        => 'date',
         'check_in'    => 'datetime',
