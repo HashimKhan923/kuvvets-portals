@@ -764,6 +764,7 @@ document.addEventListener('alpine:init', () => {
 function checkInApp() {
     return {
         nowTime: { hm:'00:00', s:'00' },
+        _now: Date.now(),
         busy: false,
         action: null,
 
@@ -793,6 +794,8 @@ function checkInApp() {
             this.tick(); setInterval(()=>this.tick(), 1000);
         },
         tick() {
+            this._now = Date.now();
+
             // live clock
             const parts = new Intl.DateTimeFormat('en-GB', {
                 timeZone: 'Asia/Karachi',
@@ -802,7 +805,7 @@ function checkInApp() {
 
             // live break timer
             if (this.onBreak && this.breakStartISO) {
-                const diff = Math.max(0, Math.floor((Date.now() - new Date(this.breakStartISO).getTime()) / 60000));
+                const diff = Math.max(0, Math.floor((this._now - new Date(this.breakStartISO).getTime()) / 60000));
                 const h = Math.floor(diff/60), m = diff%60;
                 this.liveBreakElapsed = h ? `${h}h ${m}m` : `${m}m`;
             }
@@ -824,12 +827,11 @@ function checkInApp() {
         get workingHuman() {
             if (!this.checkInISO) return { h:'0', m:'00' };
             const start = new Date(this.checkInISO);
-            const end   = this.checkedOut ? new Date(this.checkOutISO) : new Date();
+            const end   = this.checkedOut ? new Date(this.checkOutISO) : new Date(this._now);
             let mins = Math.max(0, Math.floor((end - start) / 60000));
-            // subtract break time (server stored + live active break)
             mins -= this.storedBreakMins;
             if (this.onBreak && this.breakStartISO) {
-                mins -= Math.max(0, Math.floor((Date.now() - new Date(this.breakStartISO).getTime()) / 60000));
+                mins -= Math.max(0, Math.floor((this._now - new Date(this.breakStartISO).getTime()) / 60000));
             }
             mins = Math.max(0, mins);
             return { h: String(Math.floor(mins/60)), m: String(mins%60).padStart(2,'0') };
@@ -838,7 +840,7 @@ function checkInApp() {
         get breakHuman() {
             let mins = this.storedBreakMins;
             if (this.onBreak && this.breakStartISO) {
-                mins += Math.max(0, Math.floor((Date.now() - new Date(this.breakStartISO).getTime()) / 60000));
+                mins += Math.max(0, Math.floor((this._now - new Date(this.breakStartISO).getTime()) / 60000));
             }
             return { h: String(Math.floor(mins/60)), m: String(mins%60).padStart(2,'0') };
         },

@@ -36,6 +36,13 @@ class Attendance extends Model {
     public function shift()      { return $this->belongsTo(Shift::class); }
     public function approver()   { return $this->belongsTo(User::class, 'approved_by'); }
 
+    public function getLiveWorkingMinutesAttribute(): int {
+        if ($this->check_out) return $this->working_minutes;
+        if (!$this->check_in) return 0;
+        $elapsed = max(0, (int) now()->diffInMinutes($this->check_in));
+        return max(0, $elapsed - ($this->break_minutes ?? 0));
+    }
+
     public function getWorkingHoursAttribute(): string {
         $h = intdiv($this->working_minutes, 60);
         $m = $this->working_minutes % 60;

@@ -618,7 +618,11 @@
                                 </td>
                                 <td class="num-cell">{{ $r->check_in ? $r->check_in->format('h:i A') : '—' }}</td>
                                 <td class="num-cell">{{ $r->check_out ? $r->check_out->format('h:i A') : '—' }}</td>
-                                <td class="num-cell col-hide-mobile">{{ $r->working_hours }}</td>
+                                <td class="num-cell col-hide-mobile">
+                                    @php $lwm = $r->live_working_minutes; @endphp
+                                    {{ intdiv($lwm,60) }}h {{ $lwm % 60 }}m
+                                    @if(!$r->check_out)<span style="font-size:9px;color:var(--text-muted);"> live</span>@endif
+                                </td>
                                 <td class="num-cell col-hide-mobile">{{ $r->break_hours }}</td>
                                 <td class="num-cell col-hide-mobile">
                                     @if($r->overtime_minutes > 0)

@@ -94,7 +94,7 @@ class AttendanceHistoryController extends Controller
 
         // Month stats
         $monthStats = $records->reduce(function ($acc, $r) {
-            $acc['working_minutes']     += $r->working_minutes;
+            $acc['working_minutes']     += $r->live_working_minutes;
             $acc['overtime_minutes']    += $r->overtime_minutes;
             $acc['late_minutes']        += $r->late_minutes;
             $acc['break_minutes']       += $r->break_minutes;

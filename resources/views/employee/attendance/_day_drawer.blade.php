@@ -99,8 +99,8 @@
             <div class="d-tile">
                 <div class="d-tile-lbl"><i class="fa-solid fa-business-time"></i> Working</div>
                 <div class="d-tile-val">
-                    {{ intdiv($att->working_minutes,60) }}<span class="unit">h</span>
-                    {{ $att->working_minutes % 60 }}<span class="unit">m</span>
+                    {{ intdiv($att->live_working_minutes,60) }}<span class="unit">h</span>
+                    {{ $att->live_working_minutes % 60 }}<span class="unit">m</span>
                 </div>
             </div>
             <div class="d-tile">
