@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     public function index()
-    {
+    { //
         $employee = auth()->user()->employee->load('department','designation');
 
         $shift = $employee->employeeShifts()
