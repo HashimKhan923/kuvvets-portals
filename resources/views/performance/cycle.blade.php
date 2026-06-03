@@ -53,7 +53,7 @@
                     <option value="{{ $v }}" {{ $cycle->status === $v ? 'selected' : '' }}>{{ $l }}</option>
                     @endforeach
                 </select>
-                <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                <button type="submit" class="btn btn-primary">Update</button>
             </form>
         </div>
     </div>
@@ -245,7 +245,7 @@
                             <option value="{{ $v }}" {{ $goal->status === $v ? 'selected' : '' }}>{{ $l }}</option>
                             @endforeach
                         </select>
-                        <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </form>
                 </div>
                 @endforeach

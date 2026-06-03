@@ -16,23 +16,21 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --accent:         #C2531B;
-            --accent-light:   #E87A45;
-            --accent-dark:    #9A3F11;
+            --accent:         #917130;
+            --accent-light:   #CBA557;
             --accent-bg:      #FEF2EC;
-            --accent-border:  #F5D5C0;
-            --accent-grad:    linear-gradient(135deg, #C2531B 0%, #E87A45 100%);
+            --accent-border:  #A8843F;
 
-            --bg-page:        #F9F6F2;
-            --bg-card:        #000000;
+            --bg-page:        #FBF8F5;
+            --bg-card:        #FFFFFF;
             --bg-input:       #F7F3EF;
-            --bg-muted:       #F0EAE2;
-            --bg-hover:       #F0EAE2;
-
+            --bg-muted:       #F5F0EB;
+            --bg-hover:       #FEF2EC;
+            
             --border:         #F0EAE2;
             --border-strong:  #E8DDD5;
 
-            --text-primary:   #917130;
+            --text-primary:   #cba557;
             --text-secondary: #CBA557;
             --text-muted:     #CBA557;
 
@@ -67,13 +65,19 @@
             display: flex;
             min-height: 100dvh;
         }
+         /* Accent line */
+        .accent-line {
+            height: 2px; flex-shrink: 0;
+            background: linear-gradient(90deg, transparent, var(--accent), var(--accent-light), var(--accent), transparent);
+            background-size: 200% 100%; animation: shimmer 3s linear infinite;
+        }
 
         /* Desktop sidebar */
         .side {
             width: 240px;
             flex-shrink: 0;
             background: var(--bg-card);
-            border-right: 1px solid var(--border);
+           
             display: flex;
             flex-direction: column;
             position: sticky;
@@ -85,7 +89,7 @@
         .side-brand {
             display: flex; align-items: center; gap: 10px;
             padding: 18px 18px;
-            border-bottom: 1px solid var(--border);
+           
             background-color: #000000;
 
         }
@@ -266,7 +270,7 @@
             text-decoration: none; transition: all .2s;
         }
         .btn-primary {
-            background: var(--accent-grad); color: #fff;
+            background: var(--accent-light); color: #fff;
             box-shadow: 0 4px 12px rgba(194,83,27,.25);
         }
         .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(194,83,27,.35); }
@@ -331,20 +335,23 @@
 
     {{-- ═══════════ Desktop Sidebar ═══════════ --}}
     <aside class="side">
-        <a href="{{ route('employee.dashboard') }}" class="side-brand" style="text-decoration:none;color:inherit;">
-            <div class="side-brand-logo">K</div>
+        <a href="{{ route('employee.dashboard') }}" class="side-brand" >
+              <img src="{{ asset('kuvvet_logo.png') }}" 
+                 alt="KUVVET" 
+                 width="60">
             <div>
                 <div class="side-brand-name">KUVVET</div>
                 <div class="side-brand-sub">Employee Portal</div>
             </div>
         </a>
+        <div class="accent-line"></div>
 
         <nav class="side-nav">
             <div class="side-group-label">Main</div>
             <a href="{{ route('employee.dashboard') }}" class="side-item {{ request()->routeIs('employee.dashboard') ? 'active' : '' }}">
                 <i class="fa-solid fa-house fa-fw"></i> Home
             </a>
-            <a href="{{ route('employee.attendance.index') }}" class="side-item {{ request()->routeIs('employee.attendance.*') ? 'active' : '' }}">
+            <a href="{{ route('employee.attendance.index', array_merge(request()->query(), ['view' => 'list'])) }}" class="side-item {{ request()->routeIs('employee.attendance.*') ? 'active' : '' }}">
                 <i class="fa-solid fa-clock fa-fw"></i> Attendance
             </a>
             <a href="{{ route('employee.leaves.index') }}" class="side-item {{ request()->routeIs('employee.leaves.*') ? 'active' : '' }}">
@@ -418,7 +425,6 @@
             </div>
         </header>
 
-        <div class="accent-line"></div>
 
         {{-- Page --}}
         <main class="page">

@@ -26,11 +26,11 @@
                         </option>
                         @endforeach
                     </select>
-                    <button type="submit" class="btn btn-primary btn-sm">
+                    <button type="submit" class="btn btn-primary">
                         <i class="fa-solid fa-filter"></i>
                     </button>
                 </form>
-                <a href="{{ route('training.sessions.create') }}" class="btn btn-primary btn-sm">
+                <a href="{{ route('training.sessions.create') }}" class="btn btn-primary">
                     <i class="fa-solid fa-calendar-plus"></i> Schedule Session
                 </a>
             </div>
@@ -97,7 +97,7 @@
                 @endif
 
                 <a href="{{ route('training.sessions.create', ['program' => $program->id]) }}"
-                   class="btn btn-secondary btn-sm" style="justify-content:center;margin-top:auto;">
+                   class="btn btn-secondary" style="justify-content:center;margin-top:auto;">
                     <i class="fa-solid fa-calendar-plus"></i> Schedule Session
                 </a>
             </div>

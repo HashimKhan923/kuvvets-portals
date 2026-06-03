@@ -6,15 +6,10 @@
 @push('styles')
 <style>
     /* ═══════════════════════════════════════════════════
-       PROFILE PAGE
-    ═══════════════════════════════════════════════════ */
-    .prof-wrap { max-width: 980px; }
-
-    /* ═══════════════════════════════════════════════════
        HERO
     ═══════════════════════════════════════════════════ */
     .prof-hero {
-        background: linear-gradient(135deg, #2D1F14 0%, #3d2a1c 100%);
+        background: var(--accent);
         color: #fff; border-radius: 20px;
         position: relative; overflow: hidden;
         margin-bottom: 18px;

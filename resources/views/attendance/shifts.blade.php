@@ -102,7 +102,7 @@
     </div>
 
     {{-- Create Shift Form --}}
-    <div class="card" style="position:sticky;top:20px;">
+    <div class="card" style="position:sticky;">
         <div class="form-section">
             <i class="fa-solid fa-plus-circle"></i> New Shift
         </div>

@@ -32,7 +32,7 @@
     <a href="{{ route('training.certifications') }}" class="quick-link ql-yellow"><i class="fa-solid fa-certificate"></i> Certifications</a>
     <a href="{{ route('training.skill-matrix') }}"   class="quick-link ql-purple"><i class="fa-solid fa-table-cells"></i> Skill Matrix</a>
     <a href="{{ route('training.report') }}"         class="quick-link ql-accent"><i class="fa-solid fa-chart-bar"></i> Report</a>
-    <a href="{{ route('training.sessions.create') }}" class="btn btn-primary btn-sm" style="margin-left:auto;">
+    <a href="{{ route('training.sessions.create') }}" class="btn btn-primary" style="margin-left:auto;">
         <i class="fa-solid fa-plus"></i> Schedule Session
     </a>
 </div>

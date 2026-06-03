@@ -334,7 +334,7 @@ class LeaveController extends Controller
             'max_consecutive_days' => $request->max_consecutive_days,
             'applicable_to_male'   => $request->boolean('applicable_to_male', true),
             'applicable_to_female' => $request->boolean('applicable_to_female', true),
-            'color'                => $request->color ?? '#BA7517',
+            'color'                => $request->color ?? '#CBA557',
         ]);
 
         return back()->with('success', "Leave type \"{$request->name}\" created.");
@@ -430,7 +430,7 @@ class LeaveController extends Controller
                 'sub'   => ucfirst($holiday->type),
                 'color' => match($holiday->type) {
                     'national'  => '#378ADD',
-                    'religious' => '#EF9F27',
+                    'religious' => '#CBA557',
                     'company'   => '#4CAF50',
                     default     => '#7F77DD',
                 },

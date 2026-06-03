@@ -60,16 +60,15 @@ class Attendance extends Model {
 
     public function getStatusBadgeAttribute(): array {
         return match($this->status) {
-            'completed'         => ['bg'=>'#0a1a0a', 'color'=>'#4CAF50', 'border'=>'#1a3a0a'],
-            'absent'            => ['bg'=>'#1a0505', 'color'=>'#E24B4A', 'border'=>'#3a1010'],
-            'short_day'         => ['bg'=>'#1a0a00', 'color'=>'#F97316', 'border'=>'#3a1a00'],
-            'half_day'          => ['bg'=>'#001015', 'color'=>'#378ADD', 'border'=>'#0a2a35'],
-            'three_quarter_day' => ['bg'=>'#0a1510', 'color'=>'#22C55E', 'border'=>'#1a3525'],
-            'on_leave'          => ['bg'=>'#100a1a', 'color'=>'#7F77DD', 'border'=>'#2a1a3a'],
-            'holiday'           => ['bg'=>'#0a1a0a', 'color'=>'#BA7517', 'border'=>'#2a2008'],
-            'weekend'           => ['bg'=>'#111820', 'color'=>'#5a5040', 'border'=>'#1e2a35'],
-            'work_from_home'    => ['bg'=>'#001015', 'color'=>'#1D9E75', 'border'=>'#0a2a20'],
-            default             => ['bg'=>'#111820', 'color'=>'#5a5040', 'border'=>'#1e2a35'],
+            'present'       => ['bg'=>'#0a1a0a', 'color'=>'#4CAF50', 'border'=>'#1a3a0a'],
+            'absent'        => ['bg'=>'#1a0505', 'color'=>'#E24B4A', 'border'=>'#3a1010'],
+            'late'          => ['bg'=>'#1a1200', 'color'=>'#EF9F27', 'border'=>'#2a2008'],
+            'half_day'      => ['bg'=>'#001015', 'color'=>'#378ADD', 'border'=>'#0a2a35'],
+            'on_leave'      => ['bg'=>'#100a1a', 'color'=>'#7F77DD', 'border'=>'#2a1a3a'],
+            'holiday'       => ['bg'=>'#0a1a0a', 'color'=>'#BA7517', 'border'=>'#2a2008'],
+            'weekend'       => ['bg'=>'#111820', 'color'=>'#5a5040', 'border'=>'#1e2a35'],
+            'work_from_home'=> ['bg'=>'#001015', 'color'=>'#1D9E75', 'border'=>'#0a2a20'],
+            default         => ['bg'=>'#111820', 'color'=>'#5a5040', 'border'=>'#1e2a35'],
         };
     }
 

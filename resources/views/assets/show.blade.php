@@ -36,7 +36,7 @@
                 <span class="badge" style="background:{{ $cBadge['bg'] }};color:{{ $cBadge['color'] }};border:1px solid {{ $cBadge['border'] }};">{{ ucfirst($asset->condition) }}</span>
             </div>
 
-            <a href="{{ route('assets.edit', $asset) }}" class="btn btn-secondary btn-sm" style="margin-top:14px;width:100%;justify-content:center;">
+            <a href="{{ route('assets.edit', $asset) }}" class="btn btn-secondary" style="margin-top:14px;width:100%;justify-content:center;">
                 <i class="fa-solid fa-pen"></i> Edit Asset
             </a>
         </div>
@@ -256,7 +256,7 @@
                             <input type="text" name="description" required placeholder="Brief description of work required" class="form-input">
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-sm">
+                    <button type="submit" class="btn btn-primary">
                         <i class="fa-solid fa-calendar-plus"></i> Schedule
                     </button>
                 </form>
@@ -373,7 +373,7 @@
                             <textarea name="terms" rows="2" class="form-textarea"></textarea>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-sm">
+                    <button type="submit" class="btn btn-primary">
                         <i class="fa-solid fa-file-contract"></i> Create Contract
                     </button>
                 </form>

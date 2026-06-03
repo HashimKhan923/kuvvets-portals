@@ -38,7 +38,7 @@
                 <option value="expiring_soon" {{ request('status') === 'expiring_soon' ? 'selected' : '' }}>Expiring Soon</option>
                 <option value="expired"       {{ request('status') === 'expired'       ? 'selected' : '' }}>Expired</option>
             </select>
-            <button type="submit" class="btn btn-primary btn-sm">
+            <button type="submit" class="btn btn-primary">
                 <i class="fa-solid fa-filter"></i> Filter
             </button>
         </form>

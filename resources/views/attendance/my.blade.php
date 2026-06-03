@@ -107,7 +107,7 @@
         <form method="GET" action="{{ route('attendance.my') }}" style="display:flex;gap:8px;">
             <input type="month" name="month" value="{{ $month }}"
                    class="form-input" style="width:auto;">
-            <button type="submit" class="btn btn-primary btn-sm">Go</button>
+            <button type="submit" class="btn btn-primary">Go</button>
         </form>
     </div>
 

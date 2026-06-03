@@ -33,12 +33,12 @@ class Payslip extends Model {
         return TaxCalculator::amountInWords((float) $this->net_salary);
     }
 
-    public function getStatusBadgeAttribute(): array {
-        return match($this->status) {
-            'draft'    => ['bg'=>'#111820','color'=>'#7a6a50','border'=>'#1e2a35'],
-            'approved' => ['bg'=>'#1a1200','color'=>'#EF9F27','border'=>'#2a2008'],
-            'paid'     => ['bg'=>'#0a1a0a','color'=>'#4CAF50','border'=>'#1a3a0a'],
-            default    => ['bg'=>'#111820','color'=>'#7a6a50','border'=>'#1e2a35'],
-        };
-    }
+   public function getStatusBadgeAttribute(): array {
+    return match($this->status) {
+        'draft'    => ['bg'=>'#fffbeb', 'color'=>'#7a6a50', 'border'=>'#fde68a'],
+        'approved' => ['bg'=>'#fffbeb', 'color'=>'#CBA557', 'border'=>'#fde68a'],
+        'paid'     => ['bg'=>'#fffbeb', 'color'=>'#4CAF50', 'border'=>'#fde68a'],
+        default    => ['bg'=>'#fffbeb', 'color'=>'#7a6a50', 'border'=>'#fde68a'],
+    };
+}
 }

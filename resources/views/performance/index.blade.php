@@ -86,7 +86,7 @@
         <div class="card-title" style="margin-bottom:0;">
             <i class="fa-solid fa-rotate"></i> Performance Cycles
         </div>
-        <a href="{{ route('performance.cycles') }}" class="btn btn-secondary btn-sm">
+        <a href="{{ route('performance.cycles') }}" class="btn btn-secondary">
             View All →
         </a>
     </div>

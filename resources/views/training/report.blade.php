@@ -34,7 +34,7 @@
                 </option>
                 @endforeach
             </select>
-            <button type="submit" class="btn btn-primary btn-sm">
+            <button type="submit" class="btn btn-primary">
                 <i class="fa-solid fa-filter"></i> Filter
             </button>
         </form>

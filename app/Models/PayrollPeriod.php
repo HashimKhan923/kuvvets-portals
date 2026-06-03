@@ -25,16 +25,16 @@ class PayrollPeriod extends Model {
     public function payslips()  { return $this->hasMany(Payslip::class); }
     public function adjustments(){ return $this->hasMany(PayrollAdjustment::class); }
 
-    public function getStatusBadgeAttribute(): array {
-        return match($this->status) {
-            'draft'      => ['bg'=>'#111820','color'=>'#7a6a50','border'=>'#1e2a35'],
-            'processing' => ['bg'=>'#001015','color'=>'#378ADD','border'=>'#0a2a35'],
-            'approved'   => ['bg'=>'#1a1200','color'=>'#EF9F27','border'=>'#2a2008'],
-            'paid'       => ['bg'=>'#0a1a0a','color'=>'#4CAF50','border'=>'#1a3a0a'],
-            'cancelled'  => ['bg'=>'#1a0505','color'=>'#E24B4A','border'=>'#3a1010'],
-            default      => ['bg'=>'#111820','color'=>'#7a6a50','border'=>'#1e2a35'],
-        };
-    }
+ public function getStatusBadgeAttribute(): array {
+    return match($this->status) {
+        'draft'      => ['bg'=>'#fffbeb', 'color'=>'#7a6a50', 'border'=>'#fde68a'],
+        'processing' => ['bg'=>'#fffbeb', 'color'=>'#378ADD', 'border'=>'#fde68a'],
+        'approved'   => ['bg'=>'#fffbeb', 'color'=>'#CBA557', 'border'=>'#fde68a'],
+        'paid'       => ['bg'=>'#fffbeb', 'color'=>'#4CAF50', 'border'=>'#fde68a'],
+        'cancelled'  => ['bg'=>'#fffbeb', 'color'=>'#E24B4A', 'border'=>'#fde68a'],
+        default      => ['bg'=>'#fffbeb', 'color'=>'#7a6a50', 'border'=>'#fde68a'],
+    };
+}
 
     public function getMonthNameAttribute(): string {
         return \Carbon\Carbon::create($this->year, $this->month, 1)->format('F Y');

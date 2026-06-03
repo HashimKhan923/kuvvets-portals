@@ -11,7 +11,7 @@
         <a href="{{ route('payroll.payslip.pdf', $payslip) }}" class="btn btn-blue btn-sm">
             <i class="fa-solid fa-file-pdf"></i> Download PDF
         </a>
-        <a href="{{ route('payroll.period', $payslip->period) }}" class="btn btn-secondary btn-sm">
+        <a href="{{ route('payroll.period', $payslip->period) }}" class="btn btn-secondary">
             <i class="fa-solid fa-arrow-left"></i> Back to Period
         </a>
     </div>

@@ -35,7 +35,7 @@
     <a href="{{ route('assets.maintenance') }}" class="quick-link ql-yellow"><i class="fa-solid fa-wrench"></i> Maintenance</a>
     <a href="{{ route('assets.categories') }}"  class="quick-link ql-accent"><i class="fa-solid fa-tags"></i> Categories</a>
     <a href="{{ route('assets.report') }}"      class="quick-link ql-green"><i class="fa-solid fa-chart-bar"></i> Report</a>
-    <a href="{{ route('assets.create') }}" class="btn btn-primary btn-sm" style="margin-left:auto;">
+    <a href="{{ route('assets.create') }}" class="btn btn-primary" style="margin-left:auto;">
         <i class="fa-solid fa-plus"></i> Register Asset
     </a>
 </div>

@@ -67,7 +67,7 @@ class Asset extends Model {
         return match($this->type) {
             'heavy_equipment'    => 'fa-industry',
             'vehicle'            => 'fa-truck',
-            'forklift'           => 'fa-forklift',
+            'forklift'           => 'fa-wrench',
             'crane'              => 'fa-person-digging',
             'warehouse_equipment'=> 'fa-warehouse',
             'it_equipment'       => 'fa-computer',

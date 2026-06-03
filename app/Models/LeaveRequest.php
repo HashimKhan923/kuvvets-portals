@@ -27,16 +27,16 @@ class LeaveRequest extends Model {
     public function leaveType() { return $this->belongsTo(LeaveType::class); }
     public function reviewer()  { return $this->belongsTo(User::class, 'reviewed_by'); }
 
-    public function getStatusBadgeAttribute(): array {
-        return match($this->status) {
-            'pending'   => ['bg'=>'#1a1200', 'color'=>'#EF9F27', 'border'=>'#2a2008'],
-            'approved'  => ['bg'=>'#0a1a0a', 'color'=>'#4CAF50', 'border'=>'#1a3a0a'],
-            'rejected'  => ['bg'=>'#1a0505', 'color'=>'#E24B4A', 'border'=>'#3a1010'],
-            'cancelled' => ['bg'=>'#111820', 'color'=>'#5a5040', 'border'=>'#1e2a35'],
-            'withdrawn' => ['bg'=>'#111820', 'color'=>'#5a5040', 'border'=>'#1e2a35'],
-            default     => ['bg'=>'#111820', 'color'=>'#7a6a50', 'border'=>'#1e2a35'],
-        };
-    }
+  public function getStatusBadgeAttribute(): array {
+    return match($this->status) {
+        'pending'   => ['bg'=>'#fffbeb', 'color'=>'#CBA557', 'border'=>'#fde68a'],
+        'approved'  => ['bg'=>'#fffbeb', 'color'=>'#4CAF50', 'border'=>'#fde68a'],
+        'rejected'  => ['bg'=>'#fffbeb', 'color'=>'#E24B4A', 'border'=>'#fde68a'],
+        'cancelled' => ['bg'=>'#fffbeb', 'color'=>'#5a5040', 'border'=>'#fde68a'],
+        'withdrawn' => ['bg'=>'#fffbeb', 'color'=>'#5a5040', 'border'=>'#fde68a'],
+        default     => ['bg'=>'#fffbeb', 'color'=>'#7a6a50', 'border'=>'#fde68a'],
+    };
+}
 
     public function getDurationTextAttribute(): string {
         if ($this->total_days == 0.5) {

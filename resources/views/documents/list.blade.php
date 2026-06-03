@@ -32,17 +32,17 @@
                 <option value="{{ $v }}" {{ request('status') === $v ? 'selected' : '' }}>{{ $l }}</option>
                 @endforeach
             </select>
-            <button type="submit" class="btn btn-primary btn-sm">
+            <button type="submit" class="btn btn-primary">
                 <i class="fa-solid fa-filter"></i>
             </button>
             @if(request()->hasAny(['search','type','category','status','employee']))
-            <a href="{{ route('documents.list') }}" class="btn btn-secondary btn-sm">
+            <a href="{{ route('documents.list') }}" class="btn btn-secondary">
                 <i class="fa-solid fa-xmark"></i> Clear
             </a>
             @endif
         </form>
         <button onclick="document.getElementById('uploadModal').classList.add('open')"
-                class="btn btn-primary btn-sm">
+                class="btn btn-primary">
             <i class="fa-solid fa-upload"></i> Upload
         </button>
     </div>

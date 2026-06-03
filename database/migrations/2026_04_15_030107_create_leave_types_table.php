@@ -22,7 +22,7 @@ return new class extends Migration {
                 ->comment('Max days that can be taken at once');
             $table->boolean('applicable_to_male')->default(true);
             $table->boolean('applicable_to_female')->default(true);
-            $table->string('color', 7)->default('#BA7517');
+            $table->string('color', 7)->default('#CBA557');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
 

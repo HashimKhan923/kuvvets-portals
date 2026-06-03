@@ -38,23 +38,23 @@ class Applicant extends Model {
              . '&background=1a1200&color=BA7517&bold=true';
     }
 
-    public function getStageBadgeAttribute(): array {
-        return match($this->stage) {
-            'applied'              => ['bg'=>'#111820','color'=>'#7a6a50','border'=>'#1e2a35',  'label'=>'Applied'],
-            'screening'            => ['bg'=>'#001015','color'=>'#378ADD','border'=>'#0a2a35',  'label'=>'Screening'],
-            'shortlisted'          => ['bg'=>'#1a1200','color'=>'#EF9F27','border'=>'#2a2008',  'label'=>'Shortlisted'],
-            'interview_scheduled'  => ['bg'=>'#100a1a','color'=>'#7F77DD','border'=>'#2a1a3a',  'label'=>'Interview Scheduled'],
-            'interviewed'          => ['bg'=>'#0a1015','color'=>'#1D9E75','border'=>'#0a2a20',  'label'=>'Interviewed'],
-            'assessment'           => ['bg'=>'#1a0a10','color'=>'#D4537E','border'=>'#3a1020',  'label'=>'Assessment'],
-            'offer_sent'           => ['bg'=>'#1a1200','color'=>'#BA7517','border'=>'#2a2008',  'label'=>'Offer Sent'],
-            'offer_accepted'       => ['bg'=>'#0a1a0a','color'=>'#4CAF50','border'=>'#1a3a0a',  'label'=>'Offer Accepted'],
-            'offer_declined'       => ['bg'=>'#1a0505','color'=>'#E24B4A','border'=>'#3a1010',  'label'=>'Offer Declined'],
-            'hired'                => ['bg'=>'#0a1a0a','color'=>'#4CAF50','border'=>'#1a3a0a',  'label'=>'Hired ✓'],
-            'rejected'             => ['bg'=>'#1a0505','color'=>'#E24B4A','border'=>'#3a1010',  'label'=>'Rejected'],
-            'withdrawn'            => ['bg'=>'#111820','color'=>'#5a5040','border'=>'#1e2a35',  'label'=>'Withdrawn'],
-            default                => ['bg'=>'#111820','color'=>'#7a6a50','border'=>'#1e2a35',  'label'=>ucfirst($this->stage)],
-        };
-    }
+ public function getStageBadgeAttribute(): array {
+    return match($this->stage) {
+        'applied'              => ['bg'=>'#fffbeb','color'=>'#7a6a50','border'=>'#fde68a','label'=>'Applied'],
+        'screening'            => ['bg'=>'#fffbeb','color'=>'#378ADD','border'=>'#fde68a','label'=>'Screening'],
+        'shortlisted'          => ['bg'=>'#fffbeb','color'=>'#CBA557','border'=>'#fde68a','label'=>'Shortlisted'],
+        'interview_scheduled'  => ['bg'=>'#fffbeb','color'=>'#7F77DD','border'=>'#fde68a','label'=>'Interview Scheduled'],
+        'interviewed'          => ['bg'=>'#fffbeb','color'=>'#1D9E75','border'=>'#fde68a','label'=>'Interviewed'],
+        'assessment'           => ['bg'=>'#fffbeb','color'=>'#D4537E','border'=>'#fde68a','label'=>'Assessment'],
+        'offer_sent'           => ['bg'=>'#fffbeb','color'=>'#CBA557','border'=>'#fde68a','label'=>'Offer Sent'],
+        'offer_accepted'       => ['bg'=>'#fffbeb','color'=>'#4CAF50','border'=>'#fde68a','label'=>'Offer Accepted'],
+        'offer_declined'       => ['bg'=>'#fffbeb','color'=>'#E24B4A','border'=>'#fde68a','label'=>'Offer Declined'],
+        'hired'                => ['bg'=>'#fffbeb','color'=>'#4CAF50','border'=>'#fde68a','label'=>'Hired ✓'],
+        'rejected'             => ['bg'=>'#fffbeb','color'=>'#E24B4A','border'=>'#fde68a','label'=>'Rejected'],
+        'withdrawn'            => ['bg'=>'#fffbeb','color'=>'#5a5040','border'=>'#fde68a','label'=>'Withdrawn'],
+        default                => ['bg'=>'#fffbeb','color'=>'#7a6a50','border'=>'#fde68a','label'=>ucfirst($this->stage)],
+    };
+}
 
     public function getRatingStarsAttribute(): string {
         if (!$this->rating) return '—';

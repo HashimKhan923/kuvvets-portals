@@ -8,7 +8,7 @@
     .form-card {
         background: var(--bg-card); border: 1px solid var(--border);
         border-radius: 16px; padding: 24px;
-        max-width: 740px;
+       
     }
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     @media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } }

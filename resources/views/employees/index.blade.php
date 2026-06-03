@@ -46,9 +46,9 @@
                 <option value="{{ $v }}" {{ request('type')==$v ? 'selected' : '' }}>{{ $l }}</option>
             @endforeach
         </select>
-        <button type="submit" class="btn btn-primary btn-sm"><i class="fa-solid fa-filter"></i> Filter</button>
+        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-filter"></i> Filter</button>
         @if(request()->hasAny(['search','department','status','type']))
-            <a href="{{ route('employees.index') }}" class="btn btn-secondary btn-sm"><i class="fa-solid fa-xmark"></i> Clear</a>
+            <a href="{{ route('employees.index') }}" class="btn btn-secondary"><i class="fa-solid fa-xmark"></i> Clear</a>
         @endif
         @can('employees.create')
         <div class="ml-auto">

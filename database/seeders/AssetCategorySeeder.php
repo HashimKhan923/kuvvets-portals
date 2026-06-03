@@ -15,7 +15,7 @@ class AssetCategorySeeder extends Seeder
         $company = \App\Models\Company::first();
         if ($company) {
             $cats = [
-                ['Forklifts',         'fa-forklift',      '#2B6CB0'],
+                ['Forklifts',         'fa-wrench',      '#2B6CB0'],
                 ['Cranes & Hoists',   'fa-person-digging','#C53030'],
                 ['Warehouse Trucks',  'fa-truck',         '#B7791F'],
                 ['Safety Equipment',  'fa-helmet-safety', '#2D7A4F'],

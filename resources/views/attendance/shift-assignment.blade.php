@@ -66,7 +66,7 @@
                     </option>
                     @endforeach
                 </select>
-                <button type="submit" class="btn btn-primary btn-sm">
+                <button type="submit" class="btn btn-primary">
                     <i class="fa-solid fa-filter"></i> Filter
                 </button>
             </form>
@@ -427,7 +427,7 @@
                         '{{ $emp->employee_id }}',
                         null
                     )"
-                    class="btn btn-primary btn-sm" style="width:100%;justify-content:center;">
+                    class="btn btn-primary" style="width:100%;justify-content:center;">
                 <i class="fa-solid fa-clock"></i> Assign Shift Now
             </button>
         </div>

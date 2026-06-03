@@ -43,10 +43,10 @@
                         <option value="{{ $v }}" {{ $jobPosting->status === $v ? 'selected' : '' }}>{{ $l }}</option>
                     @endforeach
                 </select>
-                <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                <button type="submit" class="btn btn-primary">Update</button>
             </form>
-            <button onclick="document.getElementById('addApplicantModal').classList.add('open')"
-                    class="btn btn-primary btn-sm">
+            <button style="padding: 12px 18px;" onclick="document.getElementById('addApplicantModal').classList.add('open')"
+                    class="btn btn-primary">
                 <i class="fa-solid fa-user-plus"></i> Add Applicant
             </button>
         </div>

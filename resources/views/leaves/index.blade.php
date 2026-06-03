@@ -55,11 +55,11 @@
             @endforeach
         </select>
         <input type="month" name="month" value="{{ request('month') }}" class="form-input" style="width:auto;">
-        <button type="submit" class="btn btn-primary btn-sm">
+        <button type="submit" class="btn btn-primary">
             <i class="fa-solid fa-filter"></i> Filter
         </button>
         @if(request()->hasAny(['status','department','leave_type','month']))
-            <a href="{{ route('leaves.index') }}" class="btn btn-secondary btn-sm">
+            <a href="{{ route('leaves.index') }}" class="btn btn-secondary">
                 <i class="fa-solid fa-xmark"></i> Clear
             </a>
         @endif

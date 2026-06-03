@@ -28,7 +28,7 @@
                     </option>
                 @endforeach
             </select>
-            <button type="submit" class="btn btn-primary btn-sm">
+            <button type="submit" class="btn btn-primary">
                 <i class="fa-solid fa-filter"></i> Filter
             </button>
         </form>
@@ -101,7 +101,7 @@
         {{-- Actions --}}
         <div style="display:flex;gap:8px;margin-top:auto;">
             <a href="{{ route('recruitment.jobs.show', $job) }}"
-               class="btn btn-secondary btn-sm" style="flex:1;justify-content:center;">
+               class="btn btn-secondary" style="flex:1;justify-content:center;">
                 <i class="fa-solid fa-eye"></i> View Pipeline
             </a>
             <form method="POST" action="{{ route('recruitment.jobs.status', $job) }}">

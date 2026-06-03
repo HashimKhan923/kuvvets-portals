@@ -53,7 +53,7 @@
     <a href="{{ route('documents.list') }}"       class="quick-link ql-blue"><i class="fa-solid fa-list"></i> All Documents</a>
     <a href="{{ route('documents.categories') }}" class="quick-link ql-accent"><i class="fa-solid fa-tags"></i> Categories</a>
     <button onclick="document.getElementById('uploadModal').classList.add('open')"
-            class="btn btn-primary btn-sm" style="margin-left:auto;">
+            class="btn btn-primary" style="margin-left:auto;">
         <i class="fa-solid fa-upload"></i> Upload Document
     </button>
 </div>

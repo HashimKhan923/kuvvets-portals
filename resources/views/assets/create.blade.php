@@ -38,7 +38,7 @@
         </div>
         <div>
             <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px;">Asset Photo (optional)</div>
-            <label class="btn btn-secondary btn-sm" style="cursor:pointer;">
+            <label class="btn btn-secondary" style="cursor:pointer;">
                 <i class="fa-solid fa-upload"></i> Upload Image
                 <input type="file" name="image" accept="image/*" style="display:none;"
                        onchange="previewAssetImg(this)">

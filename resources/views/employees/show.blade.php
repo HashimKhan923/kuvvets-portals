@@ -33,7 +33,7 @@
             @can('employees.edit')
             <div style="margin-top:16px;">
                 <a href="{{ route('employees.edit', $employee) }}"
-                   class="btn btn-secondary btn-sm" style="width:100%;justify-content:center;">
+                   class="btn btn-secondary" style="width:100%;justify-content:center;">
                     <i class="fa-solid fa-pen"></i> Edit Profile
                 </a>
             </div>
@@ -157,7 +157,7 @@
                                    accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" class="form-input">
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-sm">
+                    <button type="submit" class="btn btn-primary">
                         <i class="fa-solid fa-upload"></i> Upload
                     </button>
                 </form>
@@ -220,7 +220,7 @@
                             <input type="checkbox" name="is_private" value="1"
                                    style="accent-color:var(--accent);"> Private (HR only)
                         </label>
-                        <button type="submit" class="btn btn-primary btn-sm">
+                        <button type="submit" class="btn btn-primary">
                             <i class="fa-solid fa-plus"></i> Add Note
                         </button>
                     </div>

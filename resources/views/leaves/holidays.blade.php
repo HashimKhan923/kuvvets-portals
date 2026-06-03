@@ -21,7 +21,7 @@
                         <option value="{{ $y }}" {{ $year == $y ? 'selected' : '' }}>{{ $y }}</option>
                     @endfor
                 </select>
-                <button type="submit" class="btn btn-primary btn-sm">Go</button>
+                <button type="submit" class="btn btn-primary">Go</button>
             </form>
         </div>
 

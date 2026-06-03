@@ -446,7 +446,7 @@
             {{-- Status filter --}}
             <select name="status" onchange="document.getElementById('filterForm').submit()">
                 <option value="">All status</option>
-                @foreach(['completed'=>'Completed','three_quarter_day'=>'Three Quarter Day','half_day'=>'Half Day','short_day'=>'Short Day','absent'=>'Absent','on_leave'=>'On leave','holiday'=>'Holiday','work_from_home'=>'WFH'] as $val=>$lbl)
+                @foreach(['present'=>'Present','late'=>'Late','absent'=>'Absent','half_day'=>'Half day','on_leave'=>'On leave','holiday'=>'Holiday','work_from_home'=>'WFH'] as $val=>$lbl)
                     <option value="{{ $val }}" {{ $status===$val ? 'selected' : '' }}>{{ $lbl }}</option>
                 @endforeach
             </select>
@@ -463,10 +463,10 @@
 
             {{-- View toggle --}}
             <div class="view-tabs">
-                <a href="{{ route('employee.attendance.index', request()->query() + ['view'=>'calendar']) }}" class="{{ $view==='calendar' ? 'active' : '' }}">
+                <a href="{{ request()->fullUrlWithQuery(['view' => 'calendar']) }}" class="{{ $view==='calendar' ? 'active' : '' }}">
                     <i class="fa-solid fa-calendar"></i> Calendar
                 </a>
-                <a href="{{ route('employee.attendance.index', request()->query() + ['view'=>'list']) }}" class="{{ $view==='list' ? 'active' : '' }}">
+                <a href="{{ request()->fullUrlWithQuery(['view' => 'list']) }}" class="{{ $view==='list' ? 'active' : '' }}">
                     <i class="fa-solid fa-list"></i> List
                 </a>
             </div>

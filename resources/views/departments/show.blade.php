@@ -47,7 +47,7 @@
                 </div>
                 <form method="POST" action="{{ route('departments.toggle', $department) }}">
                     @csrf
-                    <button type="submit" class="btn btn-secondary btn-sm">
+                    <button type="submit" class="btn btn-secondary">
                         <i class="fa-solid fa-power-off"></i>
                         {{ $department->is_active ? 'Deactivate' : 'Activate' }}
                     </button>

@@ -51,7 +51,7 @@
         <i class="fa-solid fa-file-lines"></i>
         No documents on file for {{ $employee->full_name }}.
         <button onclick="document.getElementById('uploadModal').classList.add('open')"
-                class="btn btn-primary btn-sm" style="margin-top:14px;">
+                class="btn btn-primary" style="margin-top:14px;">
             <i class="fa-solid fa-upload"></i> Upload First Document
         </button>
     </div>

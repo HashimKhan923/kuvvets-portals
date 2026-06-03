@@ -23,7 +23,7 @@
             --accent:         #917130;
             --accent-light:   #CBA557;
             --accent-bg:      #FEF2EC;
-            --accent-border:  #F5D5C0;
+            --accent-border:  #A8843F;
 
             --bg-page:        #FBF8F5;
             --bg-card:        #FFFFFF;
@@ -31,10 +31,10 @@
             --bg-muted:       #F5F0EB;
             --bg-hover:       #FEF2EC;
 
-            --border:         #F0EAE2;
+            --border:         #CBA557;
             --border-strong:  #E8DDD5;
 
-            --text-primary:   #917130;
+            --text-primary:   #CBA557;
             --text-secondary: #CBA557;
             --text-muted:     #CBA557;
             --text-accent:    #C2531B;
@@ -71,7 +71,7 @@
         ═══════════════════════════════════════════════════ */
         #sidebar {
             width: 220px; flex-shrink: 0; background: var(--bg-card);
-            border-right: 1px solid var(--border); height: 100vh;
+           
             display: flex; flex-direction: column; overflow: hidden;
             transition: width .3s cubic-bezier(.4,0,.2,1);
         }
@@ -84,7 +84,7 @@
         #sidebar.collapsed .nav-arrow  { display: none !important; }
 
         /* Brand */
-.sidebar-brand {display: flex;align-items: center;gap: 10px;padding: 14px 16px;border-bottom: 1px solid var(--border);min-height: 56px;flex-shrink: 0;background-color: #000000;}
+.sidebar-brand {display: flex;align-items: center;gap: 10px;padding: 14px 16px;min-height: 56px;flex-shrink: 0;background-color: #000000;}
         .sidebar-logo   { width: 34px; height: 34px; border-radius: 9px; background: #000000; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
         .sidebar-logo i { color: #fff; font-size: 15px; }
         .brand-name     { font-size: 13px; font-weight: 700; color: var(--text-primary); letter-spacing: .8px; }
@@ -145,21 +145,21 @@
         /* ═══════════════════════════════════════════════════
            TOPBAR
         ═══════════════════════════════════════════════════ */
-        #topbar { height: 84px; background: var(--bg-card); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; flex-shrink: 0; background-color: #000000; }
+        #topbar { height: 84px; background: var(--bg-card);  display: flex; align-items: center; justify-content: space-between; padding: 0 24px; flex-shrink: 0; background-color: #000000; }
         .topbar-title  { font-size: 15px; font-weight: 700; color: var(--text-primary); line-height: 1.2; }
         .topbar-bread  { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
         .topbar-right  { display: flex; align-items: center; gap: 10px; }
 
-        .topbar-clock  { font-size: 11px; color: var(--text-secondary); background: var(--bg-muted); border: 1px solid var(--border); border-radius: 7px; padding: 5px 10px; white-space: nowrap; font-weight: 500; }
+        .topbar-clock  { height: 44px;font-size: 12px; color: var(--text-secondary); background: var(--bg-muted); border: 1px solid var(--border); border-radius: 7px; padding: 5px 10px; white-space: nowrap; font-weight: 500; text-align:center; display: flex; align-items: center; justify-content: center; }
 
         .topbar-icon-btn {
-            width: 36px; height: 36px; background: var(--bg-muted); border: 1px solid var(--border);
+            width: 36px; height: 44px; background: var(--bg-muted); border: 1px solid var(--border);
             border-radius: 8px; display: flex; align-items: center; justify-content: center;
             cursor: pointer; position: relative; transition: border-color .15s;
         }
         .topbar-icon-btn:hover { border-color: var(--accent-border); }
-        .topbar-icon-btn i { font-size: 13px; color: var(--text-secondary); }
-        .notif-dot { position: absolute; top: 7px; right: 7px; width: 7px; height: 7px; background: var(--accent); border-radius: 50%; border: 1.5px solid var(--bg-card); }
+        .topbar-icon-btn i { font-size: 15px; color: var(--text-secondary); }
+        .notif-dot { position: absolute; top: 7px; right: 7px; width: 9px; height: 9px; background: var(--accent); border-radius: 50%; border: 1.5px solid var(--bg-card); }
 
         .topbar-user-btn {
             display: flex; align-items: center; gap: 8px; background: var(--bg-muted);
@@ -187,7 +187,7 @@
             transition: transform .2s, border-color .2s;
         }
         .stat-card:hover { transform: translateY(-2px); border-color: var(--accent-border); }
-        .stat-label { font-size: 10px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .7px; }
+        .stat-label { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .7px; }
         .stat-num   { font-size: 28px; font-weight: 700; color: var(--text-primary); line-height: 1.1; margin: 6px 0 2px; }
         .stat-sub   { font-size: 11px; color: var(--text-muted); }
         .stat-trend-up   { font-size: 11px; color: var(--green);  font-weight: 600; margin-top: 4px; }
@@ -228,8 +228,8 @@
         /* ═══════════════════════════════════════════════════
            TOOLBAR / FILTER BAR
         ═══════════════════════════════════════════════════ */
-        .toolbar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-        .toolbar-search { position: relative; flex: 1; min-width: 220px; }
+        .toolbar { display: flex; align-items: center; gap: 10px; }
+        .toolbar-search { position: relative; flex: 1; min-width: 300px;  }
         .toolbar-search i { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 12px; pointer-events: none; }
         .toolbar-search input { padding-left: 32px; }
         .ml-auto { margin-left: auto; }
@@ -244,13 +244,13 @@
         .form-select,
         .form-textarea {
             width: 100%; background: var(--bg-input); border: 1px solid var(--border-strong);
-            border-radius: 8px; padding: 9px 12px; color: var(--text-primary); font-size: 13px;
+            border-radius: 8px; padding: 9px 12px; color: #000000; font-size: 13px;
             font-family: 'Plus Jakarta Sans', sans-serif; outline: none;
             transition: border-color .2s, box-shadow .2s;
         }
         .form-input:focus,
         .form-select:focus,
-        .form-textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-bg); }
+        .form-textarea:focus { border-color: var(--accent-light); box-shadow: 0 0 0 3px var(--accent-bg); }
         .form-input::placeholder { color: var(--text-muted); }
         .form-select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 4l4 4 4-4' stroke='%23A89080' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 30px; }
         .form-textarea { resize: vertical; line-height: 1.6; }
@@ -267,8 +267,8 @@
         .btn-sm { padding: 6px 12px; font-size: 12px; }
         .btn-xs { padding: 4px 10px; font-size: 11px; border-radius: 6px; }
 
-        .btn-primary  { background: var(--accent); color: #fff; }
-        .btn-primary:hover { background: var(--accent-light); }
+        .btn-primary  { background: var(--accent-light); color: #fff; }
+        .btn-primary:hover { background: var(--accent); }
 
         .btn-secondary { background: var(--bg-muted); color: var(--text-secondary); border: 1px solid var(--border-strong); }
         .btn-secondary:hover { border-color: var(--accent-border); color: var(--accent); }
@@ -353,11 +353,11 @@
         .tab-nav { display: flex; gap: 2px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
         .tab-btn {
             padding: 9px 16px; border: none; background: none; cursor: pointer;
-            font-size: 12px; font-weight: 500; font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 14px; font-weight: 500; font-family: 'Plus Jakarta Sans', sans-serif;
             color: var(--text-muted); border-bottom: 2px solid transparent; margin-bottom: -1px;
             display: flex; align-items: center; gap: 6px; transition: color .15s;
         }
-        .tab-btn i { font-size: 11px; }
+        .tab-btn i { font-size: 14px; }
         .tab-btn:hover  { color: var(--text-secondary); }
         .tab-btn.active { color: var(--accent); border-color: var(--accent); font-weight: 600; }
 
@@ -508,7 +508,7 @@
         <!-- </div> -->
         <div class="brand-text">
             <div class="brand-name">KUVVET</div>
-            <div class="brand-sub">HR PORTAL · ADMIN</div>
+            <div class="brand-sub">PRIVATE LIMITED</div>
         </div>
     </div>
 
@@ -600,7 +600,7 @@
                 <a href="{{ route('payroll.salary-structures') }}" class="nav-item {{ request()->routeIs('payroll.salary-structures') ? 'active' : '' }}"><i class="fa-solid fa-sliders fa-fw"></i><span class="nav-label">Salary Structures</span></a>
                 <a href="{{ route('payroll.tax-calculator') }}"    class="nav-item {{ request()->routeIs('payroll.tax-calculator')    ? 'active' : '' }}"><i class="fa-solid fa-calculator fa-fw"></i><span class="nav-label">Tax Calculator</span></a>
                 @endcan
-                <a href="{{ route('payroll.report') }}"            class="nav-item {{ request()->routeIs('payroll.report')            ? 'active' : '' }}"><i class="fa-solid fa-file-chart-line fa-fw"></i><span class="nav-label">Payroll Report</span></a>
+                <a href="{{ route('payroll.report') }}"            class="nav-item {{ request()->routeIs('payroll.report')            ? 'active' : '' }}"><i class="fa-solid fa-file-lines fa-fw"></i><span class="nav-label">Payroll Report</span></a>
             </div>
         </div>
         @endcan
@@ -690,7 +690,7 @@
         @canany(['reports.hr','reports.attendance','reports.payroll','reports.all','leaves.report'])
         <div>
             <div class="nav-item {{ request()->is('admin/reports*') ? 'active' : '' }}" onclick="toggleSub('sub-reports')">
-                <i class="fa-solid fa-file-chart-column fa-fw"></i>
+                <i class="fa-solid fa-file-lines fa-fw"></i>
                 <span class="nav-label">Reports</span>
                 <i class="fa-solid fa-chevron-right nav-arrow {{ request()->is('admin/reports*') ? 'open' : '' }}" id="arrow-sub-reports"></i>
             </div>
@@ -738,7 +738,7 @@
                 <a href="{{ route('settings.roles') }}"     class="nav-item {{ request()->routeIs('settings.roles')     ? 'active' : '' }}"><i class="fa-solid fa-shield-halved fa-fw"></i><span class="nav-label">Roles & Permissions</span></a>
                 @endcan
                 @can('audit_logs.view')
-                <a href="{{ route('settings.audit-log') }}" class="nav-item {{ request()->routeIs('settings.audit-log') ? 'active' : '' }}"><i class="fa-solid fa-shield-check fa-fw"></i><span class="nav-label">Audit Log</span></a>
+                <a href="{{ route('settings.audit-log') }}" class="nav-item {{ request()->routeIs('settings.audit-log') ? 'active' : '' }}"><i class="fa-solid fa-magnifying-glass-chart fa-fw"></i><span class="nav-label">Audit Log</span></a>
                 @endcan
                 <a href="{{ route('settings.profile') }}"   class="nav-item {{ request()->routeIs('settings.profile')   ? 'active' : '' }}"><i class="fa-solid fa-user-circle fa-fw"></i><span class="nav-label">My Profile</span></a>
             </div>
@@ -822,7 +822,6 @@
         </div>
     </header>
 
-    <div class="accent-line"></div>
 
     <!-- Page Content -->
     <main class="page-content">

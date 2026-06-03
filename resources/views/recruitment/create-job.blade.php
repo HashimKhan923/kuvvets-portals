@@ -4,7 +4,7 @@
 @section('breadcrumb', 'Recruitment · Jobs · New Posting')
 
 @section('content')
-<div style="max-width:860px;">
+<div style="width:100%">
 <form method="POST" action="{{ route('recruitment.jobs.store') }}">
 @csrf
 

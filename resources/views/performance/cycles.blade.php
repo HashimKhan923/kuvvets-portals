@@ -44,9 +44,9 @@
                             <option value="{{ $v }}" {{ $cycle->status === $v ? 'selected' : '' }}>{{ $l }}</option>
                             @endforeach
                         </select>
-                        <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
                     </form>
-                    <a href="{{ route('performance.cycle', $cycle) }}" class="btn btn-secondary btn-sm">
+                    <a href="{{ route('performance.cycle', $cycle) }}" class="btn btn-secondary">
                         Open →
                     </a>
                 </div>

@@ -5,6 +5,24 @@
 
 @section('content')
 
+<div class="stats-grid-4">
+    @foreach([
+        ['Total',     $departments->count(),     'fa-users',          'accent'],
+        ['Active',     $departments->where('is_active', true)->count() ,  'fa-check', 'green'],
+        ['Non-Active',      $departments->where('is_active', false)->count(),   'fa-xmark',  'yellow'],
+        ['Employees',$departments->sum(fn($d) => $d->employees_count ?? $d->employees->count()),  'fa-user-plus',      'blue'],
+    ] as [$label,$val,$icon,$color])
+    <div class="stat-card">
+        <div class="flex items-center justify-between mb-2">
+            <div class="stat-label">{{ $label }}</div>
+            <div class="stat-icon stat-icon-{{ $color }}"><i class="fa-solid {{ $icon }}"></i></div>
+        </div>
+        <div class="stat-num">{{ $val }}</div>
+    </div>
+    @endforeach
+</div>
+
+
 <div style="display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start;">
 
     {{-- Departments Table --}}
@@ -137,8 +155,8 @@
             </form>
         </div>
 
-        {{-- Summary Cards --}}
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+        {{-- Summary Cards, hide these and shifted to above --}}
+        <!-- <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
             <div class="stat-card">
                 <div class="stat-label">Total</div>
                 <div class="stat-num">{{ $departments->count() }}</div>
@@ -155,7 +173,7 @@
                     {{ $departments->sum(fn($d) => $d->employees_count ?? $d->employees->count()) }}
                 </div>
             </div>
-        </div>
+        </div> -->
 
     </div>
 

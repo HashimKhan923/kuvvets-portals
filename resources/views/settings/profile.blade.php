@@ -95,7 +95,7 @@
                     </div>
                 </div>
                 <div style="margin-top:16px;text-align:right;">
-                    <button type="submit" class="btn-gold">
+                    <button type="submit" class="btn btn-primary">
                         <i class="fa-solid fa-floppy-disk"></i> Save Profile
                     </button>
                 </div>
@@ -149,7 +149,7 @@
                         Password must be at least 8 characters and different from current password.
                     </div>
 
-                    <button type="submit" class="btn-gold" style="align-self:flex-start;">
+                    <button type="submit" class="btn btn-primary" style="align-self:flex-start;">
                         <i class="fa-solid fa-key"></i> Change Password
                     </button>
                 </div>

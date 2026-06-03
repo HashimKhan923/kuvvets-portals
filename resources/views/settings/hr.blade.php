@@ -4,7 +4,7 @@
 @section('breadcrumb','Settings · HR Policies')
 
 @section('content')
-<div style="max-width:860px;">
+<div style="width:100%">
 <form method="POST" action="{{ route('settings.hr.update') }}">
 @csrf
 

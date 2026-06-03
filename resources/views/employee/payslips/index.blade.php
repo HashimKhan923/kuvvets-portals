@@ -11,7 +11,7 @@
 
     /* YTD banner */
     .ytd-hero {
-        background: linear-gradient(135deg, #2D1F14 0%, #3d2a1c 100%);
+        background: var(--accent-light);
         color: #fff; border-radius: 20px; padding: 26px;
         position: relative; overflow: hidden;
         margin-bottom: 22px;
@@ -57,8 +57,8 @@
     @media (max-width:780px) { .ytd-metrics { grid-template-columns: repeat(2, 1fr); } }
 
     .ytd-metric {
-        background: rgba(255,255,255,.05);
-        border: 1px solid rgba(255,255,255,.08);
+        background: var(--bg-card);
+        border: 1px solid var(--border);
         border-radius: 12px;
         padding: 14px 16px;
     }
@@ -66,19 +66,21 @@
         font-size: 10px; color: rgba(255,255,255,.55);
         letter-spacing: .6px; text-transform: uppercase; font-weight: 600;
         display: flex; align-items: center; gap: 5px;
+        color: var(--text-primary);
     }
     .ytd-metric-val {
         font-family:'Space Grotesk',sans-serif;
         font-size: 22px; font-weight: 700; margin-top: 6px;
         font-variant-numeric: tabular-nums;
         line-height: 1.1;
+        color: var(--text-primary);
     }
     .ytd-metric-val .cur {
-        font-size: 11px; color: rgba(255,255,255,.5); font-weight: 500;
+        font-size: 11px; color: var(--text-primary); font-weight: 500;
         margin-right: 2px;
     }
     .ytd-metric.net { background: rgba(76,175,80,.12); border-color: rgba(76,175,80,.25); }
-    .ytd-metric.net .ytd-metric-val { color: #86efac; }
+    .ytd-metric.net .ytd-metric-val { color: var(--text-primary); }
 
     /* Latest card + list */
     .section-title {
@@ -247,9 +249,9 @@
             <div class="ytd-metric-lbl"><i class="fa-solid fa-landmark"></i> Income Tax</div>
             <div class="ytd-metric-val"><span class="cur">PKR</span>{{ number_format((float)$ytd->total_tax, 0) }}</div>
         </div>
-        <div class="ytd-metric net">
-            <div class="ytd-metric-lbl" style="color: #86efac;"><i class="fa-solid fa-wallet"></i> Net Received</div>
-            <div class="ytd-metric-val"><span class="cur" style="color:#86efac;">PKR</span>{{ number_format((float)$ytd->total_net, 0) }}</div>
+        <div class="ytd-metric">
+            <div class="ytd-metric-lbl"><i class="fa-solid fa-wallet"></i> Net Received</div>
+            <div class="ytd-metric-val"><span class="cur">PKR</span>{{ number_format((float)$ytd->total_net, 0) }}</div>
         </div>
     </div>
 </div>

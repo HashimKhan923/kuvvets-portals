@@ -22,7 +22,7 @@
                     </option>
                 @endforeach
             </select>
-            <button type="submit" class="btn btn-primary btn-sm">
+            <button type="submit" class="btn btn-primary">
                 <i class="fa-solid fa-filter"></i> Generate
             </button>
         </form>

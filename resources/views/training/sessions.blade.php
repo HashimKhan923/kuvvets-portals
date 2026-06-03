@@ -25,16 +25,16 @@
                 </option>
                 @endforeach
             </select>
-            <button type="submit" class="btn btn-primary btn-sm">
+            <button type="submit" class="btn btn-primary">
                 <i class="fa-solid fa-filter"></i> Filter
             </button>
             @if(request()->hasAny(['status','program']))
-            <a href="{{ route('training.sessions') }}" class="btn btn-secondary btn-sm">
+            <a href="{{ route('training.sessions') }}" class="btn btn-secondary">
                 <i class="fa-solid fa-xmark"></i> Clear
             </a>
             @endif
         </form>
-        <a href="{{ route('training.sessions.create') }}" class="btn btn-primary btn-sm">
+        <a href="{{ route('training.sessions.create') }}" class="btn btn-primary">
             <i class="fa-solid fa-plus"></i> New Session
         </a>
     </div>
@@ -115,7 +115,7 @@
         @endif
 
         <a href="{{ route('training.session', $session) }}"
-           class="btn btn-secondary btn-sm" style="justify-content:center;margin-top:auto;">
+           class="btn btn-secondary" style="justify-content:center;margin-top:auto;">
             Manage Session →
         </a>
     </div>

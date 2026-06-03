@@ -85,7 +85,7 @@
         <div style="margin-top:18px;padding-top:16px;border-top:1px solid var(--border);">
             <div class="section-label" style="margin-bottom:10px;">Quick Add — KUVVET Defaults</div>
             @foreach([
-                ['Forklifts',        'fa-forklift',       '#3B82F6'],
+                ['Forklifts',        'fa-wrench',       '#3B82F6'],
                 ['Cranes & Hoists',  'fa-person-digging', '#EF4444'],
                 ['Warehouse Trucks', 'fa-truck',          '#F59E0B'],
                 ['Safety Equipment', 'fa-helmet-safety',  '#22C55E'],

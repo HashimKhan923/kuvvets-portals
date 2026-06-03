@@ -45,12 +45,12 @@
                     <option value="{{ $v }}" {{ request('status') == $v ? 'selected' : '' }}>{{ $l }}</option>
                 @endforeach
             </select>
-            <button type="submit" class="btn btn-primary btn-sm">
+            <button type="submit" class="btn btn-primary">
                 <i class="fa-solid fa-filter"></i> Filter
             </button>
         </form>
         @can('attendance.manage')
-        <button class="btn btn-secondary btn-sm"
+        <button class="btn btn-secondary"
                 onclick="document.getElementById('manualModal').classList.add('open')">
             <i class="fa-solid fa-pen-to-square"></i> Manual Entry
         </button>

@@ -96,7 +96,7 @@
         [
             'title' => 'Audit Log',
             'desc'  => 'Track all system actions — logins, updates, deletions.',
-            'icon'  => 'fa-shield-check',
+            'icon'  => 'fa-magnifying-glass-chart',
             'color' => '#C53030',
             'bg'    => '#FFF5F5',
             'border'=> '#FEB2B2',
@@ -142,7 +142,7 @@
             @foreach($card['items'] as $item)
             <span style="font-size:10px;background:{{ $card['bg'] }};
                          color:{{ $card['color'] }};border:1px solid {{ $card['border'] }};
-                         border-radius:20px;padding:2px 9px;font-weight:500;">
+                         border-radius:20px;padding:2px 15px;font-weight:500;">
                 {{ $item }}
             </span>
             @endforeach

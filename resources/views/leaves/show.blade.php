@@ -67,7 +67,7 @@
     @if($leaveRequest->document_path)
     <div style="margin-bottom:18px;">
         <a href="{{ asset('storage/' . $leaveRequest->document_path) }}"
-           target="_blank" class="btn btn-secondary btn-sm">
+           target="_blank" class="btn btn-secondary">
             <i class="fa-solid fa-file-lines"></i> View Supporting Document
         </a>
     </div>

@@ -168,7 +168,7 @@
             @foreach($report['metrics'] as $metric)
             <span style="font-size:10px;background:{{ $report['bg'] }};
                          color:{{ $report['color'] }};border:1px solid {{ $report['border'] }};
-                         border-radius:20px;padding:2px 9px;font-weight:500;">
+                         border-radius:20px;padding:2px 20px;font-weight:500;">
                 {{ $metric }}
             </span>
             @endforeach

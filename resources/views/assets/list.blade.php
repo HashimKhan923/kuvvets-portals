@@ -32,16 +32,16 @@
                 <option value="{{ $d->id }}" {{ request('department') == $d->id ? 'selected' : '' }}>{{ $d->name }}</option>
                 @endforeach
             </select>
-            <button type="submit" class="btn btn-primary btn-sm">
+            <button type="submit" class="btn btn-primary">
                 <i class="fa-solid fa-filter"></i>
             </button>
             @if(request()->hasAny(['search','type','status','department','category']))
-            <a href="{{ route('assets.list') }}" class="btn btn-secondary btn-sm">
+            <a href="{{ route('assets.list') }}" class="btn btn-secondary">
                 <i class="fa-solid fa-xmark"></i> Clear
             </a>
             @endif
         </form>
-        <a href="{{ route('assets.create') }}" class="btn btn-primary btn-sm">
+        <a href="{{ route('assets.create') }}" class="btn btn-primary">
             <i class="fa-solid fa-plus"></i> Register Asset
         </a>
     </div>

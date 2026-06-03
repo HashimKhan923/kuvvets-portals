@@ -18,21 +18,20 @@
 
     /* Hero card */
     .hero-check {
-        background: #000000;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
         color: #CBA557; border-radius: 20px; padding: 26px;
-        position: relative; overflow: hidden;
+        position: relative; overflow: visible;
         display: flex; flex-direction: column; gap: 18px;
     }
     .hero-check::before {
         content:''; position:absolute; top:-60%; right:-20%;
         width:440px; height:440px;
-        background: #000000;
         pointer-events:none;
     }
     .hero-check::after {
         content:''; position:absolute; bottom:-40%; left:-10%;
         width:320px; height:320px;
-        background: radial-gradient(circle, rgba(245,158,11,.15), transparent 60%);
         pointer-events:none;
     }
     .hero-row { position:relative; z-index:1; }
@@ -42,13 +41,13 @@
         gap:12px; flex-wrap:wrap;
     }
     .hero-date {
-        font-size: 10.5px; letter-spacing: 1.2px; text-transform: uppercase;
-        color: rgba(255,255,255,.6); font-weight: 600;
+        font-size: 12px; letter-spacing: 1.2px; text-transform: uppercase;
+        color: var(--text-primary); font-weight: 600;
     }
     .hero-status {
         display: inline-flex; align-items: center; gap: 7px;
         padding: 5px 12px; border-radius: 999px;
-        background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.15);
+        background: var(--bg-muted); border: 1px solid var(--bg-muted);
         font-size: 11px; font-weight: 600;
     }
     .hero-status .dot { width: 6px; height: 6px; border-radius: 50%; }
@@ -63,14 +62,15 @@
         font-family:'Space Grotesk',sans-serif;
         font-size: 52px; font-weight: 700; letter-spacing: -1px; line-height: 1;
         font-variant-numeric: tabular-nums;
+        color: var(--text-primary);
     }
     .hero-clock .secs { font-size: 26px; opacity: .55; font-weight: 500; }
-    .hero-zone { font-size: 11px; color: rgba(255,255,255,.5); letter-spacing: .5px; }
+    .hero-zone { font-size: 11px; color: var(--text-primary); letter-spacing: .5px; }
 
     /* Shift progress */
     .shift-bar {
         position:relative; z-index:1;
-        background: rgba(255,255,255,.08);
+        background: var(--bg-muted); border: 1px solid var(--border);
         border-radius: 999px;
         height: 6px; overflow: hidden;
     }
@@ -82,7 +82,7 @@
     }
     .shift-meta {
         display:flex; justify-content:space-between; font-size:10.5px;
-        color: rgba(255,255,255,.55); margin-top: 6px;
+        color: var(--text-primary); margin-top: 6px;
         letter-spacing: .3px;
     }
 
@@ -90,11 +90,11 @@
     .loc-pill {
         display:inline-flex; align-items:center; gap:6px;
         padding: 5px 11px; border-radius: 999px;
-        background: rgba(255,255,255,.06);
-        border: 1px solid rgba(255,255,255,.12);
+        background: var(--bg-muted); border: 1px solid var(--border);
         font-size: 11px; color: rgba(255,255,255,.85);
+        color: var(--text-primary);
     }
-    .loc-pill i { color: #E87A45; font-size: 10px; }
+    .loc-pill i { color: var(--accent-light); font-size: 10px; }
 
     /* Action buttons */
     .hero-actions {
@@ -111,7 +111,7 @@
     .big-btn i { font-size: 17px; }
     .big-btn.primary {
         background: var(--text-primary);
-        color:#fff; box-shadow: 0 8px 24px rgba(194,83,27,.4);
+        color:#fff;;
     }
     .big-btn.primary:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(194,83,27,.5); }
     .big-btn.primary:disabled { opacity: .55; cursor: not-allowed; }
@@ -138,7 +138,7 @@
         cursor: default;
     }
     .big-btn.qr {
-        background: rgba(255,255,255,.1);
+        background: var(--accent);
         backdrop-filter: blur(10px);
         border: 1px solid rgba(255,255,255,.2);
         color: #fff; flex: 0 0 auto; padding: 0 20px;
@@ -156,7 +156,7 @@
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 8px;
-        position:relative; z-index:1;
+        position:relative; 
     }
     @media (max-width:520px) { .hero-metrics { grid-template-columns: repeat(2, 1fr); } }
     .hero-metric {
@@ -169,14 +169,20 @@
         font-size: 9.5px; color: rgba(255,255,255,.55);
         letter-spacing: .6px; text-transform: uppercase; font-weight: 600;
         display: flex; align-items: center; gap: 5px;
+        color: var(--text-primary);
     }
-    .hero-metric-lbl i { font-size: 9px; }
+    .hero-metric-lbl i { font-size: 9px;     
+       color: var(--text-primary);
+ }
     .hero-metric-val {
+                color: var(--text-primary);
+
         font-size: 16px; font-weight: 700; margin-top: 4px;
         font-family: 'Space Grotesk', sans-serif;
         font-variant-numeric: tabular-nums;
     }
-    .hero-metric-val .unit { font-size: 10px; font-weight: 500; color: rgba(255,255,255,.5); margin-left: 1px; }
+    .hero-metric-val .unit { font-size: 10px; font-weight: 500;         color: var(--text-primary);
+ margin-left: 1px; }
     .hero-metric.accent { background: rgba(232,122,69,.12); border-color: rgba(232,122,69,.25); }
     .hero-metric.warn   { background: rgba(245,158,11,.12); border-color: rgba(245,158,11,.25); }
     .hero-metric.late   { background: rgba(220,38,38,.12);  border-color: rgba(220,38,38,.25); }
@@ -185,14 +191,14 @@
     .break-banner {
         position:relative; z-index:1;
         display:flex; align-items:center; gap:12px;
-        background: rgba(245,158,11,.15);
+        background: rgba(245,158,11,.12);
         border: 1px solid rgba(245,158,11,.3);
         border-radius: 12px;
         padding: 12px 14px;
     }
-    .break-banner i { color: #F59E0B; font-size: 16px; }
-    .break-banner-txt { font-size: 12.5px; font-weight: 600; color: #fde68a; }
-    .break-banner-time { font-size: 11px; color: rgba(253,230,138,.65); margin-top:1px; font-variant-numeric: tabular-nums; }
+    .break-banner i { color: var(--accent-light); font-size: 16px; }
+    .break-banner-txt { font-size: 12.5px; font-weight: 600; color: var(--text-primary); }
+    .break-banner-time { font-size: 11px; color: var(--text-primary); margin-top:1px; font-variant-numeric: tabular-nums; }
 
     /* Right column */
     .tiny-card {
@@ -248,12 +254,17 @@
 
     /* Break reason menu */
     .break-menu {
-        position: absolute; top: calc(100% + 8px); right: 0;
-        background: #fff; border: 1px solid var(--border);
-        border-radius: 12px; padding: 6px;
+        position: absolute;
+        top: calc(100% + 8px);
+        right: 0;
+        min-width: 220px;
+        max-height: 280px;
+        overflow-y: auto;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
         box-shadow: 0 12px 32px rgba(0,0,0,.15);
-        min-width: 180px;
-        z-index: 50;
+        z-index: 9999;
     }
     .break-opt {
         display: flex; align-items: center; gap: 10px;
@@ -398,8 +409,8 @@
                 @forelse($activeLocations as $loc)
                     <span class="loc-pill"><i class="fa-solid fa-location-dot"></i>{{ $loc->name }}</span>
                 @empty
-                    <span class="loc-pill" style="background:rgba(220,38,38,.15);border-color:rgba(220,38,38,.3);color:#fca5a5;">
-                        <i class="fa-solid fa-triangle-exclamation" style="color:#fca5a5;"></i>
+                    <span class="loc-pill" style="background:rgba(220,38,38,.15);border-color:rgba(220,38,38,.3);color:var(--red);">
+                        <i class="fa-solid fa-triangle-exclamation" style="color:var(--red);"></i>
                         No location assigned — contact HR
                     </span>
                 @endforelse
@@ -415,6 +426,7 @@
                     </div>
                 </div>
             </template>
+           
 
             {{-- Actions --}}
             <div class="hero-actions">
@@ -426,16 +438,25 @@
                         <span x-text="busy && action==='in' ? 'Checking in…' : 'Check In'"></span>
                     </button>
                 </template>
+                
 
                 {{-- Break (when checked in, not on break, not done) --}}
                 <template x-if="checkedIn && !checkedOut && !onBreak">
-                    <div style="position:relative;flex:1;min-width:150px;" x-data="{menu:false}" @click.outside="menu=false">
-                        <button class="big-btn break" style="width:100%;" :disabled="busy" @click="menu=!menu">
+                        <div
+                                style="position:relative;flex:1;min-width:150px;z-index:100;"
+                                x-data="{menu:false}"
+                                @click.outside="menu=false"
+                                @keydown.escape.window="menu=false">
+                        <button class="big-btn primary" style="width:100%;" :disabled="busy" @click="menu=!menu">
                             <template x-if="busy && action==='break'"><span class="hero-spinner" style="border-color:rgba(0,0,0,.2);border-top-color:#1a0f00;"></span></template>
                             <template x-if="!(busy && action==='break')"><i class="fa-solid fa-mug-hot"></i></template>
                             <span>Start Break</span>
                         </button>
-                        <div class="break-menu" x-show="menu" x-transition style="display:none;">
+                        <div
+                            class="break-menu"
+                            x-show="menu"
+                            x-transition.origin.top.right
+                            x-cloak>
                             <button class="break-opt" @click="menu=false;startBreak('lunch')"><i class="fa-solid fa-utensils"></i> Lunch</button>
                             <button class="break-opt" @click="menu=false;startBreak('prayer')"><i class="fa-solid fa-mosque"></i> Prayer</button>
                             <button class="break-opt" @click="menu=false;startBreak('tea')"><i class="fa-solid fa-mug-hot"></i> Tea / Snack</button>
@@ -456,7 +477,7 @@
 
                 {{-- Check OUT --}}
                 <template x-if="checkedIn && !checkedOut && !onBreak">
-                    <button class="big-btn out" :disabled="busy" @click="doCheckOut()">
+                    <button class="big-btn primary" :disabled="busy" @click="doCheckOut()">
                         <template x-if="busy && action==='out'"><span class="hero-spinner"></span></template>
                         <template x-if="!(busy && action==='out')"><i class="fa-solid fa-door-open"></i></template>
                         <span x-text="busy && action==='out' ? 'Checking out…' : 'Check Out'"></span>
@@ -465,7 +486,7 @@
 
                 {{-- Day done --}}
                 <template x-if="checkedOut">
-                    <button class="big-btn done" disabled>
+                    <button class="big-btn primary" disabled>
                         <i class="fa-solid fa-circle-check"></i> Day Complete
                     </button>
                 </template>
@@ -481,15 +502,15 @@
 
             {{-- Metric tiles --}}
             <div class="hero-metrics">
-                <div class="hero-metric accent">
+                <div class="hero-metric warn">
                     <div class="hero-metric-lbl"><i class="fa-solid fa-right-to-bracket"></i> Check-in</div>
                     <div class="hero-metric-val" x-text="checkInTime || '—'"></div>
                 </div>
-                <div class="hero-metric">
+                <div class="hero-metric warn">
                     <div class="hero-metric-lbl"><i class="fa-solid fa-right-from-bracket"></i> Check-out</div>
                     <div class="hero-metric-val" x-text="checkOutTime || '—'"></div>
                 </div>
-                <div class="hero-metric">
+                <div class="hero-metric warn">
                     <div class="hero-metric-lbl"><i class="fa-solid fa-business-time"></i> Working</div>
                     <div class="hero-metric-val">
                         <span x-text="workingHuman.h"></span><span class="unit">h</span>
@@ -505,7 +526,7 @@
                 </div>
                 {{-- Late + overtime tiles — only if relevant --}}
                 <template x-if="lateMinutes > 0">
-                    <div class="hero-metric late">
+                    <div class="hero-metric warn">
                         <div class="hero-metric-lbl"><i class="fa-solid fa-clock"></i> Late</div>
                         <div class="hero-metric-val">
                             <span x-text="formatMins(lateMinutes).h"></span><span class="unit">h</span>
@@ -514,7 +535,7 @@
                     </div>
                 </template>
                 <template x-if="overtimeMinutes > 0">
-                    <div class="hero-metric" style="background:rgba(124,58,237,.14);border-color:rgba(124,58,237,.25);">
+                    <div class="hero-metric warn">
                         <div class="hero-metric-lbl"><i class="fa-solid fa-bolt"></i> Overtime</div>
                         <div class="hero-metric-val">
                             <span x-text="formatMins(overtimeMinutes).h"></span><span class="unit">h</span>
@@ -523,7 +544,7 @@
                     </div>
                 </template>
                 <template x-if="earlyLeaveMinutes > 0">
-                    <div class="hero-metric" style="background:rgba(236,72,153,.14);border-color:rgba(236,72,153,.25);">
+                    <div class="hero-metric warn">
                         <div class="hero-metric-lbl"><i class="fa-solid fa-person-walking-arrow-right"></i> Early out</div>
                         <div class="hero-metric-val">
                             <span x-text="formatMins(earlyLeaveMinutes).h"></span><span class="unit">h</span>
@@ -533,20 +554,21 @@
                 </template>
             </div>
 
+            
             {{-- Break history today --}}
             @if($today && $today->breakSessions->count())
                 <div class="hero-row" style="display:flex;flex-wrap:wrap;gap:6px;">
-                    <div style="font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.6px;text-transform:uppercase;width:100%;font-weight:600;margin-bottom:2px;">
+                    <div style="font-size:10px;color:var(--text-primary);letter-spacing:.6px;text-transform:uppercase;width:100%;font-weight:600;margin-bottom:2px;">
                         Today's breaks
                     </div>
                     @foreach($today->breakSessions as $bs)
-                        <span style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);font-size:10.5px;color:rgba(255,255,255,.75);">
-                            <i class="fa-solid {{ \App\Models\BreakSession::reasonIcon($bs->reason) }}" style="font-size:9px;color:#F59E0B;"></i>
-                            {{ \App\Models\BreakSession::reasonLabel($bs->reason) }}
+                        <span class="loc-pill">
+                            <i class="fa-solid " style="font-size:9px;color:#F59E0B;"></i>
+                         
                             @if($bs->ended_at)
                                 • {{ $bs->duration_minutes }}m
                             @else
-                                • <span style="color:#FBBF24;">active</span>
+                                • <span >active</span>
                             @endif
                         </span>
                     @endforeach

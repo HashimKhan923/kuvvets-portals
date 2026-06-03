@@ -622,7 +622,7 @@
         background: #E8DDD5;
     }
     .kvt-btn-primary {
-        background: linear-gradient(135deg, #C2531B, #E87A45);
+        background: var(--accent-light);
         color: #FFFFFF;
         box-shadow: 0 4px 12px rgba(194, 83, 27, 0.25);
     }

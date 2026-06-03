@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#C2531B">
+    <meta name="theme-color" content="#CBA557">
     <title>Sign In — KUVVET Employee Portal</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
         :root {
-            --accent: #C2531B;
+            --accent: #CBA557;
             --accent-light: #E87A45;
-            --accent-grad: linear-gradient(135deg,#C2531B 0%,#E87A45 50%,#F59E0B 100%);
+            --accent-grad: linear-gradient(135deg,#E0BE73 0%,#CBA557 50%,#8A6E2F 100%);
             --bg: #F9F6F2;
             --card: #FFFFFF;
             --text: #2D1F14;
@@ -58,7 +58,7 @@
             background: var(--accent-grad);
             color:#fff;
             border-radius: 24px 0 0 24px;
-            display:flex; flex-direction:column; justify-content:space-between;
+            display:flex; flex-direction:column; justify-content:center;
             min-height: 580px;
             position:relative; overflow:hidden;
         }
@@ -69,14 +69,8 @@
             pointer-events:none;
         }
         .hero-logo {
-            width:52px; height:52px; border-radius:14px;
-            background: rgba(255,255,255,.18);
-            border: 1.5px solid rgba(255,255,255,.35);
-            backdrop-filter: blur(10px);
-            display:flex;align-items:center;justify-content:center;
-            font-weight:700; font-size:20px; font-family:'Space Grotesk',sans-serif;
-            letter-spacing:1px;
-            position:relative; z-index:1;
+            display:flex; align-items:start; justify-content:start;
+           
         }
         .hero-big {
             font-family:'Space Grotesk',sans-serif;
@@ -84,6 +78,7 @@
             line-height:1.15; letter-spacing:-0.5px;
             margin-top:auto;
             position:relative; z-index:1;
+            margin-top:20px;
         }
         .hero-big span { opacity:.75; font-weight:500; }
         .hero-sub {
@@ -190,7 +185,8 @@
 
     {{-- Hero / Branding panel --}}
     <div class="hero">
-        <div class="hero-logo">K</div>
+        <div class="hero-logo"><img src="{{ asset('kuvvet_dark_logo.png') }}"
+                 style="width:200px; border-radius:14px; object-fit:contain;"></div>
 
         <div>
             <div class="hero-big">Welcome back.<br><span>Let's get to work.</span></div>
@@ -209,7 +205,7 @@
     {{-- Form panel --}}
     <div class="card">
         <h1>Sign in</h1>
-        <p class="sub">Access your KUVVET employee portal</p>
+        <p class="sub">Access your portal</p>
 
         @if(session('error'))
             <div class="flash-err"><i class="fa-solid fa-circle-xmark"></i>{{ session('error') }}</div>

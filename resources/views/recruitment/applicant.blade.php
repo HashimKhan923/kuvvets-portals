@@ -221,7 +221,7 @@
                         <option value="maybe">Maybe</option>
                         <option value="no_hire">No Hire</option>
                     </select>
-                    <button type="submit" class="btn btn-primary btn-sm">Save Result</button>
+                    <button type="submit" class="btn btn-primary">Save Result</button>
                 </form>
                 @elseif($iv->score)
                 <div style="display:flex;gap:12px;font-size:11px;color:var(--text-muted);margin-top:6px;">
