@@ -80,7 +80,7 @@ class AttendanceService
                 'check_in_distance_m' => (int) round($distance),
                 'check_in_method'     => $method,
                 'check_in_ip'         => request()->ip(),
-                'source'              => 'web',
+                'source'              => request()->is('mobile-api/*') ? 'mobile' : 'web',
                 'status'              => 'short_day',
                 'is_late'             => $lateInfo['is_late'],
                 'late_minutes'        => $lateInfo['late_minutes'],

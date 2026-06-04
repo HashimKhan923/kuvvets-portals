@@ -3,6 +3,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\LeaveBalance;
+use App\Models\LeaveRequest;
 
 class Employee extends Model {
     use HasFactory;
@@ -150,6 +152,16 @@ class Employee extends Model {
     public function attendances()
     {
         return $this->hasMany(Attendance::class);
+    }
+
+    public function leaveBalances()
+    {
+        return $this->hasMany(LeaveBalance::class);
+    }
+
+    public function leaveRequests()
+    {
+        return $this->hasMany(LeaveRequest::class);
     }
 
     public function shift(): \Illuminate\Database\Eloquent\Relations\BelongsTo

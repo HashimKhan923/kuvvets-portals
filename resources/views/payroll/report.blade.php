@@ -221,16 +221,21 @@
 </div>
 @endif
 
+@php
+    $chartPeriods = $periods->count() ? $periods->values()->map(function($p) {
+        return [
+            'label' => \Carbon\Carbon::create($p->year, $p->month)->format('M Y'),
+            'gross' => (float) $p->total_gross,
+            'net'   => (float) $p->total_net,
+            'tax'   => (float) $p->total_tax,
+        ];
+    })->values()->all() : [];
+@endphp
 @push('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script>
 @if($periods->count())
-var periodsData = @json($periods->values()->map(fn($p) => [
-    'label' => \Carbon\Carbon::create($p->year, $p->month)->format('M Y'),
-    'gross' => (float) $p->total_gross,
-    'net'   => (float) $p->total_net,
-    'tax'   => (float) $p->total_tax,
-]));
+var periodsData = {!! json_encode($chartPeriods) !!};
 
 new Chart(document.getElementById('monthlyChart'), {
     type: 'bar',

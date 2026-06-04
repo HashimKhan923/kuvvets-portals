@@ -461,7 +461,7 @@ function switchAssetDetailTab(active) {
 switchAssetDetailTab('assign');
 
 function openCompleteModal(id) {
-    document.getElementById('completeMaintForm').action = '/assets/maintenance/' + id + '/complete';
+    document.getElementById('completeMaintForm').action = '{{ route("assets.maintenance.complete", ["record" => "RECORD_ID"]) }}'.replace('RECORD_ID', id);
     document.getElementById('completeMaintModal').classList.add('open');
 }
 function closeCompleteModal() {

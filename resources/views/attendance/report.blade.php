@@ -42,7 +42,7 @@
                 <th class="center">Leave</th>
                 <th class="center">Total Hrs</th>
                 <th class="center">OT Hrs</th>
-                <th class="center">Late Mins</th>
+                <th class="center">Late Time</th>
             </tr>
         </thead>
         <tbody>
@@ -84,7 +84,8 @@
                     {{ $row['overtime_hours'] }}
                 </td>
                 <td class="center" style="font-size:12px;color:{{ $row['late_minutes'] > 0 ? 'var(--red)' : 'var(--text-muted)' }};">
-                    {{ $row['late_minutes'] }}m
+                    @php $lm = (int)$row['late_minutes']; @endphp
+                    {{ $lm >= 60 ? floor($lm/60).'h '.($lm%60).'m' : $lm.'m' }}
                 </td>
             </tr>
             @endforeach
@@ -116,7 +117,8 @@
                     {{ $report->sum('overtime_hours') }}
                 </td>
                 <td class="center" style="padding:11px 16px;font-size:12px;font-weight:700;color:var(--red);">
-                    {{ $report->sum('late_minutes') }}m
+                    @php $tlm = (int)$report->sum('late_minutes'); @endphp
+                    {{ $tlm >= 60 ? floor($tlm/60).'h '.($tlm%60).'m' : $tlm.'m' }}
                 </td>
             </tr>
         </tfoot>
