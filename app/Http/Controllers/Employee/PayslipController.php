@@ -142,6 +142,34 @@ class PayslipController extends Controller
         );
     }
 
+    /**
+     * Download payslip PDF for mobile — returns binary PDF stream.
+     */
+    public function apiPdf(Request $request, Payslip $payslip)
+    {
+        $employee = \App\Models\Employee::where('user_id', $request->user()->id)->firstOrFail();
+
+        abort_unless($payslip->employee_id === $employee->id, 403, 'This payslip does not belong to you.');
+        abort_if($payslip->status === 'draft', 403, 'This payslip is not yet available.');
+
+        $payslip->load(['employee.department', 'employee.designation', 'company', 'period']);
+
+        $pdf = Pdf::loadView('payroll.payslip-pdf', compact('payslip'))
+            ->setPaper('a4', 'portrait')
+            ->setOptions([
+                'defaultFont'          => 'DejaVu Sans',
+                'isHtml5ParserEnabled' => true,
+                'isRemoteEnabled'      => true,
+            ]);
+
+        $filename = "Payslip-{$payslip->payslip_number}.pdf";
+
+        return response($pdf->output(), 200, [
+            'Content-Type'        => 'application/pdf',
+            'Content-Disposition' => "attachment; filename=\"{$filename}\"",
+        ]);
+    }
+
     // API method to return payslip list and YTD totals for mobile app
 
     public function apiIndex(Request $request)

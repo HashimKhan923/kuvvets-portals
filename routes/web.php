@@ -530,6 +530,7 @@ Route::prefix('mobile-api/employee')->withoutMiddleware([\App\Http\Middleware\Ve
         Route::post('/leaves',                   [\App\Http\Controllers\Employee\LeaveController::class,             'store']);
         Route::delete('/leaves/{leaveRequest}',  [\App\Http\Controllers\Employee\LeaveController::class,             'cancel']);
         Route::get('/payslips',                  [\App\Http\Controllers\Employee\PayslipController::class,           'apiIndex']);
+        Route::get('/payslips/{payslip}/pdf',    [\App\Http\Controllers\Employee\PayslipController::class,           'apiPdf']);
         Route::get('/profile',                   [\App\Http\Controllers\Employee\ProfileController::class,           'apiShow']);
     });
 });
