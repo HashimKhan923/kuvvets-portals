@@ -262,7 +262,7 @@ body {
 <div class="hdr">
     <div class="hdr-logo">
         @php $logoPath = str_replace('\\', '/', public_path('kuvvet_logo.png')); @endphp
-        <img src="https://portals.kuvvets.com/kuvvet_dark_logo.jpeg" style="width: 100px;" alt="KUVVET">
+        <img src="https://portals.kuvvets.com/kuvvet_dark_logo.jpeg" style="width: 120px; height: 160px;" alt="KUVVET">
     </div>
     <div class="hdr-right">
         <div class="slip-label">Salary Slip</div>
