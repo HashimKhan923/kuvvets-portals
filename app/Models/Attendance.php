@@ -60,15 +60,18 @@ class Attendance extends Model {
 
     public function getStatusBadgeAttribute(): array {
         return match($this->status) {
-            'present'       => ['bg'=>'#0a1a0a', 'color'=>'#4CAF50', 'border'=>'#1a3a0a'],
-            'absent'        => ['bg'=>'#1a0505', 'color'=>'#E24B4A', 'border'=>'#3a1010'],
-            'late'          => ['bg'=>'#1a1200', 'color'=>'#EF9F27', 'border'=>'#2a2008'],
-            'half_day'      => ['bg'=>'#001015', 'color'=>'#378ADD', 'border'=>'#0a2a35'],
-            'on_leave'      => ['bg'=>'#100a1a', 'color'=>'#7F77DD', 'border'=>'#2a1a3a'],
-            'holiday'       => ['bg'=>'#0a1a0a', 'color'=>'#BA7517', 'border'=>'#2a2008'],
-            'weekend'       => ['bg'=>'#111820', 'color'=>'#5a5040', 'border'=>'#1e2a35'],
-            'work_from_home'=> ['bg'=>'#001015', 'color'=>'#1D9E75', 'border'=>'#0a2a20'],
-            default         => ['bg'=>'#111820', 'color'=>'#5a5040', 'border'=>'#1e2a35'],
+            'completed'        => ['bg'=>'#E8F5E9', 'color'=>'#2E7D32', 'border'=>'#A5D6A7'],
+            'present'          => ['bg'=>'#E8F5E9', 'color'=>'#2E7D32', 'border'=>'#A5D6A7'],
+            'absent'           => ['bg'=>'#FFEBEE', 'color'=>'#C62828', 'border'=>'#EF9A9A'],
+            'late'             => ['bg'=>'#FFF8E1', 'color'=>'#E65100', 'border'=>'#FFE082'],
+            'short_day'        => ['bg'=>'#FFF3E0', 'color'=>'#BF360C', 'border'=>'#FFCC80'],
+            'half_day'         => ['bg'=>'#E3F2FD', 'color'=>'#1565C0', 'border'=>'#90CAF9'],
+            'three_quarter_day'=> ['bg'=>'#EDE7F6', 'color'=>'#4527A0', 'border'=>'#B39DDB'],
+            'on_leave'         => ['bg'=>'#F3E5F5', 'color'=>'#6A1B9A', 'border'=>'#CE93D8'],
+            'holiday'          => ['bg'=>'#FFF8E1', 'color'=>'#F57F17', 'border'=>'#FFE082'],
+            'weekend'          => ['bg'=>'#FAFAFA', 'color'=>'#757575', 'border'=>'#E0E0E0'],
+            'work_from_home'   => ['bg'=>'#E0F2F1', 'color'=>'#00695C', 'border'=>'#80CBC4'],
+            default            => ['bg'=>'#F5F5F5', 'color'=>'#616161', 'border'=>'#E0E0E0'],
         };
     }
 

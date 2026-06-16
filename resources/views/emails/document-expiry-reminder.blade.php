@@ -1,4 +1,4 @@
-<x-emails.layout>
+﻿<x-emails.layout>
 
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:28px;">
         <tr>
@@ -52,7 +52,7 @@
 
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr><td style="text-align:center;padding:4px 0 8px;">
-            <a href="{{ url('/employee/profile?tab=documents') }}" style="display:inline-block;background-color:#C2531B;color:#ffffff;text-decoration:none;padding:14px 36px;border-radius:12px;font-family:Arial,sans-serif;font-size:14px;font-weight:700;">Upload New Document &rarr;</a>
+            <a href="{{ url('/employee/profile?tab=documents') }}" style="display:inline-block;background-color:#0F0901;color:#D4A843;text-decoration:none;padding:14px 36px;border-radius:12px;font-family:Arial,sans-serif;font-size:14px;font-weight:700;">Upload New Document &rarr;</a>
         </td></tr>
     </table>
 

@@ -41,7 +41,7 @@
             </select>
             <select name="status" class="form-select">
                 <option value="">All Status</option>
-                @foreach(['present'=>'Present','absent'=>'Absent','late'=>'Late','half_day'=>'Half Day','on_leave'=>'On Leave','work_from_home'=>'WFH'] as $v => $l)
+                @foreach(['completed'=>'Present','absent'=>'Absent','short_day'=>'Short Day','half_day'=>'Half Day','three_quarter_day'=>'3/4 Day','on_leave'=>'On Leave','work_from_home'=>'WFH'] as $v => $l)
                     <option value="{{ $v }}" {{ request('status') == $v ? 'selected' : '' }}>{{ $l }}</option>
                 @endforeach
             </select>
@@ -78,6 +78,7 @@
                 <th>OT</th>
                 <th>Status</th>
                 <th>Source</th>
+                @can('attendance.manage')<th></th>@endcan
             </tr>
         </thead>
         <tbody>
@@ -138,21 +139,31 @@
                     <span class="badge" style="background:{{ $badge['bg'] }};color:{{ $badge['color'] }};border:1px solid {{ $badge['border'] }};">
                         {{ ucfirst(str_replace('_', ' ', $att->status)) }}
                     </span>
-                    @if($att->override)
+                    <!-- @if($att->override)
                         <i class="fa-solid fa-pen-to-square"
                            style="font-size:9px;color:var(--text-muted);margin-left:4px;"
                            title="Manually overridden"></i>
-                    @endif
+                    @endif -->
                 </td>
                 <td>
                     <span style="font-size:10px;color:var(--text-muted);text-transform:uppercase;">
                         {{ $att->source }}
                     </span>
                 </td>
+                @can('attendance.manage')
+                <td style="text-align:center;">
+                    <button type="button"
+                            onclick="openEditModal({{ $att->id }}, {{ $att->employee_id }}, '{{ $att->date->format('Y-m-d') }}', '{{ $att->check_in?->format('H:i') }}', '{{ $att->check_out?->format('H:i') }}', '{{ $att->status }}', '{{ addslashes($att->notes ?? '') }}')"
+                            style="background:none;border:1px solid var(--border);border-radius:6px;padding:4px 8px;cursor:pointer;color:var(--accent);"
+                            title="Edit attendance">
+                        <i class="fa-solid fa-pen-to-square" style="font-size:11px;"></i>
+                    </button>
+                </td>
+                @endcan
             </tr>
             @empty
             <tr>
-                <td colspan="9">
+                <td colspan="10">
                     <div class="empty-state">No attendance records for this date.</div>
                 </td>
             </tr>
@@ -188,6 +199,59 @@
 </div>
 @endif
 
+{{-- Edit Attendance Modal --}}
+@can('attendance.manage')
+<div id="editModal" class="modal-overlay">
+    <div class="modal-box">
+        <div class="modal-title">
+            <i class="fa-solid fa-pen-to-square"></i> Edit Attendance Record
+        </div>
+        <form method="POST" action="" id="editForm">
+            @csrf
+            @method('PUT')
+            <input type="hidden" name="employee_id" id="edit_employee_id">
+            <div style="display:flex;flex-direction:column;gap:12px;">
+                <div>
+                    <label class="form-label">Employee</label>
+                    <input type="text" id="edit_employee_name" class="form-input" disabled style="background:var(--cream-warm);">
+                </div>
+                <div class="grid-2" style="gap:12px;">
+                    <div>
+                        <label class="form-label">Date</label>
+                        <input type="date" name="date" id="edit_date" class="form-input">
+                    </div>
+                    <div>
+                        <label class="form-label">Status</label>
+                        <select name="status" id="edit_status" required class="form-select">
+                            @foreach(['completed'=>'Present','absent'=>'Absent','short_day'=>'Short Day','half_day'=>'Half Day','three_quarter_day'=>'3/4 Day','on_leave'=>'On Leave','work_from_home'=>'Work From Home'] as $v => $l)
+                                <option value="{{ $v }}">{{ $l }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div>
+                        <label class="form-label">Check In</label>
+                        <input type="time" name="check_in" id="edit_check_in" class="form-input">
+                    </div>
+                    <div>
+                        <label class="form-label">Check Out</label>
+                        <input type="time" name="check_out" id="edit_check_out" class="form-input">
+                    </div>
+                </div>
+                <div>
+                    <label class="form-label">Notes</label>
+                    <input type="text" name="notes" id="edit_notes" placeholder="Reason for edit…" class="form-input">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                        onclick="document.getElementById('editModal').classList.remove('open')">Cancel</button>
+                <button type="submit" class="btn btn-primary">Update Record</button>
+            </div>
+        </form>
+    </div>
+</div>
+@endcan
+
 {{-- Manual Entry Modal --}}
 @can('attendance.manage')
 <div id="manualModal" class="modal-overlay">
@@ -216,7 +280,7 @@
                     <div>
                         <label class="form-label">Status</label>
                         <select name="status" required class="form-select">
-                            @foreach(['present'=>'Present','absent'=>'Absent','late'=>'Late','half_day'=>'Half Day','on_leave'=>'On Leave','work_from_home'=>'Work From Home'] as $v => $l)
+                            @foreach(['completed'=>'Present','absent'=>'Absent','short_day'=>'Short Day','half_day'=>'Half Day','three_quarter_day'=>'3/4 Day','on_leave'=>'On Leave','work_from_home'=>'Work From Home'] as $v => $l)
                                 <option value="{{ $v }}">{{ $l }}</option>
                             @endforeach
                         </select>
@@ -250,11 +314,39 @@
 
 @push('scripts')
 <script>
-var modal = document.getElementById('manualModal');
-if (modal) {
-    modal.addEventListener('click', function(e) {
+var manualModal = document.getElementById('manualModal');
+if (manualModal) {
+    manualModal.addEventListener('click', function(e) {
         if (e.target === this) this.classList.remove('open');
     });
+}
+
+var editModal = document.getElementById('editModal');
+if (editModal) {
+    editModal.addEventListener('click', function(e) {
+        if (e.target === this) this.classList.remove('open');
+    });
+}
+
+function openEditModal(id, employeeId, date, checkIn, checkOut, status, notes) {
+    var baseUrl = '{{ route("attendance.update", ["attendance" => "ATTENDANCE_ID"]) }}'.replace('ATTENDANCE_ID', id);
+    document.getElementById('editForm').action = baseUrl;
+    document.getElementById('edit_employee_id').value = employeeId;
+    document.getElementById('edit_date').value = date;
+    document.getElementById('edit_check_in').value = checkIn || '';
+    document.getElementById('edit_check_out').value = checkOut || '';
+    document.getElementById('edit_status').value = status;
+    document.getElementById('edit_notes').value = notes || '';
+
+    // Look up employee name from the row
+    var btn = event.currentTarget;
+    var row = btn.closest('tr');
+    if (row) {
+        var nameEl = row.querySelector('.td-employee div div:first-child');
+        document.getElementById('edit_employee_name').value = nameEl ? nameEl.textContent.trim() : '';
+    }
+
+    document.getElementById('editModal').classList.add('open');
 }
 </script>
 @endpush

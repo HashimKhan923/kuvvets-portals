@@ -135,7 +135,8 @@ Route::middleware(['auth', 'admin.portal'])->prefix('admin')->group(function () 
             Route::get('/report',        [AttendanceController::class, 'report'])->name('report');
         });
         Route::middleware('permission:attendance.manage')->group(function () {
-            Route::post('/store',        [AttendanceController::class, 'store'])->name('store');
+            Route::post('/store',               [AttendanceController::class, 'store'])->name('store');
+            Route::put('/{attendance}',         [AttendanceController::class, 'update'])->name('update');
             Route::get('/shifts',        [AttendanceController::class, 'shifts'])->name('shifts');
             Route::post('/shifts',       [AttendanceController::class, 'storeShift'])->name('shifts.store');
             Route::post('/assign-shift', [AttendanceController::class, 'assignShift'])->name('shifts.assign');

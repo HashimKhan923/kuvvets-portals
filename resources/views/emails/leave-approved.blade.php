@@ -1,4 +1,4 @@
-<x-emails.layout>
+﻿<x-emails.layout>
 
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:28px;">
         <tr>
@@ -19,7 +19,7 @@
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                 <tr>
                     <td style="font-family:Arial,sans-serif;font-size:13px;color:#A89080;font-weight:600;padding:12px 0;border-bottom:1px solid #F0EAE2;width:160px;">Request #</td>
-                    <td style="font-family:'Courier New',monospace;font-size:13px;color:#C2531B;font-weight:600;padding:12px 0;border-bottom:1px solid #F0EAE2;">{{ $leaveRequest->request_number }}</td>
+                    <td style="font-family:'Courier New',monospace;font-size:13px;color:#D4A843;font-weight:600;padding:12px 0;border-bottom:1px solid #F0EAE2;">{{ $leaveRequest->request_number }}</td>
                 </tr>
                 <tr>
                     <td style="font-family:Arial,sans-serif;font-size:13px;color:#A89080;font-weight:600;padding:12px 0;border-bottom:1px solid #F0EAE2;">Leave Type</td>
@@ -70,7 +70,7 @@
 
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
         <tr><td style="text-align:center;padding:4px 0 8px;">
-            <a href="{{ url('/employee/leaves') }}" style="display:inline-block;background-color:#C2531B;color:#ffffff;text-decoration:none;padding:14px 36px;border-radius:12px;font-family:Arial,sans-serif;font-size:14px;font-weight:700;">View My Leaves &rarr;</a>
+            <a href="{{ url('/employee/leaves') }}" style="display:inline-block;background-color:#0F0901;color:#D4A843;text-decoration:none;padding:14px 36px;border-radius:12px;font-family:Arial,sans-serif;font-size:14px;font-weight:700;">View My Leaves &rarr;</a>
         </td></tr>
     </table>
 

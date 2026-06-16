@@ -176,6 +176,37 @@ class AttendanceController extends Controller
         return back()->with('success', 'Attendance record saved.');
     }
 
+    // ── UPDATE ATTENDANCE RECORD ─────────────────────────────
+    public function update(Request $request, Attendance $attendance)
+    {
+        $request->validate([
+            'date'      => 'required|date',
+            'check_in'  => 'nullable|date_format:H:i',
+            'check_out' => 'nullable|date_format:H:i|after:check_in',
+            'status'    => 'required|string',
+            'notes'     => 'nullable|string',
+        ]);
+
+        $date     = Carbon::parse($request->date);
+        $checkIn  = $request->check_in  ? Carbon::parse($request->date . ' ' . $request->check_in)  : null;
+        $checkOut = $request->check_out ? Carbon::parse($request->date . ' ' . $request->check_out) : null;
+
+        $attendance->update([
+            'date'     => $date,
+            'check_in' => $checkIn,
+            'check_out'=> $checkOut,
+            'status'   => $request->status,
+            'notes'    => $request->notes,
+            'override' => true,
+            'source'   => 'manual',
+        ]);
+
+        if ($checkIn && $checkOut) Attendance::compute($attendance->fresh());
+
+        AuditLog::log('attendance_updated', $attendance);
+        return back()->with('success', 'Attendance record updated.');
+    }
+
     // ── MONTHLY REPORT ───────────────────────────────────────
     public function report(Request $request)
     {
