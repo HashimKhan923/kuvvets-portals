@@ -185,8 +185,8 @@
 
     {{-- Hero / Branding panel --}}
     <div class="hero">
-        <div class="hero-logo"><img src="{{ asset('kuvvet_dark_logo.png') }}"
-                 style="width:200px; border-radius:14px; object-fit:contain;"></div>
+        <div class="hero-logo"><img src="{{ asset('kuvvet_dark_logo.jpeg') }}"
+                 style="width:150px; border-radius:14px; object-fit:contain;"></div>
 
         <div>
             <div class="hero-big">Welcome back.<br><span>Let's get to work.</span></div>
